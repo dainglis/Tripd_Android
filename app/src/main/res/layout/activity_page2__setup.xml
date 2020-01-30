@@ -8,7 +8,7 @@
     tools:context=".Page2_SetupActivity">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbar2"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:background="#5B5580"
