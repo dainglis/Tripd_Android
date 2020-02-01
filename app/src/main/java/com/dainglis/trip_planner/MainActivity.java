@@ -6,13 +6,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;        // For LogCat debug messages
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.dainglis.trip_planner.data.Trip;
-
-import java.util.List;
+import com.dainglis.trip_planner.data.TripDatabase;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        /*
+
+        We will use this FAB for the "Add Trip" button
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        */
 
 
 
@@ -43,14 +46,9 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 TripDatabase db = TripDatabase.getInstance(getApplicationContext());
 
-                Trip myTrip = new Trip();
-                myTrip.tripId = 1010;
-                myTrip.title = "test";
+                TripDatabase.loadSampleData();
 
-                db.tripDAO().insert(myTrip);
-
-                List<Trip> trips = db.tripDAO().getAll();
-                System.out.println("There are " + trips.size() + " trips");
+                Log.d(null, "There are " + db.tripDAO().getAll().size() + " trips");
             }
         });
         /*
