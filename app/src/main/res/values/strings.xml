@@ -1,6 +1,36 @@
 <resources>
     <string name="app_name">Tripd</string>
+
+    <!-- String name for Trip Name id -->
+    <string name="tripNameText">Trip Name:</string>
+    <string name="editName">Route 66</string>
+
+    <!-- String name for Start City id -->
+    <string name="startCity">Start City:</string>
+    <string name="editStartCity">Toronto</string>
+
+    <!-- String name for End City id -->
+    <string name="endCity">End City:</string>
+    <string name="editEndCity">New York</string>
+
+    <!-- String for departure date -->
+    <string name="departName">Depart Date:</string>
+
+    <!-- String for arrivalDate date -->
+    <string name="ariveName">Arrive Date:</string>
+
+    <!-- Radio Button date -->
+    <string name="hotelButton">Need a hotel?</string>
+    <string name="foodButton">Need any Food Suggestions?</string>
+
+    <!-- Confirm and cancel buttons -->
+    <string name="confrimButton">Confirm</string>
+    <string name="cancelButton">Cancel</string>
+
     <string name="action_settings">Settings</string>
     <string name="title_activity_setup_page2">Enter Trip Info!!</string>
     <string name="title_activity_info_page3">Trip Info</string>
+    <string name="depart_date">depart date</string>
+    <string name="arrival_date">arrival date</string>
+    <string name="upload_a_trip_image">Upload a trip image</string>
 </resources>
