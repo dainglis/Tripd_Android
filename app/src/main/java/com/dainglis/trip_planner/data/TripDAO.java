@@ -18,7 +18,7 @@ import android.arch.persistence.room.Query;
 @Dao
 public interface TripDAO {
 
-    @Query("SELECT * FROM trip")
+    @Query("SELECT * FROM trips")
     List<Trip> getAll();
 
     @Insert
