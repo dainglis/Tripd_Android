@@ -27,6 +27,9 @@
     <string name="confrimButton">Confirm</string>
     <string name="cancelButton">Cancel</string>
 
+    <!-- upload button -->
+    <string name="uploadButton">Upload Image</string>
+
     <string name="action_settings">Settings</string>
     <string name="title_activity_setup_page2">Enter Trip Info!!</string>
     <string name="title_activity_info_page3">Trip Info</string>
