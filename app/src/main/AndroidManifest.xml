@@ -12,11 +12,11 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".activity_info_page3"
+            android:name=".ActivityInfoPage"
             android:label="@string/title_activity_info_page3"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".activity_setupPage2"
+            android:name=".ActivitySetupPage"
             android:label="@string/title_activity_setup_page2"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

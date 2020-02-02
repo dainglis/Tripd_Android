@@ -1,6 +1,6 @@
 package com.dainglis.trip_planner;
 
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,11 +10,13 @@ import android.util.Log;        // For LogCat debug messages
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 import com.dainglis.trip_planner.data.TripDatabase;
 
-
 public class MainActivity extends AppCompatActivity {
+
+    FloatingActionButton AddBtnMove;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+    // create action for add button
+       AddBtnMove = findViewById(R.id.addBtn);
+
+        //create addBtn listener
+        AddBtnMove.setOnClickListener(new View.OnClickListener() {
         /*
 
         We will use this FAB for the "Add Trip" button
@@ -30,14 +37,11 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                openActivity2();
             }
         });
         */
-
-
-
+          
         /*
             This is a test to ensure that the TripDatabase inits correctly
          */
@@ -51,9 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(null, "There are " + db.tripDAO().getAll().size() + " trips");
             }
         });
-        /*
 
-         */
     }
 
     @Override
@@ -77,4 +79,23 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
+    // Method       :   openActivity2()
+    // Description  :
+    //                  This method is called when the add button is pressed.
+    //                  when pressed set up page is called.
+    // Parameter    :   None
+    // Returns      :   Void
+
+    public void openActivity2() {
+        Intent intent = new Intent(this, ActivitySetupPage.class);
+        startActivity(intent);
+    }
+
+
+
+
+
 }
