@@ -46,9 +46,10 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 TripDatabase db = TripDatabase.getInstance(getApplicationContext());
 
+                System.out.println("There are " + db.tripDAO().getAll().size() + " trips");
                 TripDatabase.loadSampleData();
 
-                Log.d(null, "There are " + db.tripDAO().getAll().size() + " trips");
+                System.out.println("There are now " + db.tripDAO().getAll().size() + " trips");
             }
         });
 

@@ -12,6 +12,7 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
+import android.util.Log;
 
 import java.util.List;
 
@@ -35,8 +36,13 @@ public abstract class TripDatabase extends RoomDatabase {
             return false;
         }
 
+        Log.d(null, "Generating sample data");
+
         // First sample trip and Events
         Trip tripOne = new Trip("Santa Barbara Road Trip");
+        instance.tripDAO().insert(tripOne);
+
+        System.out.println("Trip one has ID " + tripOne.tripId);
 
         Event[] tripOneEvents = {
             new Event("Breakfast", tripOne.tripId),
@@ -47,6 +53,8 @@ public abstract class TripDatabase extends RoomDatabase {
 
         // Second sample trip and Events
         Trip tripTwo = new Trip("Kayaking in the Mississippi");
+        instance.tripDAO().insert(tripTwo);
+        System.out.println("Trip two has ID " + tripTwo.tripId);
 
         Event[] tripTwoEvents = {
                 new Event("Kayaking", tripTwo.tripId),
@@ -55,8 +63,8 @@ public abstract class TripDatabase extends RoomDatabase {
 
 
 
-        instance.tripDAO().insert(tripOne);
-        instance.tripDAO().insert(tripTwo);
+
+
         for (int i = 0; i < tripOneEvents.length; i++) {
             instance.eventDAO().insert(tripOneEvents[i]);
         }

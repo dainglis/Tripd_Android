@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "60f6f900b31a7b139ef5ac664f13c2bf",
+    "identityHash": "670fa9d59a9d34d34feb59d80a52ff18",
     "entities": [
       {
         "tableName": "trips",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`tripId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `tripTitle` TEXT, `startLocation` TEXT, `endLocation` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`tripId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `tripTitle` TEXT, `startLocation` TEXT, `endLocation` TEXT, `startDate` TEXT, `endDate` TEXT)",
         "fields": [
           {
             "fieldPath": "tripId",
@@ -29,6 +29,18 @@
           {
             "fieldPath": "endLocation",
             "columnName": "endLocation",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "startDate",
+            "columnName": "startDate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "endDate",
+            "columnName": "endDate",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -113,7 +125,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"60f6f900b31a7b139ef5ac664f13c2bf\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"670fa9d59a9d34d34feb59d80a52ff18\")"
     ]
   }
 }
