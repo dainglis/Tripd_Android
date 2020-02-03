@@ -11,10 +11,13 @@ import android.util.Log;        // For LogCat debug messages
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.dainglis.trip_planner.data.Trip;
 import com.dainglis.trip_planner.data.TripDatabase;
@@ -113,14 +116,12 @@ public class MainActivity extends AppCompatActivity {
     public void refreshTripListView() {
         TripDatabase db = TripDatabase.getInstance(getApplicationContext());
 
-        List<Trip> trips = db.tripDAO().getAll();
+        final List<Trip> trips = db.tripDAO().getAll();
         ArrayList<String> tripNames = new ArrayList<>();
 
         for (int i = 0; i < trips.size(); i++) {
             tripNames.add(trips.get(i).title);
         }
-        
-        
 
         // This is a very simplified listview display of a list of content
         // using the built-in android.R.layout.simple_list_item_1
@@ -130,6 +131,15 @@ public class MainActivity extends AppCompatActivity {
 
         ListView tripList = findViewById(R.id.tripCardListView);
         tripList.setAdapter(itemsAdapter);
+
+        tripList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,  int position, long id) {
+                Toast.makeText(MainActivity.this,
+                        "The ID for this trip is " + trips.get(position).getId(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
