@@ -11,13 +11,22 @@ import android.util.Log;        // For LogCat debug messages
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
+import com.dainglis.trip_planner.data.Trip;
 import com.dainglis.trip_planner.data.TripDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     FloatingActionButton AddBtnMove;
+
+    TripDatabase tripDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +53,13 @@ public class MainActivity extends AppCompatActivity {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                TripDatabase db = TripDatabase.getInstance(getApplicationContext());
 
-                System.out.println("There are " + db.tripDAO().getAll().size() + " trips");
-                TripDatabase.loadSampleData();
+                initTripDatabase();
 
-                System.out.println("There are now " + db.tripDAO().getAll().size() + " trips");
+                refreshTripListView();
             }
         });
+
 
     }
 
@@ -91,8 +99,38 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // TODO move this to TripDatabase.java
+    public void initTripDatabase() {
+        TripDatabase db = TripDatabase.getInstance(getApplicationContext());
 
+        System.out.println("There are " + db.tripDAO().getAll().size() + " trips");
 
+        TripDatabase.loadSampleData();
+
+        System.out.println("There are now " + db.tripDAO().getAll().size() + " trips");
+    }
+
+    public void refreshTripListView() {
+        TripDatabase db = TripDatabase.getInstance(getApplicationContext());
+
+        List<Trip> trips = db.tripDAO().getAll();
+        ArrayList<String> tripNames = new ArrayList<>();
+
+        for (int i = 0; i < trips.size(); i++) {
+            tripNames.add(trips.get(i).title);
+        }
+        
+        
+
+        // This is a very simplified listview display of a list of content
+        // using the built-in android.R.layout.simple_list_item_1
+        // We will need to create a custom ListAdapter to support the Trip data objects
+        ArrayAdapter<String> itemsAdapter =
+                new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tripNames);
+
+        ListView tripList = findViewById(R.id.tripCardListView);
+        tripList.setAdapter(itemsAdapter);
+    }
 
 
 }
