@@ -20,6 +20,13 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_activity_setup_page2" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize">
+
+        <include layout="@layout/content_activity_setup_page2" />
+    </ScrollView>
+
 
 </android.support.design.widget.CoordinatorLayout>
