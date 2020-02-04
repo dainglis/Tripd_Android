@@ -19,7 +19,7 @@ import android.arch.persistence.room.PrimaryKey;
         indices = {@Index("tripId")})
 public class Trip {
     @PrimaryKey(autoGenerate = true)
-    int tripId;
+    long tripId;
 
     @ColumnInfo(name = "tripTitle")
     public String title;
@@ -42,7 +42,7 @@ public class Trip {
     // file path to image stored in local storage
 
 
-    Trip(int tripId) {
+    Trip(long tripId) {
         this.tripId = tripId;
 
     }
@@ -62,7 +62,7 @@ public class Trip {
         this.endDate = endDate;
     }
 
-    public int getId() {
+    public long getId() {
         return tripId;
     }
 }

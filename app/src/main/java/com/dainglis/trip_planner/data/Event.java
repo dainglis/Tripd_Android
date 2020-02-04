@@ -15,10 +15,10 @@ import android.arch.persistence.room.PrimaryKey;
         indices = {@Index("tripId")})
 public class Event {
     @PrimaryKey(autoGenerate = true)
-    public int eventId;
+    public long eventId;
 
     @ColumnInfo(name = "tripId")
-    public int tripId;
+    public long tripId;
 
     @ColumnInfo(name = "eventTitle")
     public String title;
@@ -29,7 +29,7 @@ public class Event {
     Event() {}
 
     @Ignore
-    Event(String title, int tripId) {
+    Event(String title, long tripId) {
         this.title = title;
         this.tripId = tripId;
     }

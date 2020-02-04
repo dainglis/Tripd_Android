@@ -14,10 +14,10 @@ public interface EventDAO {
     List<Event> getAll();
 
     @Query("SELECT * FROM events WHERE tripId = (:tripId)")
-    List<Event> getAllByTripId(int tripId);
+    List<Event> getAllByTripId(long tripId);
 
     @Insert
-    void insert(Event event);
+    long insert(Event event);
 
     @Delete
     void delete(Event event);

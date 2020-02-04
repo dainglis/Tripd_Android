@@ -1,6 +1,7 @@
 package com.dainglis.trip_planner;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -135,9 +136,11 @@ public class MainActivity extends AppCompatActivity {
         tripList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View view,  int position, long id) {
-                Toast.makeText(MainActivity.this,
-                        "The ID for this trip is " + trips.get(position).getId(), Toast.LENGTH_SHORT).show();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent intent = new Intent(getApplicationContext(), ActivityInfoPage.class);
+                intent.putExtra("tripId", trips.get(position).getId());
+                startActivity(intent);
             }
         });
     }

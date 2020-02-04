@@ -36,4 +36,9 @@
     <string name="depart_date">depart date</string>
     <string name="arrival_date">arrival date</string>
     <string name="upload_a_trip_image">Upload a trip image</string>
+
+    <string name="trip_placeholder">Trip</string>
+    <string name="city_placeholder">City</string>
+    <string name="spacer_to">to</string>
+
 </resources>

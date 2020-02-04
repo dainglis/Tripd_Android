@@ -1,11 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:rowCount="3"
+    android:columnCount="2"
+    android:padding="20dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ActivityInfoPage"
-    tools:showIn="@layout/activity_info">
+    tools:showIn="@layout/activity_info" >
 
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:contentDescription="@string/upload_a_trip_image"
+        app:srcCompat="@android:drawable/ic_menu_report_image"
+        android:layout_row="0"
+        android:layout_column="0" />
+
+    <TextView
+        android:id="@+id/tripName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="@string/trip_placeholder"
+        android:layout_gravity="center"
+        android:textSize="36sp"
+        android:layout_row="0"
+        android:layout_column="1" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_row="1"
+        android:layout_column="0"
+        android:layout_columnSpan="2"
+        android:layout_gravity="center" >
+
+        <TextView
+            android:id="@+id/tripStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
+            android:padding="10dp"
+            android:text="@string/city_placeholder"
+            android:textSize="26sp" />
+        <TextView
+            android:id="@+id/tripPlaceholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/spacer_to"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tripEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
+            android:padding="10dp"
+            android:text="@string/city_placeholder"
+            android:textSize="26sp" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/eventListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_row="2"
+        android:layout_column="0"
+        android:layout_columnSpan="2" />
+
+</GridLayout>
