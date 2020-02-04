@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ActivitySetupPage">
+    tools:context=".ActivityInfoPage">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -20,13 +20,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize">
-
-        <include layout="@layout/content_activity_setup_page2" />
-    </ScrollView>
-
+    <include layout="@layout/content_info" />
 
 </android.support.design.widget.CoordinatorLayout>

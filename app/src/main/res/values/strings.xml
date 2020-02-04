@@ -17,14 +17,14 @@
     <string name="departName">Depart Date:</string>
 
     <!-- String for arrivalDate date -->
-    <string name="ariveName">Arrive Date:</string>
+    <string name="arriveName">Arrive Date:</string>
 
     <!-- Radio Button date -->
-    <string name="hotelButton">Need a hotel?</string>
-    <string name="foodButton">Need any Food Suggestions?</string>
+    <string name="hotelLabel">Need a hotel?</string>
+    <string name="foodLabel">Need any food suggestions?</string>
 
     <!-- Confirm and cancel buttons -->
-    <string name="confrimButton">Confirm</string>
+    <string name="confirmButton">Confirm</string>
     <string name="cancelButton">Cancel</string>
 
     <!-- upload button -->
