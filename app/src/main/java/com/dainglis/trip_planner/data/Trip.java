@@ -62,7 +62,16 @@ public class Trip {
         this.endDate = endDate;
     }
 
+    public void setId(long id) {
+        if (id > 0) {
+            tripId = id;
+        }
+    }
     public long getId() {
         return tripId;
+    }
+
+    public String getDateStamp() {
+        return startDate + "   -   " + endDate;
     }
 }

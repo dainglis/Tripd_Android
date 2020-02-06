@@ -1,4 +1,11 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="fab_btm_margin">20dp</dimen>
+
+
+    <!-- Info Page dimensions -->
+    <dimen name="info_trip_title">30sp</dimen>
+    <dimen name="info_city_text">22sp</dimen>
+    <dimen name="info_city_spacer">14sp</dimen>
+    <dimen name="info_date_text">16sp</dimen>
 </resources>

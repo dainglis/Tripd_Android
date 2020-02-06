@@ -41,6 +41,9 @@
 
     <string name="trip_placeholder">Trip</string>
     <string name="city_placeholder">City</string>
-    <string name="spacer_to">to</string>
+    <string name="events_label">Events</string>
+    <string name="label_from">From</string>
+    <string name="label_to">To</string>
+
 
 </resources>
