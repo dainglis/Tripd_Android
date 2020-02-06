@@ -29,8 +29,9 @@ public class Event {
     Event() {}
 
     @Ignore
-    Event(String title, long tripId) {
+    Event(String title, String date, long tripId) {
         this.title = title;
+        this.date = date;
         this.tripId = tripId;
     }
 }

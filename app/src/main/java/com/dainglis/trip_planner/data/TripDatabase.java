@@ -42,7 +42,7 @@ public abstract class TripDatabase extends RoomDatabase {
         return instance;
     }
 
-    public static void loadSampleData() {
+    private static void loadSampleData() {
 
         if (instance == null || instance.tripDAO().getAll().size() > 0) {
             return;
@@ -51,28 +51,30 @@ public abstract class TripDatabase extends RoomDatabase {
         Log.d(null, "Generating sample data");
 
         // First sample trip and Events
-        Trip tripOne = new Trip("Santa Barbara Road Trip", "Glendale, CA", "Santa Barbara, CA",
+        Trip tripOne = new Trip("Santa Barbara Road Trip",
+                "Glendale, CA", "Santa Barbara, CA",
                 "2020-01-01", "2020-01-10");
         tripOne.tripId = instance.tripDAO().insert(tripOne);
 
-        System.out.println("Trip one has ID " + tripOne.tripId);
+        //System.out.println("Trip one has ID " + tripOne.tripId);
 
         Event[] tripOneEvents = {
-            new Event("Breakfast", tripOne.tripId),
-            new Event("Lunch", tripOne.tripId),
-            new Event("Dinner", tripOne.tripId)
+                new Event("Breakfast", "2020-01-01 00:00:00", tripOne.tripId),
+                new Event("Lunch", "2020-01-01 12:00:00", tripOne.tripId),
+                new Event("Dinner", "2020-01-01 19:00:00",tripOne.tripId)
         };
 
 
         // Second sample trip and Events
-        Trip tripTwo = new Trip("Kayaking in the Mississippi", "Grand Rapids, MN", "New Orleans, LA",
+        Trip tripTwo = new Trip("Kayaking in the Mississippi",
+                "Grand Rapids, MN", "New Orleans, LA",
                 "2020-05-01", "2020-05-29");
         tripTwo.tripId = instance.tripDAO().insert(tripTwo);
-        System.out.println("Trip two has ID " + tripTwo.tripId);
+        //System.out.println("Trip two has ID " + tripTwo.tripId);
 
         Event[] tripTwoEvents = {
-                new Event("Kayaking", tripTwo.tripId),
-                new Event("Swimming", tripTwo.tripId)
+                new Event("Kayaking", "2020-05-03 01:00:00",tripTwo.tripId),
+                new Event("Swimming", "2020-05-01 09:00:00",tripTwo.tripId),
         };
 
 
