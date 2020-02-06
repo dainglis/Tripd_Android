@@ -63,7 +63,7 @@ public class ActivityInfoPage extends AppCompatActivity {
 
                         // This is a very simplified listview display of a list of content
                         // using the built-in android.R.layout.simple_list_item_1
-                        // We will need to create a custom ListAdapter to support the Trip data objects
+                        // We will need to create a custom ListAdapter to support the Event data objects
                         ArrayAdapter<String> itemsAdapter =
                                 new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, eventNames);
 
