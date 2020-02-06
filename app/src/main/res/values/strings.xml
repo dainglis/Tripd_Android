@@ -44,6 +44,7 @@
     <string name="events_label">Events</string>
     <string name="label_from">From</string>
     <string name="label_to">To</string>
+    <string name="title_activity_event_form">EventFormActivity</string>
 
 
 </resources>

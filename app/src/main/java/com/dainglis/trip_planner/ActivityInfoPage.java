@@ -10,13 +10,14 @@
 package com.dainglis.trip_planner;
 
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
+
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -33,6 +34,12 @@ import java.util.Map;
 
 
 public class ActivityInfoPage extends AppCompatActivity {
+
+    private static final String KEY_MAIN_TEXT = "main";
+    private static final String KEY_SECONDARY_TEXT = "secondary";
+
+    public static final int REQUEST_TRIP_FORM = 0;
+    public static final int REQUEST_EVENT_FORM = 1;
 
     public long currentTripId = 0;
 
@@ -86,14 +93,59 @@ public class ActivityInfoPage extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_edit_trip) {
+            // Selecting the "Edit Trip" menu option will launch the ActivitySetupPage
+            // as an activity with a result, passing the member currentTripId
+            Intent intent = new Intent(getApplicationContext(), ActivitySetupPage.class);
+            intent.putExtra(MainActivity.KEY_TRIP_ID, currentTripId);
+            //startActivity(intent);
+            startActivityForResult(intent, REQUEST_TRIP_FORM);
             return true;
         }
 
         if (id == R.id.action_add_event) {
+            // Selecting the "Edit Trip" menu option will launch the EventFormActivity
+            // as an activity with a result, passing the member currentTripId
+            Intent intent = new Intent(getApplicationContext(), EventFormActivity.class);
+            intent.putExtra(MainActivity.KEY_TRIP_ID, currentTripId);
+            //startActivity(intent);
+            startActivityForResult(intent, REQUEST_EVENT_FORM);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch(requestCode) {
+            case REQUEST_TRIP_FORM:
+
+                if (resultCode == RESULT_OK) {
+                    // refresh the form
+                    Toast.makeText(getApplicationContext(), "Trip Details Edited", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Trip Details Unchanged", Toast.LENGTH_SHORT).show();
+                }
+
+                break;
+
+            case REQUEST_EVENT_FORM:
+
+                if (resultCode == RESULT_OK) {
+                    // refresh the event list
+                    Toast.makeText(getApplicationContext(), "New Event Created", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Event Creation Cancelled", Toast.LENGTH_SHORT).show();
+                }
+                break;
+
+            default:
+                break;
+        }
+
+
+
     }
 
 
@@ -131,7 +183,7 @@ public class ActivityInfoPage extends AppCompatActivity {
             SimpleAdapter eventsAdapter = new SimpleAdapter(this,
                     generateEventInfoList(tripId),
                     R.layout.two_line_list_item,
-                    new String[] {"main", "secondary" },
+                    new String[] {KEY_MAIN_TEXT, KEY_SECONDARY_TEXT },
                     new int[] {R.id.main_text, R.id.secondary_text });
 
             ListView eventList = findViewById(R.id.eventListView);
@@ -140,6 +192,13 @@ public class ActivityInfoPage extends AppCompatActivity {
         }
     }
 
+
+    /*
+     *  Method      : generateEventInfoList
+     *  Description :
+     *      Queries the local database for all Events matching the specified
+     *      tripId
+     */
     private List<Map<String, String>> generateEventInfoList(long tripId) {
         List<Map<String, String>> data = new ArrayList<>();
 
@@ -147,8 +206,8 @@ public class ActivityInfoPage extends AppCompatActivity {
 
         for (int i = 0; i < events.size(); i++) {
             Map<String, String> datum = new HashMap<>(2);
-            datum.put("main", events.get(i).title);
-            datum.put("secondary",events.get(i).date);
+            datum.put(KEY_MAIN_TEXT, events.get(i).title);
+            datum.put(KEY_SECONDARY_TEXT,events.get(i).date);
             data.add(datum);
         }
 

@@ -1,24 +1,15 @@
 package com.dainglis.trip_planner;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;        // For LogCat debug messages
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.dainglis.trip_planner.data.Trip;
 import com.dainglis.trip_planner.data.TripDatabase;
@@ -30,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     FloatingActionButton AddBtnMove;
 
-    TripDatabase tripDatabase;
+    static final String KEY_TRIP_ID = "tripId";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent = new Intent(getApplicationContext(), ActivityInfoPage.class);
-                intent.putExtra("tripId", trips.get(position).getId());
+                intent.putExtra(KEY_TRIP_ID, trips.get(position).getId());
                 startActivity(intent);
             }
         });
