@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.dainglis.trip_planner.data.Trip;
 import com.dainglis.trip_planner.data.TripDatabase;
@@ -30,28 +31,26 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-    // create action for add button
-       AddBtnMove = findViewById(R.id.addBtn);
+        // create action for add button
+        AddBtnMove = findViewById(R.id.addBtn);
 
         //create addBtn listener
         AddBtnMove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openActivity2();
+                launchTripFormForResult();
             }
         });
 
           
         /*
-            This is a test to ensure that the TripDatabase inits correctly
+            This is a test to ensure that the TripDatabase initializes correctly
          */
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-
-                initTripDatabase();
-
-                refreshTripListView();
+                TripDatabase.init(getApplicationContext());
+                setTripListView();
             }
         });
 
@@ -60,30 +59,32 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    // Method       :   openActivity2()
+    // Method       :   launchTripFormForResult()
     // Description  :
     //                  This method is called when the add button is pressed.
     //                  when pressed set up page is called.
     // Parameter    :   None
     // Returns      :   Void
 
-    public void openActivity2() {
+    public void launchTripFormForResult() {
         Intent intent = new Intent(this, ActivitySetupPage.class);
-        startActivity(intent);
+        startActivityForResult(intent, ActivityRequest.TRIP_FORM);
     }
 
-    // TODO move this to TripDatabase.java
-    public void initTripDatabase() {
-        TripDatabase db = TripDatabase.getInstance(getApplicationContext());
-
-        System.out.println("There are " + db.tripDAO().getAll().size() + " trips");
-
-        TripDatabase.loadSampleData();
-
-        System.out.println("There are now " + db.tripDAO().getAll().size() + " trips");
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ActivityRequest.TRIP_FORM) {
+            if (resultCode == RESULT_OK) {
+                // refresh the event list
+                Toast.makeText(getApplicationContext(), "New Trip Created", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(getApplicationContext(), "Trip Creation Cancelled", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
-    public void refreshTripListView() {
+
+    public void setTripListView() {
         TripDatabase db = TripDatabase.getInstance(getApplicationContext());
 
         final List<Trip> trips = db.tripDAO().getAll();

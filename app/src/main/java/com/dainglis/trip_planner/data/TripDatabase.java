@@ -22,6 +22,18 @@ public abstract class TripDatabase extends RoomDatabase {
 
     private static TripDatabase instance;
 
+
+    /*
+     *  Method      : init
+     *  Description :
+     *      Initializes the TripDatabase singleton by calling the getInstance
+     *      method, then attempting to load some sample data into the database
+     */
+    public static void init(Context context) {
+        getInstance(context);
+        loadSampleData();
+    }
+
     public static TripDatabase getInstance(Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(), TripDatabase.class, TripDatabase.databaseName).build();
@@ -30,10 +42,10 @@ public abstract class TripDatabase extends RoomDatabase {
         return instance;
     }
 
-    public static boolean loadSampleData() {
+    public static void loadSampleData() {
 
         if (instance == null || instance.tripDAO().getAll().size() > 0) {
-            return false;
+            return;
         }
 
         Log.d(null, "Generating sample data");
@@ -70,10 +82,7 @@ public abstract class TripDatabase extends RoomDatabase {
         for (int i = 0; i < tripTwoEvents.length; i++) {
             instance.eventDAO().insert(tripTwoEvents[i]);
         }
-
         // Insert sample data
-
-        return true;
     }
 
     public abstract TripDAO tripDAO();

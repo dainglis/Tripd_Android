@@ -38,8 +38,7 @@ public class ActivityInfoPage extends AppCompatActivity {
     private static final String KEY_MAIN_TEXT = "main";
     private static final String KEY_SECONDARY_TEXT = "secondary";
 
-    public static final int REQUEST_TRIP_FORM = 0;
-    public static final int REQUEST_EVENT_FORM = 1;
+
 
     public long currentTripId = 0;
 
@@ -98,7 +97,7 @@ public class ActivityInfoPage extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), ActivitySetupPage.class);
             intent.putExtra(MainActivity.KEY_TRIP_ID, currentTripId);
             //startActivity(intent);
-            startActivityForResult(intent, REQUEST_TRIP_FORM);
+            startActivityForResult(intent, ActivityRequest.TRIP_FORM);
             return true;
         }
 
@@ -108,7 +107,7 @@ public class ActivityInfoPage extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), EventFormActivity.class);
             intent.putExtra(MainActivity.KEY_TRIP_ID, currentTripId);
             //startActivity(intent);
-            startActivityForResult(intent, REQUEST_EVENT_FORM);
+            startActivityForResult(intent, ActivityRequest.EVENT_FORM);
             return true;
         }
 
@@ -117,7 +116,7 @@ public class ActivityInfoPage extends AppCompatActivity {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch(requestCode) {
-            case REQUEST_TRIP_FORM:
+            case ActivityRequest.TRIP_FORM:
 
                 if (resultCode == RESULT_OK) {
                     // refresh the form
@@ -129,7 +128,7 @@ public class ActivityInfoPage extends AppCompatActivity {
 
                 break;
 
-            case REQUEST_EVENT_FORM:
+            case ActivityRequest.EVENT_FORM:
 
                 if (resultCode == RESULT_OK) {
                     // refresh the event list
