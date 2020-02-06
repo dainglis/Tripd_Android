@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
+    android:background="@color/colorBackground"
 
-    android:padding="20dp"
     android:columnCount="2"
+    android:padding="20dp"
     android:rowCount="10"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ActivitySetupPage"
-    tools:showIn="@layout/activity_setup" >
+    tools:showIn="@layout/activity_setup">
 
 
     <!-- Trip image -->
@@ -30,10 +30,10 @@
         android:layout_height="51dp"
         android:layout_row="0"
         android:layout_column="1"
+        android:layout_gravity="center|start"
         android:background="@color/colorPrimary"
-        android:textColor="@android:color/white"
         android:text="@string/uploadButton"
-        android:layout_gravity="center|start"/>
+        android:textColor="@android:color/white" />
 
 
     <!-- Trip name -->
@@ -41,22 +41,22 @@
         android:id="@+id/tripNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_row="2"
+        android:layout_column="0"
         android:layout_marginBottom="20dp"
         android:text="@string/tripNameText"
-        android:textSize="24sp"
-        android:layout_row="2"
-        android:layout_column="0" />
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/editName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/editName"
-        android:inputType="textPersonName"
         android:layout_row="2"
         android:layout_column="1"
-        android:importantForAutofill="no" />
+        android:ems="10"
+        android:hint="@string/editName"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName" />
 
 
     <!-- Starting city -->
@@ -64,21 +64,21 @@
         android:id="@+id/startCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/startCity"
-        android:textSize="24sp"
         android:layout_row="3"
-        android:layout_column="0"/>
+        android:layout_column="0"
+        android:text="@string/startCity"
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/editStartCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/editStartCity"
-        android:inputType="textPersonName"
         android:layout_row="3"
         android:layout_column="1"
-        android:importantForAutofill="no" />
+        android:ems="10"
+        android:hint="@string/editStartCity"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName" />
 
 
     <!-- End city -->
@@ -86,25 +86,22 @@
         android:id="@+id/endCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/endCity"
-        android:textSize="24sp"
-        android:layout_marginBottom="20dp"
         android:layout_row="4"
-        android:layout_column="0" />
+        android:layout_column="0"
+        android:layout_marginBottom="20dp"
+        android:text="@string/endCity"
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/editEndCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/editEndCity"
-        android:inputType="textPersonName"
         android:layout_row="4"
         android:layout_column="1"
-        android:importantForAutofill="no" />
-
-
-
+        android:ems="10"
+        android:hint="@string/editEndCity"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName" />
 
 
     <!-- Depart date -->
@@ -112,21 +109,21 @@
         android:id="@+id/departName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/departName"
-        android:textSize="24sp"
         android:layout_row="5"
-        android:layout_column="0" />
+        android:layout_column="0"
+        android:text="@string/departName"
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/dateDepartEnter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_row="5"
+        android:layout_column="1"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/depart_date"
         android:inputType="date"
-        android:layout_row="5"
-        android:layout_column="1"
         tools:targetApi="o" />
 
 
@@ -135,22 +132,22 @@
         android:id="@+id/arriveName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/arriveName"
-        android:textSize="24sp"
-        android:layout_marginBottom="20dp"
         android:layout_row="6"
-        android:layout_column="0" />
+        android:layout_column="0"
+        android:layout_marginBottom="20dp"
+        android:text="@string/arriveName"
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/dateArriveEnter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_row="6"
+        android:layout_column="1"
         android:ems="10"
         android:hint="@string/arrival_date"
         android:importantForAutofill="no"
-        android:inputType="date"
-        android:layout_row="6"
-        android:layout_column="1" />
+        android:inputType="date" />
 
 
     <!-- Switches -->
@@ -158,39 +155,39 @@
         android:id="@+id/hotelLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hotelLabel"
-        android:textSize="18sp"
         android:layout_row="7"
         android:layout_column="0"
-        android:layout_columnSpan="2"/>
+        android:layout_columnSpan="2"
+        android:text="@string/hotelLabel"
+        android:textSize="18sp" />
 
     <Switch
         android:id="@+id/hotelSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:layout_gravity="center"
         android:layout_row="7"
-        android:layout_column="1" />
+        android:layout_column="1"
+        android:layout_gravity="center"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/foodLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/foodLabel"
-        android:textSize="18sp"
         android:layout_row="8"
         android:layout_column="0"
-        android:layout_columnSpan="2"/>
+        android:layout_columnSpan="2"
+        android:text="@string/foodLabel"
+        android:textSize="18sp" />
 
     <Switch
         android:id="@+id/foodSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textSize="18sp"
         android:layout_row="8"
-        android:layout_column="1"/>
+        android:layout_column="1"
+        android:layout_gravity="center"
+        android:textSize="18sp" />
 
 
     <!-- Buttons -->
@@ -198,29 +195,29 @@
         android:id="@+id/buttonSetupConfirm"
         android:layout_width="140dp"
         android:layout_height="46dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_row="9"
+        android:layout_column="0"
         android:layout_gravity="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
         android:background="@color/colorPrimary"
         android:text="@string/confirmButton"
-        android:textColor="@android:color/white"
-        android:layout_row="9"
-        android:layout_column="0"/>
+        android:textColor="@android:color/white" />
 
     <Button
         android:id="@+id/buttonSetupCancel"
         android:layout_width="140dp"
         android:layout_height="46dp"
-        android:layout_marginTop="20dp"
+        android:layout_row="9"
+        android:layout_column="1"
+        android:layout_gravity="center"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
         android:background="@color/colorPrimary"
         android:bufferType="normal"
         android:text="@string/cancelButton"
-        android:layout_gravity="center"
-        android:textColor="@android:color/white"
-        android:layout_row="9"
-        android:layout_column="1"/>
+        android:textColor="@android:color/white" />
 
 </GridLayout>
