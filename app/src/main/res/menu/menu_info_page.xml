@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.dainglis.trip_planner.ActivitySetupPage">
+    <item
+        android:id="@+id/action_edit_trip"
+        android:orderInCategory="100"
+        android:title="@string/action_edit_trip"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_add_event"
+        android:orderInCategory="100"
+        android:title="@string/action_add_event"
+        app:showAsAction="never" />
+</menu>
