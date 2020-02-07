@@ -30,6 +30,9 @@
             </intent-filter>
         </activity>
 
+        <!-- round logo needed for adaptive icon -->
+
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
