@@ -9,8 +9,9 @@ import android.content.Intent;
 
 public class ActivitySetupPage extends AppCompatActivity {
 
-    // create var for cancel button
+    // Create vars for cancel and confirm buttons
     Button CanButt;
+    Button BtnConfirm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +20,6 @@ public class ActivitySetupPage extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         // create action for cancel button
         CanButt = findViewById(R.id.buttonSetupCancel);
 
@@ -27,12 +27,26 @@ public class ActivitySetupPage extends AppCompatActivity {
         CanButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openActivity();
+                cancelForm();
+                //openActivity();
             }
         });
+    }
 
-
-
+    /*
+     *  Method      : cancelForm
+     *  Description :
+     *      Cancels the form for creating a new Trip, telling
+     *      the calling activity that it was cancelled.
+     *
+     *  Parameters  :
+     *      void
+     *  Returns     :
+     *      void
+     */
+    private void cancelForm() {
+        setResult(RESULT_CANCELED);
+        finish();
     }
 
 
