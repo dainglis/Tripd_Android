@@ -114,6 +114,11 @@ public class ActivityInfoPage extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    /*
+     *  Android Activity event invoked when an Activity started for Result
+     *  returns to this Activity
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch(requestCode) {
             case ActivityRequest.TRIP_FORM:
@@ -142,9 +147,6 @@ public class ActivityInfoPage extends AppCompatActivity {
             default:
                 break;
         }
-
-
-
     }
 
 
