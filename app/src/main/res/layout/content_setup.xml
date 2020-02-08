@@ -15,7 +15,8 @@
     tools:showIn="@layout/activity_setup">
 
 
-    <!-- Trip image -->
+    <!-- Trip image
+        Commenting out the image because I dont think we will have time for it
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="120dp"
@@ -36,6 +37,7 @@
         android:background="@color/colorPrimary"
         android:text="@string/uploadButton"
         android:textColor="@android:color/white" />
+    -->
 
 
     <!-- Trip name -->
@@ -124,7 +126,7 @@
         android:layout_column="1"
         android:autofillHints=""
         android:ems="10"
-        android:hint="@string/depart_date"
+        android:hint="@string/hint_date"
         android:inputType="date"
         tools:targetApi="o" />
 
@@ -147,7 +149,7 @@
         android:layout_row="6"
         android:layout_column="1"
         android:ems="10"
-        android:hint="@string/arrival_date"
+        android:hint="@string/hint_date"
         android:importantForAutofill="no"
         android:inputType="date" />
 
