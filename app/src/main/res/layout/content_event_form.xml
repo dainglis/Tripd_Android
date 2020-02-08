@@ -75,7 +75,7 @@
 
         <!-- Buttons -->
         <Button
-            android:id="@+id/buttonSetupConfirm"
+            android:id="@+id/buttonEventFormConfirm"
             android:layout_width="140dp"
             android:layout_height="46dp"
             android:layout_margin="20dp"
@@ -86,7 +86,7 @@
             android:textColor="@android:color/white" />
 
         <Button
-            android:id="@+id/buttonSetupCancel"
+            android:id="@+id/buttonEventFormCancel"
             android:layout_width="140dp"
             android:layout_height="46dp"
             android:layout_margin="20dp"
