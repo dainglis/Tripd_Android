@@ -9,10 +9,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class EventFormActivity extends AppCompatActivity {
 
     Button btnCancel;
     Button btnConfirm;
+    String dateString;
+    String titleString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +43,7 @@ public class EventFormActivity extends AppCompatActivity {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (validateEventForm()) {
+                if (validateEventForm(dateString,titleString)) {
                     saveEventForm();
                 }
             }
@@ -74,10 +80,35 @@ public class EventFormActivity extends AppCompatActivity {
      *  Returns     :
      *      boolean : `true` if the form is valid, `false` otherwise
      */
-    private boolean validateEventForm() {
+    private boolean validateEventForm(String dateString, String titleString) {
         Toast.makeText(getApplicationContext(), "This is where form validation goes", Toast.LENGTH_SHORT).show();
 
-        return false;
+        // set the date format
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date ObjDate = null;
+        df.setLenient(false);
+
+
+
+        // use try catch to compare string with df format
+        try
+        {
+
+            ObjDate = df.parse(dateString);
+            //TODO
+            //validate that date is within Trip object start and end dates
+            //get startdate by tripId and compare
+            //get enddate by trip id and compare
+
+            return true;
+        }
+        catch(Exception e)
+        {
+            return false;
+
+        }
+
+        //return false;
     }
 
 
