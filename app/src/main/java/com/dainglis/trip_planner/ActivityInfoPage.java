@@ -173,9 +173,9 @@ public class ActivityInfoPage extends AppCompatActivity {
             TextView endLocationView = findViewById(R.id.tripEnd);
             TextView tripDateView = findViewById(R.id.tripDateInfo);
 
-            tripNameView.setText(currentTrip.title);
-            startLocationView.setText(currentTrip.startLocation);
-            endLocationView.setText(currentTrip.endLocation);
+            tripNameView.setText(currentTrip.getTitle());
+            startLocationView.setText(currentTrip.getStartLocation());
+            endLocationView.setText(currentTrip.getEndLocation());
             tripDateView.setText(currentTrip.getDateStamp());
 
 

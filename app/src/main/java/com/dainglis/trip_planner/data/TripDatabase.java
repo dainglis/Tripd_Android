@@ -54,14 +54,14 @@ public abstract class TripDatabase extends RoomDatabase {
         Trip tripOne = new Trip("Santa Barbara Road Trip",
                 "Glendale, CA", "Santa Barbara, CA",
                 "2020-01-01", "2020-01-10");
-        tripOne.tripId = instance.tripDAO().insert(tripOne);
+        tripOne.setTripId(instance.tripDAO().insert(tripOne));
 
         //System.out.println("Trip one has ID " + tripOne.tripId);
 
         Event[] tripOneEvents = {
-                new Event("Breakfast", "2020-01-01 00:00:00", tripOne.tripId),
-                new Event("Lunch", "2020-01-01 12:00:00", tripOne.tripId),
-                new Event("Dinner", "2020-01-01 19:00:00",tripOne.tripId)
+                new Event("Breakfast", "2020-01-01 00:00:00", tripOne.getId()),
+                new Event("Lunch", "2020-01-01 12:00:00", tripOne.getId()),
+                new Event("Dinner", "2020-01-01 19:00:00",tripOne.getId())
         };
 
 
@@ -69,12 +69,12 @@ public abstract class TripDatabase extends RoomDatabase {
         Trip tripTwo = new Trip("Kayaking in the Mississippi",
                 "Grand Rapids, MN", "New Orleans, LA",
                 "2020-05-01", "2020-05-29");
-        tripTwo.tripId = instance.tripDAO().insert(tripTwo);
+        tripTwo.setTripId(instance.tripDAO().insert(tripTwo));
         //System.out.println("Trip two has ID " + tripTwo.tripId);
 
         Event[] tripTwoEvents = {
-                new Event("Kayaking", "2020-05-03 01:00:00",tripTwo.tripId),
-                new Event("Swimming", "2020-05-01 09:00:00",tripTwo.tripId),
+                new Event("Kayaking", "2020-05-03 01:00:00",tripTwo.getId()),
+                new Event("Swimming", "2020-05-01 09:00:00",tripTwo.getId()),
         };
 
 
