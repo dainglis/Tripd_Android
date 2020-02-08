@@ -18,7 +18,7 @@
 
         <!-- Trip Title -->
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tripTitleID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TEMP TRIP NAME"
@@ -31,7 +31,7 @@
 
         <!-- Image -->
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/tripImageID"
             android:layout_gravity="center"
             android:contentDescription="@string/upload_a_trip_image"
             app:srcCompat="@android:drawable/ic_menu_report_image"
@@ -57,7 +57,7 @@
             android:padding="5dp" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/startCityNameID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TEMP CITY NAME"
@@ -80,7 +80,7 @@
             android:padding="5dp" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/endCityNameID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TEMP CITY NAME"
@@ -103,7 +103,7 @@
             android:padding="5dp" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/tripStartDateID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TEMP START DATE"
@@ -126,7 +126,7 @@
             android:padding="5dp" />
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/tripEndDateID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TEMP END DATE"
@@ -134,8 +134,7 @@
             android:textSize="12sp"
             android:layout_column="2"
             android:layout_row="4"
-            android:padding="5dp"
-            android:padding_bottom="10dp" />
+            android:padding="5dp"/>
 
     </GridLayout>
 
