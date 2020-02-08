@@ -57,8 +57,11 @@ public class ActivitySetupPage extends AppCompatActivity {
         BtnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {//create addBtn listener
+                if( !fieldValidation(EditName) || !fieldValidation(EditStartCity) || !fieldValidation(EditEndCity)||
+                        !dateValidate(DateDepartEnter) || !dateValidate(DateArriveEnter) )
+                {
+                }else
                 submitForm();
-
             }
         });
     }
@@ -127,7 +130,7 @@ public class ActivitySetupPage extends AppCompatActivity {
     // Parameter    :   dateString
     // Returns      :   bool
 
-    public boolean dateValidate(String dateString)
+    public boolean dateValidate(EditText EditTextDate)
     {
         // set the date format
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -138,13 +141,24 @@ public class ActivitySetupPage extends AppCompatActivity {
         try
         {
 
-            ObjDate = df.parse(dateString);
+            ObjDate = df.parse(EditTextDate.getText().toString());
             return true;
         }
         catch(Exception e)
         {
+            Toast.makeText(ActivitySetupPage.this,EditTextDate.getText().toString() + " is not a valid date.", Toast.LENGTH_LONG).show();
             return false;
 
+        }
+    }
+
+    public boolean fieldValidation(EditText editText)
+    {
+        if (editText.getText().toString() == null || editText.getText().toString().trim().length() < 1){
+            Toast.makeText(ActivitySetupPage.this,"Fill the complete trip information", Toast.LENGTH_SHORT).show();
+            return false;
+        }else {
+            return true;
         }
     }
 
