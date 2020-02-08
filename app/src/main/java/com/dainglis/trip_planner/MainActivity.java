@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> tripNames = new ArrayList<>();
 
         for (int i = 0; i < trips.size(); i++) {
-            tripNames.add(trips.get(i).title);
+            tripNames.add(trips.get(i).getTitle());
         }
 
         // This is a very simplified listview display of a list of content

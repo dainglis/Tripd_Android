@@ -14,6 +14,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
@@ -26,7 +27,7 @@ public interface TripDAO {
     @Query("SELECT * FROM trips WHERE tripId = (:id) LIMIT 1")
     Trip getById(long id);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insert(Trip trip);
 
     @Update

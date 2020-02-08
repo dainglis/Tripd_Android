@@ -1,11 +1,20 @@
 package com.dainglis.trip_planner;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.content.Intent;
+import android.widget.EditText;
+import android.widget.Toast;
+import com.dainglis.trip_planner.data.Trip;
+import com.dainglis.trip_planner.data.TripDAO;
+import com.dainglis.trip_planner.data.TripDatabase;
+
+import java.util.List;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -16,6 +25,11 @@ public class ActivitySetupPage extends AppCompatActivity {
     // Create vars for cancel and confirm buttons
     Button CanButt;
     Button BtnConfirm;
+    EditText EditName;
+    EditText EditStartCity;
+    EditText EditEndCity;
+    EditText DateDepartEnter;
+    EditText DateArriveEnter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,15 +38,27 @@ public class ActivitySetupPage extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // create action for cancel button
-        CanButt = findViewById(R.id.buttonSetupCancel);
 
-        //create addBtn listener
+        EditName = findViewById(R.id.editName);
+        EditStartCity = findViewById(R.id.editStartCity);
+        EditEndCity = findViewById(R.id.editEndCity);
+        DateDepartEnter = findViewById(R.id.dateDepartEnter);
+        DateArriveEnter = findViewById(R.id.dateArriveEnter);
+
+        CanButt = findViewById(R.id.buttonSetupCancel);         // create action for cancel button
         CanButt.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) { //create addBtn listener
                 cancelForm();
                 //openActivity();
+            }
+        });
+        BtnConfirm = findViewById(R.id.buttonSetupConfirm); // create action for confirm button
+        BtnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {//create addBtn listener
+                submitForm();
+
             }
         });
     }
@@ -66,6 +92,33 @@ public class ActivitySetupPage extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /*
+     *  Method      : cancelForm
+     *  Description :
+     *      Cancels the form for creating a new Trip, telling
+     *      the calling activity that it was cancelled.
+     *
+     *  Parameters  :
+     *      void
+     *  Returns     :
+     *      void
+     */
+    private void submitForm() {
+        String title = EditName.getText().toString();
+        String startLocation = EditStartCity.getText().toString();
+        String endLocation = EditEndCity.getText().toString();
+        String startDate = DateDepartEnter.getText().toString();
+        String endDate = DateArriveEnter.getText().toString();
+        final Trip trip = new Trip(title, startLocation, endLocation, startDate, endDate);
+
+               AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                TripDatabase.getInstance(null).tripDAO().insert(trip);
+                Toast.makeText(ActivitySetupPage.this,"Trip saved", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     // Method       :   dateValidate()
     // Description  :

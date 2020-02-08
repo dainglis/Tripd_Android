@@ -19,22 +19,23 @@ import android.arch.persistence.room.PrimaryKey;
         indices = {@Index("tripId")})
 public class Trip {
     @PrimaryKey(autoGenerate = true)
+    private
     long tripId;
 
     @ColumnInfo(name = "tripTitle")
-    public String title;
+    private String title;
 
     @ColumnInfo
-    public String startLocation;
+    private String startLocation;
 
     @ColumnInfo
-    public String endLocation;
+    private String endLocation;
 
     @ColumnInfo
-    public String startDate;
+    private String startDate;
 
     @ColumnInfo
-    public String endDate;
+    private String endDate;
 
 
     // TODO
@@ -43,35 +44,83 @@ public class Trip {
 
 
     Trip(long tripId) {
-        this.tripId = tripId;
+        this.setTripId(tripId);
 
     }
 
     @Ignore
     Trip(String title) {
-        this.title = title;
+        this.setTitle(title);
     }
 
     @Ignore
-    Trip(String title, String startLocation, String endLocation,
+    public Trip(String title, String startLocation, String endLocation,
             String startDate, String endDate) {
-        this.title = title;
-        this.startLocation = startLocation;
-        this.endLocation = endLocation;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.setTitle(title);
+        this.setStartLocation(startLocation);
+        this.setEndLocation(endLocation);
+        this.setStartDate(startDate);
+        this.setEndDate(endDate);
     }
 
     public void setId(long id) {
         if (id > 0) {
-            tripId = id;
+            setTripId(id);
         }
     }
     public long getId() {
-        return tripId;
+        return getTripId();
     }
 
     public String getDateStamp() {
-        return startDate + "   -   " + endDate;
+        return getStartDate() + "   -   " + getEndDate();
+    }
+
+    public long getTripId() {
+        return tripId;
+    }
+
+    public void setTripId(long tripId) {
+        this.tripId = tripId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getStartLocation() {
+        return startLocation;
+    }
+
+    public void setStartLocation(String startLocation) {
+        this.startLocation = startLocation;
+    }
+
+    public String getEndLocation() {
+        return endLocation;
+    }
+
+    public void setEndLocation(String endLocation) {
+        this.endLocation = endLocation;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 }
