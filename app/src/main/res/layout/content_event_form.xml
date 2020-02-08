@@ -1,16 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:padding="20dp"
+    android:columnCount="2"
+    android:rowCount="3"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".EventFormActivity"
     tools:showIn="@layout/activity_event_form">
 
+
+    <!-- Event title -->
     <TextView
+        android:id="@+id/eventTitleLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/trip_placeholder" />
+        android:layout_row="0"
+        android:layout_column="0"
+        android:text="@string/label_event_title"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textSize="24sp" />
 
-</LinearLayout>
+    <EditText
+        android:id="@+id/eventTitleEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_row="0"
+        android:layout_column="1"
+        android:hint="@string/event_title_hint"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName" />
+
+
+    <!-- Event date -->
+    <TextView
+        android:id="@+id/eventDateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_row="1"
+        android:layout_column="0"
+        android:layout_marginBottom="20dp"
+        android:text="@string/label_event_date"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/eventDateEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_row="1"
+        android:layout_column="1"
+        android:hint="@string/hint_datetime"
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="datetime" />
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_row="2"
+        android:layout_column="0"
+        android:layout_columnSpan="2" >
+
+        <!-- Buttons -->
+        <Button
+            android:id="@+id/buttonSetupConfirm"
+            android:layout_width="140dp"
+            android:layout_height="46dp"
+            android:layout_margin="20dp"
+            android:layout_gravity="center|start"
+            android:background="@color/colorPrimary"
+            android:bufferType="normal"
+            android:text="@string/confirmButton"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/buttonSetupCancel"
+            android:layout_width="140dp"
+            android:layout_height="46dp"
+            android:layout_margin="20dp"
+            android:layout_gravity="center|end"
+            android:background="@color/colorPrimary"
+            android:bufferType="normal"
+            android:text="@string/cancelButton"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+</GridLayout>

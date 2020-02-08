@@ -14,7 +14,7 @@
         <activity
             android:name=".EventFormActivity"
             android:label="@string/title_activity_event_form"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ActivityInfoPage"
             android:label="@string/title_activity_info_page3"
