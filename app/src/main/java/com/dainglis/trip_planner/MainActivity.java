@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.dainglis.trip_planner.data.Trip;
@@ -102,6 +103,15 @@ public class MainActivity extends AppCompatActivity {
 
         ListView tripList = findViewById(R.id.tripCardListView);
         tripList.setAdapter(itemsAdapter);
+
+        // "Card Adapter"
+        /*
+        SimpleAdapter cardAdapter = new SimpleAdapter(this,
+                generateEventInfoList(tripID),
+                R.layout.card_view_list_item,
+                new String[] {KEY_MAIN_TEXT, KEY_SECONDARY_TEXT},
+                new int[] {R.id.main_text, R.id.secondary_text});
+        */
 
         tripList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
