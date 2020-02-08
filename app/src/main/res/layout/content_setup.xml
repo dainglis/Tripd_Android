@@ -51,6 +51,7 @@
         android:text="@string/tripNameText"
         android:textSize="24sp" />
 
+
     <EditText
         android:id="@+id/editName"
         android:layout_width="wrap_content"
