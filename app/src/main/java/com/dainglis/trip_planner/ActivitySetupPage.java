@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.content.Intent;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class ActivitySetupPage extends AppCompatActivity {
 
     // Create vars for cancel and confirm buttons
@@ -62,6 +66,34 @@ public class ActivitySetupPage extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+    // Method       :   dateValidate()
+    // Description  :
+    //                  This method is called when the add button to validate
+    //                  date input entered by user
+    // Parameter    :   dateString
+    // Returns      :   bool
+
+    public boolean dateValidate(String dateString)
+    {
+        // set the date format
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date ObjDate = null;
+        df.setLenient(false);
+
+        // use try catch to compare string with df format
+        try
+        {
+
+            ObjDate = df.parse(dateString);
+            return true;
+        }
+        catch(Exception e)
+        {
+            return false;
+
+        }
+    }
 
 }
 
