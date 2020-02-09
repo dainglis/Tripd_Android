@@ -30,7 +30,7 @@ public interface TripDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insert(Trip trip);
 
-    @Update
+    @Update (onConflict = OnConflictStrategy.REPLACE)
     void update(Trip trip);
 
     @Delete
