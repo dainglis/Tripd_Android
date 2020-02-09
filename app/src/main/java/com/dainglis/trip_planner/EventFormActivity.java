@@ -74,71 +74,53 @@ public class EventFormActivity extends AppCompatActivity {
     --------------------------------------------------------------------------------------------- */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_form);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         /*Get trip data members from database*/
-        currentTrip = getCurrentTrip(currentTripId);
+        //currentTrip = getCurrentTrip(currentTripId);
 
         /*Connect title and date variables to EditText fields*/
-        eventTitle = (EditText)findViewById(R.id.eventTitleEdit);
-        eventDate = (EditText)findViewById(R.id.eventDateEdit);
+        eventTitle = findViewById(R.id.eventTitleEdit);
+        eventDate = findViewById(R.id.eventDateEdit);
 
         //Connect Cancel button and set click listener
         btnCancel = findViewById(R.id.buttonEventFormCancel);
         btnCancel.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 cancelForm();
             }
-
         });
 
         // Connect Confirm button and set click listener
         btnConfirm = findViewById(R.id.buttonEventFormConfirm);
         btnConfirm.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
-
                 /*validate non-empty title and valid date within trip date range*/
-                if (validateEventForm(eventTitle, eventDate, currentTrip)) {
+                if (validateEventForm()) {
                     saveEventForm();
                 }
-                else {
-                    Toast.makeText(getApplicationContext(), "Check Event Name and Dates For Valid Input", Toast.LENGTH_SHORT).show();
-                }
-
             }
-
         });
 
         /*Get tripId passed when Add Event Activity invoked*/
         extras = getIntent().getExtras();
 
-        if (extras == null) { }
-        else {
-
+        if (extras != null) {
             currentTripId = extras.getLong("tripId");
 
-            if (currentTripId != 0) {
-
-                // Query the database and update the layout in a secondary thread
-                AsyncTask.execute(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        getCurrentTrip(currentTripId);
-                    }
-
-                });
+            if (currentTripId == 0) {
+                cancelForm();
             }
         }
+
     }
+
 
 
 
@@ -184,31 +166,43 @@ public class EventFormActivity extends AppCompatActivity {
                                         False           If the form is invalid.
 
     --------------------------------------------------------------------------------------------- */
-    private boolean validateEventForm(EditText title, EditText date, Trip trip) {
+    private boolean validateEventForm() {
 
         // set the date format
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        Date ObjDate = null;
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         df.setLenient(false);
+
+        // Ensure Event title is not empty
+        if (eventTitle.getText().length() == 0) {
+            Toast.makeText(getApplicationContext(),
+                    "Event title cannot be blank",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
         // use try catch to compare string with df format
         try {
 
-            ObjDate = df.parse(eventDate.toString());
+            df.parse(eventDate.getText().toString());
+
+            /*
 
             if ( ObjDate.before( df.parse(currentTrip.getStartDate())) || ObjDate.after( df.parse(currentTrip.getEndDate())))
             {
                 Toast.makeText(getApplicationContext(), "Invalid Date Entered", Toast.LENGTH_SHORT).show();
                 return false;
             }
-
-            return true;
-
+            */
         }
-        catch(Exception e) {
+        catch(Exception e)
+        {
+            Toast.makeText(getApplicationContext(),
+                    "Date is not in the correct format",
+                    Toast.LENGTH_SHORT).show();
             return false;
         }
 
+        return true;
     }
 
 
@@ -222,27 +216,26 @@ public class EventFormActivity extends AppCompatActivity {
 
     --------------------------------------------------------------------------------------------- */
     private void saveEventForm() {
-
-        final Event newEvent = new Event(eventTitle.toString(),eventDate.toString(),currentTripId);
-
+        final Event event =
+                new Event(eventTitle.getText().toString(),
+                        eventDate.getText().toString(),
+                        currentTripId);
         try {
             AsyncTask.execute(new Runnable() {
                 @Override
                 public void run() {
-                  addTripEvent = TripDatabase.getInstance(null).eventDAO().insert(newEvent);
+                    TripDatabase.getInstance(null).eventDAO().insert(event);
                 }
             });
 
-            if (addTripEvent >= 0) {
-                Toast.makeText(EventFormActivity.this, "Event Added", Toast.LENGTH_SHORT).show();
-                setResult(RESULT_OK);
-            }
+            setResult(RESULT_OK);
             finish();
         }
-        catch(Exception e) {
-            Toast.makeText(EventFormActivity.this, "Could Not Add Event", Toast.LENGTH_SHORT).show();
+        catch(Exception e)
+        {
+            Toast.makeText(EventFormActivity.this, "Error adding event", Toast.LENGTH_SHORT).show();
             setResult(RESULT_CANCELED);
-            finish();
+
         }
     }
 }
