@@ -48,13 +48,12 @@ public class MainActivity extends AppCompatActivity {
             This is a test to ensure that the TripDatabase initializes correctly
          */
         AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
+           @Override
+           public void run() {
                 TripDatabase.init(getApplicationContext());
                 setTripListView();
-            }
+           }
         });
-
 
     }
 
@@ -89,29 +88,11 @@ public class MainActivity extends AppCompatActivity {
         TripDatabase db = TripDatabase.getInstance(getApplicationContext());
 
         final List<Trip> trips = db.tripDAO().getAll();
-        ArrayList<String> tripNames = new ArrayList<>();
 
-        for (int i = 0; i < trips.size(); i++) {
-            tripNames.add(trips.get(i).getTitle());
-        }
-
-        // This is a very simplified listview display of a list of content
-        // using the built-in android.R.layout.simple_list_item_1
-        // We will need to create a custom ListAdapter to support the Trip data objects
-        ArrayAdapter<String> itemsAdapter =
-                new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tripNames);
-
+        // "Card" Array Adapter
+        CustomArrayAdapter adapt = new CustomArrayAdapter(this, R.layout.card_view_list_item, trips);
         ListView tripList = findViewById(R.id.tripCardListView);
-        tripList.setAdapter(itemsAdapter);
-
-        // "Card Adapter"
-        /*
-        SimpleAdapter cardAdapter = new SimpleAdapter(this,
-                generateEventInfoList(tripID),
-                R.layout.card_view_list_item,
-                new String[] {KEY_MAIN_TEXT, KEY_SECONDARY_TEXT},
-                new int[] {R.id.main_text, R.id.secondary_text});
-        */
+        tripList.setAdapter(adapt);
 
         tripList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -124,6 +105,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }
+

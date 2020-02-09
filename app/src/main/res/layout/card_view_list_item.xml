@@ -18,7 +18,7 @@
 
         <!-- Trip Title -->
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tripTitleID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TEMP TRIP NAME"
@@ -29,7 +29,7 @@
             android:layout_row="0"
             android:padding="10dp" />
 
-        <!-- Image -->
+        <!-- Image
         <ImageView
             android:id="@+id/imageView"
             android:layout_gravity="center"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:padding="30dp" >
-        </ImageView>
+        </ImageView> -->
 
 
         <!-- Start City -->
@@ -57,7 +57,7 @@
             android:padding="5dp" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/startCityID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TEMP CITY NAME"
@@ -80,7 +80,7 @@
             android:padding="5dp" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/endCityID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TEMP CITY NAME"
@@ -103,7 +103,7 @@
             android:padding="5dp" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/startDateID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TEMP START DATE"
@@ -126,7 +126,7 @@
             android:padding="5dp" />
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/endDateID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TEMP END DATE"
