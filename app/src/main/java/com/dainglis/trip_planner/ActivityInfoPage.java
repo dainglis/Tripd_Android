@@ -43,12 +43,19 @@ public class ActivityInfoPage extends AppCompatActivity {
     private static final String KEY_MAIN_TEXT = "main";
     private static final String KEY_SECONDARY_TEXT = "secondary";
 
-
-
     public long currentTripId = 0;
 
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         onCreate()      -- Override
+        Description:    This method is called on the creation of the ActivityInfoPage
+        Parameters:     Bundle      savedInstanceState      Where the app is coming from
+        Returns:        Void.
+
+    --------------------------------------------------------------------------------------------- */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -76,6 +83,15 @@ public class ActivityInfoPage extends AppCompatActivity {
     }
 
 
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         onCreateOptionsMenu()      -- Override
+        Description:    This method creates the options menu and allows it to inflate.
+        Parameters:     Menu        menu        The options menu
+        Returns:        boolean     true
+
+    --------------------------------------------------------------------------------------------- */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -84,8 +100,19 @@ public class ActivityInfoPage extends AppCompatActivity {
     }
 
 
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         onOptionsItemSelected()      -- Override
+        Description:    This method handles action bar item clicks.
+        Parameters:     MenuItem    item        The item selected
+        Returns:        boolean     true        If id is action_edit_trip or action_add_event
+                        boolean     return from Super with identical parameter.
+
+    --------------------------------------------------------------------------------------------- */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -93,20 +120,24 @@ public class ActivityInfoPage extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_edit_trip) {
+
             // Selecting the "Edit Trip" menu option will launch the ActivitySetupPage
             // as an activity with a result, passing the member currentTripId
             Intent intent = new Intent(getApplicationContext(), ActivitySetupPage.class);
             intent.putExtra(MainActivity.KEY_TRIP_ID, currentTripId);
+
             //startActivity(intent);
             startActivityForResult(intent, ActivityRequest.TRIP_FORM);
             return true;
         }
 
         if (id == R.id.action_add_event) {
+
             // Selecting the "Edit Trip" menu option will launch the EventFormActivity
             // as an activity with a result, passing the member currentTripId
             Intent intent = new Intent(getApplicationContext(), EventFormActivity.class);
             intent.putExtra(MainActivity.KEY_TRIP_ID, currentTripId);
+
             //startActivity(intent);
             startActivityForResult(intent, ActivityRequest.EVENT_FORM);
             return true;
@@ -116,10 +147,18 @@ public class ActivityInfoPage extends AppCompatActivity {
     }
 
 
-    /*
-     *  Android Activity event invoked when an Activity started for Result
-     *  returns to this Activity
-     */
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         onActivityResult()
+        Description:    This method is invoked when an activity started for Result returns to this
+                        Activity.
+        Parameters:     int         requestCode         The request for an activity
+                        int         resultCode          The result from the activity
+                        Intent      data
+        Returns:        Void.
+
+    --------------------------------------------------------------------------------------------- */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch(requestCode) {
             case ActivityRequest.TRIP_FORM:
@@ -152,6 +191,16 @@ public class ActivityInfoPage extends AppCompatActivity {
         }
     }
 
+
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         displayTripDetailsAsync()
+        Description:    This method executes the displayTripDetails method as an asynchronous task.
+        Parameters:     final long  tripId      The trip for which details are required.
+        Returns:        Void.
+
+    --------------------------------------------------------------------------------------------- */
     protected void displayTripDetailsAsync(final long tripId) {
         AsyncTask.execute(new Runnable() {
             @Override
@@ -161,17 +210,18 @@ public class ActivityInfoPage extends AppCompatActivity {
         });
     }
 
-    /*
-     *  Method      : displayTripDetails
-     *  Description :
-     *      Given a unique id for a Trip, the details of the Trip are retrieved
-     *      from the `trip_planner` database
-     *  Parameters  :
-     *      final long tripId : The id of the Trip to query the database for and
-     *          populate the layout elements with the Trip data
-     *  Returns     :
-     *      void
-     */
+
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         displayTripDetails()
+        Description:    Given a unique id for a Trip, the details of the Trip are retrieved from
+                        the "trip_planner" database.
+        Parameters:     long        tripId      The id of the Trip to query the database for and
+                                                populate the layout elements with the Trip data.
+        Returns:        Void.
+
+    --------------------------------------------------------------------------------------------- */
     protected void displayTripDetails(long tripId) {
 
         // Query the database for the Trip associated with tripId
@@ -205,12 +255,16 @@ public class ActivityInfoPage extends AppCompatActivity {
     }
 
 
-    /*
-     *  Method      : generateEventInfoList
-     *  Description :
-     *      Queries the local database for all Events matching the specified
-     *      tripId
-     */
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         generateEventInfoList()
+        Description:    Queries the local database for all Events matching the specified tripId.
+        Parameters:     long        tripId      The id of the Trip to query the database for and
+                                                populate the layout elements with the Trip data.
+        Returns:        List<Map<String, String>>   The requested data from the database.
+
+    --------------------------------------------------------------------------------------------- */
     private List<Map<String, String>> generateEventInfoList(long tripId) {
         List<Map<String, String>> data = new ArrayList<>();
 
@@ -228,32 +282,32 @@ public class ActivityInfoPage extends AppCompatActivity {
 
 
 
-    /*
-     *  Method      : getCurrentTrip
-     *  Description :
-     *      Queries the `trip_planner` database for the Trip object with the
-     *      specified id
-     *  Parameters  :
-     *      long id : The unique id of the requested Trip
-     *  Returns     :
-     *      Trip : The Trip object with the corresponding id, or null
-     */
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         getCurrentTrip()
+        Description:    Queries the "trip_planner" database for the Trip object with the specified
+                        id.
+        Parameters:     long        id          The id of the Trip to query the database for.
+        Returns:        Trip                    The requested Trip object.
+
+    --------------------------------------------------------------------------------------------- */
     private Trip getCurrentTrip(long id) {
         return TripDatabase.getInstance(getApplicationContext()).tripDAO().getById(id);
     }
 
 
-    /*
-     *  Method      : getCurrentTrip
-     *  Description :
-     *      Queries the `trip_planner` database for the Trip object with the
-     *      specified id
-     *  Parameters  :
-     *      long id : The unique id of the requested Trip
-     *  Returns     :
-     *      Trip : The Trip object with the corresponding id, or null
-     */
+    
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         getEvents()
+        Description:    Queries the "trip_planner" database for the Trip object with the specified
+                        id.
+        Parameters:     long        id          The id of the Trip to query the database for.
+        Returns:        List<Event>             The events in the specified Trip.
+
+    --------------------------------------------------------------------------------------------- */
     private List<Event> getEvents(long tripId) {
         return TripDatabase.getInstance(getApplicationContext()).eventDAO().getAllByTripId(tripId);
     }
+
 }
