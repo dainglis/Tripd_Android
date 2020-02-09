@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // refresh the event list
                 Toast.makeText(getApplicationContext(), "New Trip Created", Toast.LENGTH_SHORT).show();
+                this.recreate();
             }
             else {
                 Toast.makeText(getApplicationContext(), "Trip Creation Cancelled", Toast.LENGTH_SHORT).show();
