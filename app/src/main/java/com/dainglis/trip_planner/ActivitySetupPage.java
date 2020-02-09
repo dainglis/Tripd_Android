@@ -139,14 +139,18 @@ public class ActivitySetupPage extends AppCompatActivity {
         String endLocation = EditEndCity.getText().toString();
         String startDate = DateDepartEnter.getText().toString();
         String endDate = DateArriveEnter.getText().toString();
-        final Trip trip = new Trip(title, startLocation, endLocation, startDate, endDate);
-            if (extras == null){
 
-                       AsyncTask.execute(new Runnable() {
+        final Trip trip = new Trip(title, startLocation, endLocation, startDate, endDate);
+
+        try {
+            if (extras == null) {
+                // Save the new trip to the db in a background thread,
+                // then return to the calling Activity
+                AsyncTask.execute(new Runnable() {
                     @Override
                     public void run() {
                         TripDatabase.getInstance(null).tripDAO().insert(trip);
-                        Toast.makeText(ActivitySetupPage.this,"Trip saved", Toast.LENGTH_SHORT).show();
+                        //      Toast.makeText(ActivitySetupPage.this,"Trip saved", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -156,10 +160,18 @@ public class ActivitySetupPage extends AppCompatActivity {
                     @Override
                     public void run() {
                         TripDatabase.getInstance(null).tripDAO().update(trip);
-                        Toast.makeText(ActivitySetupPage.this,"Trip edited", Toast.LENGTH_SHORT).show();
+                        //     Toast.makeText(ActivitySetupPage.this,"Trip edited", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
+
+            setResult(RESULT_OK);
+        }
+        // this is bad practice
+        catch (Exception e) {
+            setResult(RESULT_CANCELED);
+        }
+        finish();
     }
 
     // Method       :   dateValidate()
