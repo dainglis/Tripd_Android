@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<!-- SOURCE FILE HEADER COMMENT ====================================================================
+
+  FILENAME:     activity_info.xml
+  PROJECT:      PROG3150 - Assignment 01
+  PROGRAMMERS:  David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
+  DATE:         February 8th, 2020
+  DESCRIPTION:  This file contains the activity layout for the detailed information page.
+
+===============================================================================================  -->
+
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"

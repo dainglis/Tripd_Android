@@ -1,6 +1,5 @@
 package com.dainglis.trip_planner;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -8,10 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
-import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.data.Trip;
-
 import java.util.List;
 
 public class CustomArrayAdapter extends ArrayAdapter<Trip> {
@@ -42,28 +38,26 @@ public class CustomArrayAdapter extends ArrayAdapter<Trip> {
         Trip p = Trips.get(position);
 
         if (p != null) {
-            TextView tt1 = newView.findViewById(R.id.tripTitleID);
-            TextView tt2 = newView.findViewById(R.id.startCityID);
-            TextView tt3 = newView.findViewById(R.id.endCityID);
-            TextView tt4 = newView.findViewById(R.id.startDateID);
-            TextView tt5 = newView.findViewById(R.id.endDateID);
+            TextView tv1 = newView.findViewById(R.id.tripTitleID);
+            TextView tv2 = newView.findViewById(R.id.startCityID);
+            TextView tv3 = newView.findViewById(R.id.endCityID);
+            TextView tv4 = newView.findViewById(R.id.startDateID);
+            TextView tv5 = newView.findViewById(R.id.endDateID);
 
-            if (tt1 != null) {
-                tt1.setText(p.getTitle());
+            if (tv1 != null) {
+                tv1.setText(p.getTitle());
             }
-
-            if (tt2 != null) {
-                tt2.setText(p.getStartLocation());
+            if (tv2 != null) {
+                tv2.setText(p.getStartLocation());
             }
-
-            if (tt3 != null) {
-                tt3.setText(p.getEndLocation());
+            if (tv3 != null) {
+                tv3.setText(p.getEndLocation());
             }
-            if (tt4 != null) {
-                tt4.setText(p.getStartDate());
+            if (tv4 != null) {
+                tv4.setText(p.getStartDate());
             }
-            if (tt5 != null) {
-                tt5.setText(p.getEndDate());
+            if (tv5 != null) {
+                tv5.setText(p.getEndDate());
             }
         }
 

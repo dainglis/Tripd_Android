@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- SOURCE FILE HEADER COMMENT ====================================================================
+
+  FILENAME:     content_event_form.xml
+  PROJECT:      PROG3150 - Assignment 01
+  PROGRAMMERS:  David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
+  DATE:         February 8th, 2020
+  DESCRIPTION:  This file contains the layout for the event form.
+
+===============================================================================================  -->
+
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,17 +24,6 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".EventFormActivity"
     tools:showIn="@layout/activity_event_form">
-
-    <!--
-FILE:       content_event_form.xml
-PROJECT:    Prog3150 Assignment 1
-Name:       David Inglis, Megan Bradshaw,Steven Knapp, Michel Gnomes Lima, Nick Iden
-DATE:       February 8th, 2020
-COMMENT:
-            This is the content event form that manages all the xml code for the
-            event form.
--->
-
 
     <!-- Event title -->
     <TextView

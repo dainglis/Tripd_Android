@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.widget.TwoLineListItem xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- SOURCE FILE HEADER COMMENT ====================================================================
+
+  FILENAME:     card_view_list_item.xml
+  PROJECT:      PROG3150 - Assignment 01
+  PROGRAMMERS:  David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
+  DATE:         February 8th, 2020
+  DESCRIPTION:  This file contains the layout for individual "card"s on the main activity page.
+                Each card includes a brief summary of the trip.
+
+===============================================================================================  -->
+
+<android.widget.TwoLineListItem
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp"
     android:rowCount="1"
     android:columnCount="1">
@@ -21,7 +32,7 @@
             android:id="@+id/tripTitleID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TEMP TRIP NAME"
+            android:text=""
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp"
             android:layout_column="0"
@@ -29,7 +40,7 @@
             android:layout_row="0"
             android:padding="10dp" />
 
-        <!-- Image
+        <!-- Image (DEPRECATED)
         <ImageView
             android:id="@+id/imageView"
             android:layout_gravity="center"
@@ -42,7 +53,6 @@
             android:layout_width="wrap_content"
             android:padding="30dp" >
         </ImageView> -->
-
 
         <!-- Start City -->
         <TextView
@@ -60,7 +70,7 @@
             android:id="@+id/startCityID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TEMP CITY NAME"
+            android:text=""
             android:textColor="@android:color/black"
             android:textSize="12sp"
             android:layout_column="2"
@@ -83,7 +93,7 @@
             android:id="@+id/endCityID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TEMP CITY NAME"
+            android:text=""
             android:textColor="@android:color/black"
             android:textSize="12sp"
             android:layout_column="2"
@@ -106,7 +116,7 @@
             android:id="@+id/startDateID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TEMP START DATE"
+            android:text=""
             android:textColor="@android:color/black"
             android:textSize="12sp"
             android:layout_column="2"
@@ -129,7 +139,7 @@
             android:id="@+id/endDateID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TEMP END DATE"
+            android:text=""
             android:textColor="@android:color/black"
             android:textSize="12sp"
             android:layout_column="2"
