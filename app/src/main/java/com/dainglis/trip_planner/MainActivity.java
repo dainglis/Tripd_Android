@@ -1,3 +1,12 @@
+/*
+    File    : MainActivity.java
+
+        The main activity is the landing page of the Tripd app. This page
+        contains the code behind to display and add trips.
+
+ */
+
+
 package com.dainglis.trip_planner;
 
 import android.content.Intent;
