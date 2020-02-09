@@ -4,13 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
+    android:background="@android:color/white"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
 
+
+    <!--
+FILE:       content_main.xml
+PROJECT:    Prog3150 Assignment 1
+Name:       David Inglis, Megan Bradshaw,Steven Knapp, Michel Gnomes Lima, Nick Iden
+DATE:       February 8th, 2020
+COMMENT:
+            This is the content main file that contains all the xml code for the main
+            activity.
+-->
+
+
     <ListView
         android:id="@+id/tripCardListView"
+        android:divider="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

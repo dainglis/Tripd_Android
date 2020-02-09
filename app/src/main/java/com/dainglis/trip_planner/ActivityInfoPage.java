@@ -10,6 +10,7 @@
 package com.dainglis.trip_planner;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -64,12 +65,8 @@ public class ActivityInfoPage extends AppCompatActivity {
             if (currentTripId != 0) {
 
                 // Query the database and update the layout in a secondary thread
-                AsyncTask.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        displayTripDetails(currentTripId);
-                    }
-                });
+                displayTripDetailsAsync(currentTripId);
+
             }
         }
     }
@@ -126,6 +123,7 @@ public class ActivityInfoPage extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     // refresh the form
                     Toast.makeText(getApplicationContext(), "Trip Details Edited", Toast.LENGTH_SHORT).show();
+                    this.recreate();
                 }
                 else {
                     Toast.makeText(getApplicationContext(), "Trip Details Unchanged", Toast.LENGTH_SHORT).show();
@@ -138,6 +136,7 @@ public class ActivityInfoPage extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     // refresh the event list
                     Toast.makeText(getApplicationContext(), "New Event Created", Toast.LENGTH_SHORT).show();
+                    this.recreate();
                 }
                 else {
                     Toast.makeText(getApplicationContext(), "Event Creation Cancelled", Toast.LENGTH_SHORT).show();
@@ -149,6 +148,14 @@ public class ActivityInfoPage extends AppCompatActivity {
         }
     }
 
+    protected void displayTripDetailsAsync(final long tripId) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                displayTripDetails(tripId);
+            }
+        });
+    }
 
     /*
      *  Method      : displayTripDetails
