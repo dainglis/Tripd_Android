@@ -327,6 +327,5 @@ public class ActivitySetupPage extends AppCompatActivity {
         return TripDatabase.getInstance(getApplicationContext()).tripDAO().getById(id);
     }
 
-
 }
 

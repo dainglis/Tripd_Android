@@ -25,6 +25,7 @@ import android.arch.persistence.room.PrimaryKey;
                 parentColumns = "tripId",
                 childColumns = "tripId"),
         indices = {@Index("tripId")})
+
 public class Event {
     @PrimaryKey(autoGenerate = true)
     public long eventId;
@@ -42,8 +43,11 @@ public class Event {
 
     @Ignore
     public Event(String title, String date, long tripId) {
+
         this.title = title;
         this.date = date;
         this.tripId = tripId;
+
     }
+
 }
