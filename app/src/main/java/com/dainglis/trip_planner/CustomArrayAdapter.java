@@ -60,10 +60,10 @@ public class CustomArrayAdapter extends ArrayAdapter<Trip> {
                 tt3.setText(p.getEndLocation());
             }
             if (tt4 != null) {
-                tt3.setText(p.getStartDate());
+                tt4.setText(p.getStartDate());
             }
             if (tt5 != null) {
-                tt3.setText(p.getEndDate());
+                tt5.setText(p.getEndDate());
             }
         }
 
