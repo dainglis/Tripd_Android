@@ -18,12 +18,14 @@ public class CustomArrayAdapter extends ArrayAdapter<Trip> {
 
     private int resourceLayout;
     private Context cContext;
+    private List<Trip> Trips;
 
     // by here there is no data in most of trips
     public CustomArrayAdapter(@NonNull Context context, int resource, List<Trip> trips) {
         super(context, resource, trips);
         this.resourceLayout = resource;
         this.cContext = context;
+        Trips = trips;
     }
 
     @Override
@@ -37,7 +39,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Trip> {
             newView = li.inflate(resourceLayout, null);
         }
 
-        Trip p = getItem(position);
+        Trip p = Trips.get(position);
 
         if (p != null) {
             TextView tt1 = newView.findViewById(R.id.tripTitleID);
