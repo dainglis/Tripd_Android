@@ -296,7 +296,7 @@ public class ActivityInfoPage extends AppCompatActivity {
     }
 
 
-    
+
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
 
         Method:         getEvents()

@@ -29,6 +29,16 @@ public class CustomArrayAdapter extends ArrayAdapter<Trip> {
     private Context cContext;
     private List<Trip> Trips;
 
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         CustomArrayAdapter()        -- Constructor
+        Description:    Instantiates a CustomArrayAdapter object.
+        Parameters:     Context     context         The context from the calling function.
+                        int         resource        The resource layout provided
+                        List<Trip>  trips           The list of current trips
+        Returns:        N/A
+
+    --------------------------------------------------------------------------------------------- */
     public CustomArrayAdapter(@NonNull Context context, int resource, List<Trip> trips) {
         super(context, resource, trips);
         this.resourceLayout = resource;
@@ -36,6 +46,18 @@ public class CustomArrayAdapter extends ArrayAdapter<Trip> {
         Trips = trips;
     }
 
+
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         getView()        -- Override
+        Description:    Creates a view for a row of the CustomArrayAdapter list.
+        Parameters:     int         position        The row to be created
+                        View        convertView     The view to be created
+                        ViewGroup   parent          The type of view to be adapted.
+        Returns:        View        newView         The newly adapted view.
+
+    --------------------------------------------------------------------------------------------- */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
