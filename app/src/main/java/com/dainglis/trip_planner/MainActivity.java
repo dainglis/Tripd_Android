@@ -11,18 +11,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dainglis.trip_planner.data.Event;
 import com.dainglis.trip_planner.data.Trip;
 import com.dainglis.trip_planner.data.TripDatabase;
 
-import java.sql.Date;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -91,31 +86,32 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void setTripListView() {
-
         TripDatabase db = TripDatabase.getInstance(getApplicationContext());
+
         final List<Trip> trips = db.tripDAO().getAll();
-
-        // "Card Adapter" ==========================================================================
-
-        String[] tripName = {};
-        String[] tripStartCity = {};
-        String[] tripEndCity = {};
-        String[] tripStartDate = {};
-        String[] tripEndDate = {};
+        ArrayList<String> tripNames = new ArrayList<>();
 
         for (int i = 0; i < trips.size(); i++) {
-            tripName[i] = trips.get(i).getTitle();
-            tripStartCity[i] = trips.get(i).getStartLocation();
-            tripEndCity[i] = trips.get(i).getEndLocation();
-            tripStartDate[i] = trips.get(i).getStartDate();
-            tripEndDate[i] = trips.get(i).getEndDate();
+            tripNames.add(trips.get(i).getTitle());
         }
 
-        CustomCardListAdapter cardAdapter = new CustomCardListAdapter(this, tripName, tripStartCity,
-                tripEndCity, tripStartDate, tripEndDate);
+        // This is a very simplified listview display of a list of content
+        // using the built-in android.R.layout.simple_list_item_1
+        // We will need to create a custom ListAdapter to support the Trip data objects
+        ArrayAdapter<String> itemsAdapter =
+                new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tripNames);
 
         ListView tripList = findViewById(R.id.tripCardListView);
-        tripList.setAdapter(cardAdapter);
+        tripList.setAdapter(itemsAdapter);
+
+        // "Card Adapter"
+        /*
+        SimpleAdapter cardAdapter = new SimpleAdapter(this,
+                generateEventInfoList(tripID),
+                R.layout.card_view_list_item,
+                new String[] {KEY_MAIN_TEXT, KEY_SECONDARY_TEXT},
+                new int[] {R.id.main_text, R.id.secondary_text});
+        */
 
         tripList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -126,14 +122,8 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(KEY_TRIP_ID, trips.get(position).getId());
                 startActivity(intent);
             }
-
         });
-
     }
 
 
-
 }
-
-
-
