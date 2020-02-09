@@ -85,7 +85,6 @@ public abstract class TripDatabase extends RoomDatabase {
                 "Glendale, CA", "Santa Barbara, CA",
                 "2020-01-01", "2020-01-10");
         tripOne.setTripId(instance.tripDAO().insert(tripOne));
-
         //System.out.println("Trip one has ID " + tripOne.tripId);
 
         Event[] tripOneEvents = {
@@ -93,7 +92,6 @@ public abstract class TripDatabase extends RoomDatabase {
                 new Event("Lunch", "2020-01-01 12:00:00", tripOne.getId()),
                 new Event("Dinner", "2020-01-01 19:00:00",tripOne.getId())
         };
-
 
         // Second sample trip and Events
         Trip tripTwo = new Trip("Kayaking in the Mississippi",
@@ -107,10 +105,10 @@ public abstract class TripDatabase extends RoomDatabase {
                 new Event("Swimming", "2020-05-01 09:00:00",tripTwo.getId()),
         };
 
-
         for (int i = 0; i < tripOneEvents.length; i++) {
             instance.eventDAO().insert(tripOneEvents[i]);
         }
+
         for (int i = 0; i < tripTwoEvents.length; i++) {
             instance.eventDAO().insert(tripTwoEvents[i]);
         }
