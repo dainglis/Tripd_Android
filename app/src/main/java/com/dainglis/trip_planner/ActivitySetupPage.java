@@ -44,7 +44,6 @@ public class ActivitySetupPage extends AppCompatActivity {
     Button CanButt;
     Button BtnConfirm;
 
-
     // Create vars for edit texts
     EditText EditName;
     EditText EditStartCity;
@@ -54,8 +53,17 @@ public class ActivitySetupPage extends AppCompatActivity {
     public long currentTripId = 0;
     Bundle extras;
 
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         getCurrentTrip()        -- Override
+        Description:    Executes and prepares the creation of the Setup Page Activity.
+        Parameters:     Bundle      savedInstanceState
+        Returns:        void
+
+    --------------------------------------------------------------------------------------------- */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -67,30 +75,41 @@ public class ActivitySetupPage extends AppCompatActivity {
         DateDepartEnter = findViewById(R.id.dateDepartEnter);
         DateArriveEnter = findViewById(R.id.dateArriveEnter);
 
-        CanButt = findViewById(R.id.buttonSetupCancel);         // create action for cancel button
+        // create action for cancel button
+        CanButt = findViewById(R.id.buttonSetupCancel);
+
         CanButt.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { //create addBtn listener
+            public void onClick(View view) {
+
+                //create addBtn listener
                 cancelForm();
                 //openActivity();
+
             }
         });
+
         BtnConfirm = findViewById(R.id.buttonSetupConfirm); // create action for confirm button
+
         BtnConfirm.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View view) {//create addBtn listener
+            public void onClick(View view) {
+
+                //create addBtn listener
                 if( !fieldValidation(EditName) || !fieldValidation(EditStartCity) || !fieldValidation(EditEndCity)||
                         !dateValidate(DateDepartEnter) || !dateValidate(DateArriveEnter) )
                 {
                 }else
                 submitForm();
+
             }
+
         });
 
         extras = getIntent().getExtras();
 
-        if (extras == null) {
-        }
+        if (extras == null) { }
         else {
 
             currentTripId = extras.getLong("tripId");
@@ -99,59 +118,63 @@ public class ActivitySetupPage extends AppCompatActivity {
 
                 // Query the database and update the layout in a secondary thread
                 AsyncTask.execute(new Runnable() {
+
                     @Override
                     public void run() {
                         loadTripDetails(currentTripId);
                     }
+
                 });
+
             }
         }
 
     }
 
-    /*
-     *  Method      : cancelForm
-     *  Description :
-     *      Cancels the form for creating a new Trip, telling
-     *      the calling activity that it was cancelled.
-     *
-     *  Parameters  :
-     *      void
-     *  Returns     :
-     *      void
-     */
+
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         cancelForm()
+        Description:    Cancels the form for creating a new Trip, telling the calling activity that
+                        it was cancelled.
+        Parameters:     void.
+        Returns:        void.
+
+    --------------------------------------------------------------------------------------------- */
     private void cancelForm() {
         setResult(RESULT_CANCELED);
         finish();
     }
 
 
-    // Method       :   openActivity()
-    // Description  :
-    //                  This method is called when the add button is pressed.
-    //                  when pressed main page page is called.
-    // Parameter    :   None
-    // Returns      :   Void
 
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         openActivity()
+        Description:    This method is called when the add button is pressed.
+                        When pressed, main page is called.
+        Parameters:     None.
+        Returns:        Void.
+
+    --------------------------------------------------------------------------------------------- */
     public void openActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
 
-    /*
-     *  Method      : submitForm
-     *  Description :
-     *      Submit the form for creating/edit a new Trip.
-     *      If we have extras, it means that we are updating.
-     *      If we do not have extras, it means that we are creating/inserting.
-     *
-     *
-     *  Parameters  :
-     *      void
-     *  Returns     :
-     *      void
-     */
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         submitForm()
+        Description:    Submit the form for creating / editing a new Trip.
+                        If there are extras, it means that the form action is updating.
+                        If there are no extras, it means that the action is creation/insertion.
+        Parameters:     void.
+        Returns:        void.
+
+    --------------------------------------------------------------------------------------------- */
     private void submitForm() {
         String title = EditName.getText().toString();
         String startLocation = EditStartCity.getText().toString();
@@ -162,44 +185,60 @@ public class ActivitySetupPage extends AppCompatActivity {
         final Trip trip = new Trip(title, startLocation, endLocation, startDate, endDate);
 
         try {
+
             if (extras == null) {
+
                 // Save the new trip to the db in a background thread,
                 // then return to the calling Activity
                 AsyncTask.execute(new Runnable() {
+
                     @Override
                     public void run() {
                         TripDatabase.getInstance(null).tripDAO().insert(trip);
                         //      Toast.makeText(ActivitySetupPage.this,"Trip saved", Toast.LENGTH_SHORT).show();
                     }
+
                 });
 
             } else {
+
                 trip.setTripId(currentTripId);
                 AsyncTask.execute(new Runnable() {
+
                     @Override
                     public void run() {
                         TripDatabase.getInstance(null).tripDAO().update(trip);
                         //     Toast.makeText(ActivitySetupPage.this,"Trip edited", Toast.LENGTH_SHORT).show();
                     }
+
                 });
+
             }
 
             setResult(RESULT_OK);
         }
+
         // this is bad practice
         catch (Exception e) {
             setResult(RESULT_CANCELED);
         }
+
         finish();
+
     }
 
-    // Method       :   dateValidate()
-    // Description  :
-    //                  This method is called when the add button to validate
-    //                  date input entered by user
-    // Parameter    :   dateString
-    // Returns      :   bool
 
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         dateValidate()
+        Description:    This method is called when the add button is triggered. Validating the
+                        date entered by the user.
+        Parameters:     EditText        EditTextDate        Date string.
+        Returns:        boolean         True                If there are no exceptions thrown
+                                        False               If an exception is caught.
+
+    --------------------------------------------------------------------------------------------- */
     public boolean dateValidate(EditText EditTextDate)
     {
         // set the date format
@@ -210,7 +249,6 @@ public class ActivitySetupPage extends AppCompatActivity {
         // use try catch to compare string with df format
         try
         {
-
             ObjDate = df.parse(EditTextDate.getText().toString());
             return true;
         }
@@ -222,39 +260,41 @@ public class ActivitySetupPage extends AppCompatActivity {
         }
     }
 
-        /*
-     *  Method      : fieldValidation
-     *  Description :
-    //                  This method is called when the add/edit button to validate
-    //                  the fields input entered by user
-     *  Parameters  :
-     *      EditText editText : Edit Text that will be verified
-     *  Returns     : boolean false ou true, based if the verification passed.
-     *
-     */
 
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         fieldValidation()
+        Description:    This method is called when the add / edit button is pressed. This
+                        method validates the input fields as entered by the user
+        Parameters:     EditText        editText        The text to be verified.
+        Returns:        boolean         False           If the form is incomplete
+                                        True            If the form is complete
+
+    --------------------------------------------------------------------------------------------- */
     public boolean fieldValidation(EditText editText)
     {
         if (editText.getText().toString() == null || editText.getText().toString().trim().length() < 1){
+
             Toast.makeText(ActivitySetupPage.this,"Fill the complete trip information", Toast.LENGTH_SHORT).show();
             return false;
-        }else {
+
+        } else {
             return true;
         }
     }
 
-    /*
-     *  Method      : loadTripDetails
-     *  Description :
-     *      If we had extras, Given a unique id for a Trip, the details of the Trip are retrieved
-     *      from the `trip_planner` database
-     *  Parameters  :
-     *      final long tripId : The id of the Trip to query the database for and
-     *          populate the layout elements with the Trip data
-     *  Returns     :
-     *      void
-     */
 
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         loadTripDetails()
+        Description:    If there were "Extras", given a unique ID for a Trip, the details of the
+                        Trip are retrieved from the "trip_planner" database.
+        Parameters:     long        id      The unique id of the requested Trip object.
+        Returns:        void.
+
+    --------------------------------------------------------------------------------------------- */
     protected void loadTripDetails(long tripId) {
 
         // Query the database for the Trip associated with tripId
@@ -272,16 +312,17 @@ public class ActivitySetupPage extends AppCompatActivity {
         }
     }
 
-    /*
-     *  Method      : getCurrentTrip
-     *  Description :
-     *      Queries the `trip_planner` database for the Trip object with the
-     *      specified id
-     *  Parameters  :
-     *      long id : The unique id of the requested Trip
-     *  Returns     :
-     *      Trip : The Trip object with the corresponding id, or null
-     */
+
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         getCurrentTrip()
+        Description:    Queries the `trip_planner` database for the Trip object with the specified
+                        id.
+        Parameters:     long        id      The unique id of the requested Trip object.
+        Returns:        Trip                The Trip object corresponding to the provided Id
+
+    --------------------------------------------------------------------------------------------- */
     private Trip getCurrentTrip(long id) {
         return TripDatabase.getInstance(getApplicationContext()).tripDAO().getById(id);
     }
