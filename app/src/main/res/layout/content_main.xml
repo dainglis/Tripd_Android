@@ -9,6 +9,18 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
 
+
+    <!--
+FILE:       content_main.xml
+PROJECT:    Prog3150 Assignment 1
+Name:       David Inglis, Megan Bradshaw,Steven Knapp, Michel Gnomes Lima, Nick Iden
+DATE:       February 8th, 2020
+COMMENT:
+            This is the content main file that contains all the xml code for the main
+            activity.
+-->
+
+
     <ListView
         android:id="@+id/tripCardListView"
         android:layout_width="match_parent"

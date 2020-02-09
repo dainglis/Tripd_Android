@@ -1,3 +1,4 @@
+
 package com.dainglis.trip_planner;
 
 public final class ActivityRequest {

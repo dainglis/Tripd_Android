@@ -14,6 +14,16 @@
     tools:context=".EventFormActivity"
     tools:showIn="@layout/activity_event_form">
 
+    <!--
+FILE:       content_event_form.xml
+PROJECT:    Prog3150 Assignment 1
+Name:       David Inglis, Megan Bradshaw,Steven Knapp, Michel Gnomes Lima, Nick Iden
+DATE:       February 8th, 2020
+COMMENT:
+            This is the content event form that manages all the xml code for the
+            event form.
+-->
+
 
     <!-- Event title -->
     <TextView

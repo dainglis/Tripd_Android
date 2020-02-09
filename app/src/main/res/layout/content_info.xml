@@ -11,6 +11,19 @@
     tools:context=".ActivityInfoPage"
     tools:showIn="@layout/activity_info" >
 
+
+    <!--
+
+FILE:       content_info.xml
+PROJECT:    Prog3150 Assignment 1
+Name:       David Inglis, Megan Bradshaw,Steven Knapp, Michel Gnomes Lima, Nick Iden
+DATE:       February 8th, 2020
+COMMENT:
+            This is the content info file for assignment one. This file has all the xml
+            code needed for the content_info activity. GridLayout and TextViews
+
+-->
+
     <!-- Trip title -->
     <TextView
         android:id="@+id/tripName"
