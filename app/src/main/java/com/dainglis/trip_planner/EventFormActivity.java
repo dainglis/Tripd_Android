@@ -64,13 +64,21 @@ public class EventFormActivity extends AppCompatActivity {
     Bundle extras;
     long addTripEvent;
 
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         onCreate()        -- Override
+        Description:    Creates and populates an Event Form Activity.
+        Parameters:     Bundle      savedInstanceState
+        Returns:        void.
+
+    --------------------------------------------------------------------------------------------- */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_form);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         /*Get trip data members from database*/
         currentTrip = getCurrentTrip(currentTripId);
@@ -82,17 +90,21 @@ public class EventFormActivity extends AppCompatActivity {
         //Connect Cancel button and set click listener
         btnCancel = findViewById(R.id.buttonEventFormCancel);
         btnCancel.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 cancelForm();
             }
+
         });
 
         // Connect Confirm button and set click listener
         btnConfirm = findViewById(R.id.buttonEventFormConfirm);
         btnConfirm.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
+
                 /*validate non-empty title and valid date within trip date range*/
                 if (validateEventForm(eventTitle, eventDate, currentTrip)) {
                     saveEventForm();
@@ -100,14 +112,15 @@ public class EventFormActivity extends AppCompatActivity {
                 else {
                     Toast.makeText(getApplicationContext(), "Check Event Name and Dates For Valid Input", Toast.LENGTH_SHORT).show();
                 }
+
             }
+
         });
 
         /*Get tripId passed when Add Event Activity invoked*/
         extras = getIntent().getExtras();
 
-        if (extras == null) {
-        }
+        if (extras == null) { }
         else {
 
             currentTripId = extras.getLong("tripId");
@@ -116,46 +129,61 @@ public class EventFormActivity extends AppCompatActivity {
 
                 // Query the database and update the layout in a secondary thread
                 AsyncTask.execute(new Runnable() {
+
                     @Override
                     public void run() {
                         getCurrentTrip(currentTripId);
                     }
+
                 });
             }
         }
-
     }
 
-    /*
-    *  Method      : getCurrentTrip
-    *  Description : Queries the `trip_planner` database for the Trip object with the specified id
-    *  Parameters  : long id : The unique id of the requested Trip
-    *  Returns     : Trip : The Trip object with the corresponding id, or null
-    */
+
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         getCurrentTrip()
+        Description:    Queries the `trip_planner` database for the Trip object with the specified
+                        id.
+        Parameters:     long        id      The unique id of the requested Trip object.
+        Returns:        Trip                The Trip object corresponding to the provided Id
+
+    --------------------------------------------------------------------------------------------- */
     private Trip getCurrentTrip(long id) {
         return TripDatabase.getInstance(getApplicationContext()).tripDAO().getById(id);
     }
 
-    /*
-    *  Method      : cancelForm
-    *  Description : Cancels the form for creating a new Trip, telling
-    *                  the calling activity that it was cancelled.
-    *  Parameters  : void
-    *  Returns     : void; set result to RESULT_CANCELED (== 0)
-    */
+
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         cancelForm()
+        Description:    Cancels the form for creating a new Trip, telling the calling activity
+                        that it was cancelled.
+        Parameters:     void
+        Returns:        void;       Sets result to RESULT_CANCELED
+
+    --------------------------------------------------------------------------------------------- */
     private void cancelForm() {
         setResult(RESULT_CANCELED);
         finish();
     }
 
-    /*
-    *  Method      : validateEventForm
-    *  Description : Validates the EditText fields of the form's layout, ensuring
-    *                   the "Title" is a valid string, and the "DateTime" is in
-    *                   the correct DateTime format: YYYY-MM-DD HH:MM:SS
-    *  Parameters  : void
-    *  Returns     : boolean; `true` if the form is valid, `false` otherwise
-    */
+
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         validateEventForm()
+        Description:    Validates the EditText fields of the form's layout, ensuring the "Title" is
+                        a valid string, and the "DateTime" is in the correct DateTime format:
+                        i.e. YYYY-MM-DD HH:MM:SS
+        Parameters:     void
+        Returns:        boolean         True            If the form is valid
+                                        False           If the form is invalid.
+
+    --------------------------------------------------------------------------------------------- */
     private boolean validateEventForm(EditText title, EditText date, Trip trip) {
 
         // set the date format
@@ -164,8 +192,7 @@ public class EventFormActivity extends AppCompatActivity {
         df.setLenient(false);
 
         // use try catch to compare string with df format
-        try
-        {
+        try {
 
             ObjDate = df.parse(eventDate.toString());
 
@@ -176,25 +203,29 @@ public class EventFormActivity extends AppCompatActivity {
             }
 
             return true;
+
         }
-        catch(Exception e)
-        {
+        catch(Exception e) {
             return false;
         }
+
     }
 
-    /*
-    *  Method      : saveEventForm
-    *  Description : Attempts to save the form as a new Event in the database
-    *  Parameters  : void
-    *  Returns     : void
-    */
+
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         saveEventForm()
+        Description:    Attempts to save the form as a new Event in the database
+        Parameters:     void.
+        Returns:        void.
+
+    --------------------------------------------------------------------------------------------- */
     private void saveEventForm() {
 
-
         final Event newEvent = new Event(eventTitle.toString(),eventDate.toString(),currentTripId);
-        try
-        {
+
+        try {
             AsyncTask.execute(new Runnable() {
                 @Override
                 public void run() {
@@ -208,8 +239,7 @@ public class EventFormActivity extends AppCompatActivity {
             }
             finish();
         }
-        catch(Exception e)
-        {
+        catch(Exception e) {
             Toast.makeText(EventFormActivity.this, "Could Not Add Event", Toast.LENGTH_SHORT).show();
             setResult(RESULT_CANCELED);
             finish();
