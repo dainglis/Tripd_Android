@@ -1,3 +1,15 @@
+
+/* SOURCE FILE HEADER COMMENT ======================================================================
+
+    FILENAME:       Event.java
+    PROJECT:        PROG3150 - Assignment 01
+    PROGRAMMERS:    David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
+    DATE:           February 8th, 2020
+    DESCRIPTION:    This file contains the definition of the Event class. An event has a title,
+                    date, and associated trip ID.
+
+================================================================================================= */
+
 package com.dainglis.trip_planner.data;
 
 import android.arch.persistence.room.ColumnInfo;

@@ -1,3 +1,16 @@
+
+/* SOURCE FILE HEADER COMMENT ======================================================================
+
+    FILENAME:       EventFormActivity.java
+    PROJECT:        PROG3150 - Assignment 01
+    PROGRAMMERS:    David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
+    DATE:           February 8th, 2020
+    DESCRIPTION:    This file contains the definition of the EventFormActivity class.
+                    An object of this class has a Trip, event title, event date, and allows the
+                    user to edit, or save an event.
+
+================================================================================================= */
+
 package com.dainglis.trip_planner;
 
 import android.os.AsyncTask;
@@ -19,6 +32,7 @@ import com.dainglis.trip_planner.data.TripDatabase;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 /*
 *   Class:          EventFormActivity
 *

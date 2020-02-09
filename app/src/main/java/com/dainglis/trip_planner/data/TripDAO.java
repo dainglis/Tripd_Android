@@ -1,10 +1,14 @@
-/*
- *  File    : TripDAO.java
- *  Author  : David Inglis
- *  Date    : 2020-01-28
- *
- *  Interface between the TripDatabase and Trip data object
- */
+
+/* SOURCE FILE HEADER COMMENT ======================================================================
+
+    FILENAME:       TripDAO.java
+    PROJECT:        PROG3150 - Assignment 01
+    PROGRAMMERS:    David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
+    DATE:           January 28th, 2020
+    DESCRIPTION:    This file contains the interface between the TripDatabase and the Trip data
+                    object.
+
+================================================================================================= */
 
 package com.dainglis.trip_planner.data;
 

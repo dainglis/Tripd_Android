@@ -1,10 +1,14 @@
-/*
- *  File    : TripDatabase.java
- *  Author  : David Inglis
- *  Date    : 2020-01-28
- *
- *  Defines the Room persistent storage implementation of the 'trip_planner' database
- */
+
+/* SOURCE FILE HEADER COMMENT ======================================================================
+
+    FILENAME:       TripDatabase.java
+    PROJECT:        PROG3150 - Assignment 01
+    PROGRAMMERS:    David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
+    DATE:           January 28th, 2020
+    DESCRIPTION:    This file contains the definition for the class TripDatabase, which is the
+                    room persistent storage implementation of the "trip_planner" database.
+
+================================================================================================= */
 
 package com.dainglis.trip_planner.data;
 

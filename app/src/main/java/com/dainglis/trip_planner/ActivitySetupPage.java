@@ -1,11 +1,15 @@
-/*
-    File    : ActivitySetupPage.java
 
-        The SetupPage Activity presents the fields required to create a trip/
-        This file contains the classes and methods used to save a trip
-        and save it to the database.
+/* SOURCE FILE HEADER COMMENT ======================================================================
 
- */
+    FILENAME:       ActivitySetupPage.java
+    PROJECT:        PROG3150 - Assignment 01
+    PROGRAMMERS:    David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
+    DATE:           February 8th, 2020
+    DESCRIPTION:    The SetupPage Activity presents the fields required to create a trip/
+                    This file contains the classes and methods used to save a trip and save it
+                    to the database.
+
+================================================================================================= */
 
 package com.dainglis.trip_planner;
 

@@ -1,3 +1,16 @@
+
+/* SOURCE FILE HEADER COMMENT ======================================================================
+
+    FILENAME:       CustomArrayAdapter.java
+    PROJECT:        PROG3150 - Assignment 01
+    PROGRAMMERS:    David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
+    DATE:           February 8th, 2020
+    DESCRIPTION:    This file contains the definition of the CustomArrayAdapter class. This adapter
+                    takes a Trip object and formats it to follow the card_view_list_item layout
+                    within a list.
+
+================================================================================================= */
+
 package com.dainglis.trip_planner;
 
 import android.content.Context;
@@ -16,7 +29,6 @@ public class CustomArrayAdapter extends ArrayAdapter<Trip> {
     private Context cContext;
     private List<Trip> Trips;
 
-    // by here there is no data in most of trips
     public CustomArrayAdapter(@NonNull Context context, int resource, List<Trip> trips) {
         super(context, resource, trips);
         this.resourceLayout = resource;

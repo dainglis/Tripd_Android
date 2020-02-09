@@ -1,11 +1,15 @@
-/*
-    File    : ActivityInfoPage.java
 
-        The InfoPage Activity presents information to the user about a
-        specified Trip. The 'id' of the Trip must be passed to this
-        Activity in the Intent as a `long` with key "tripId"
+/* SOURCE FILE HEADER COMMENT ======================================================================
 
- */
+    FILENAME:       ActivityInfoPage.java
+    PROJECT:        PROG3150 - Assignment 01
+    PROGRAMMERS:    David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
+    DATE:           February 8th, 2020
+    DESCRIPTION:    The InfoPage Activity presents information to the user about a specified Trip.
+                    The 'id' of the Trip must be passed to this Activity in the Intent as a `long`
+                    with key "tripId"
+
+================================================================================================= */
 
 package com.dainglis.trip_planner;
 

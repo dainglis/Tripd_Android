@@ -1,11 +1,15 @@
-/*
- *  File    : Trip.java
- *  Author  : David Inglis
- *  Date    : 2020-01-28
- *
- *  Defines a Trip data object for the Trip Planner application. A single Trip
- *  can have one or more Days
- */
+
+/* SOURCE FILE HEADER COMMENT ======================================================================
+
+    FILENAME:       Trip.java
+    PROJECT:        PROG3150 - Assignment 01
+    PROGRAMMERS:    David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
+    DATE:           January 28th, 2020
+    DESCRIPTION:    This file contains the definition of a Trip data object for the trip planner
+                    application. A single Trip has an ID, a title, a start and end location, and
+                    a start and end date.
+
+================================================================================================= */
 
 package com.dainglis.trip_planner.data;
 

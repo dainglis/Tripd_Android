@@ -1,11 +1,14 @@
-/*
-    File    : MainActivity.java
 
-        The main activity is the landing page of the Tripd app. This page
-        contains the code behind to display and add trips.
+/* SOURCE FILE HEADER COMMENT ======================================================================
 
- */
+    FILENAME:       MainActivity.java
+    PROJECT:        PROG3150 - Assignment 01
+    PROGRAMMERS:    David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
+    DATE:           February 8th, 2020
+    DESCRIPTION:    The main activity is the landing page of the Tripd app. This page contains the
+                    code behind to display trip "cards" and add new trips.
 
+================================================================================================= */
 
 package com.dainglis.trip_planner;
 

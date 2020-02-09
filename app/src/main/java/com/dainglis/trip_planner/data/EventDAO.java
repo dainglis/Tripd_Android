@@ -1,3 +1,15 @@
+
+/* SOURCE FILE HEADER COMMENT ======================================================================
+
+    FILENAME:       EventDAO.java
+    PROJECT:        PROG3150 - Assignment 01
+    PROGRAMMERS:    David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
+    DATE:           January 28th, 2020
+    DESCRIPTION:    This file contains the interface for between the TripDatabase and the EventDAO
+                    data object.
+
+================================================================================================= */
+
 package com.dainglis.trip_planner.data;
 
 import java.util.List;
