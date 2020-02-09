@@ -30,6 +30,9 @@ public class ActivitySetupPage extends AppCompatActivity {
     // Create vars for cancel and confirm buttons
     Button CanButt;
     Button BtnConfirm;
+
+
+    // Create vars for edit texts
     EditText EditName;
     EditText EditStartCity;
     EditText EditEndCity;
@@ -122,11 +125,14 @@ public class ActivitySetupPage extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     /*
-     *  Method      : cancelForm
+     *  Method      : submitForm
      *  Description :
-     *      Cancels the form for creating a new Trip, telling
-     *      the calling activity that it was cancelled.
+     *      Submit the form for creating/edit a new Trip.
+     *      If we have extras, it means that we are updating.
+     *      If we do not have extras, it means that we are creating/inserting.
+     *
      *
      *  Parameters  :
      *      void
@@ -203,6 +209,17 @@ public class ActivitySetupPage extends AppCompatActivity {
         }
     }
 
+        /*
+     *  Method      : fieldValidation
+     *  Description :
+    //                  This method is called when the add/edit button to validate
+    //                  the fields input entered by user
+     *  Parameters  :
+     *      EditText editText : Edit Text that will be verified
+     *  Returns     : boolean false ou true, based if the verification passed.
+     *
+     */
+
     public boolean fieldValidation(EditText editText)
     {
         if (editText.getText().toString() == null || editText.getText().toString().trim().length() < 1){
@@ -212,6 +229,18 @@ public class ActivitySetupPage extends AppCompatActivity {
             return true;
         }
     }
+
+    /*
+     *  Method      : loadTripDetails
+     *  Description :
+     *      If we had extras, Given a unique id for a Trip, the details of the Trip are retrieved
+     *      from the `trip_planner` database
+     *  Parameters  :
+     *      final long tripId : The id of the Trip to query the database for and
+     *          populate the layout elements with the Trip data
+     *  Returns     :
+     *      void
+     */
 
     protected void loadTripDetails(long tripId) {
 
