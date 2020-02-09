@@ -5,15 +5,20 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.content.Intent;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.dainglis.trip_planner.data.Trip;
 import com.dainglis.trip_planner.data.TripDAO;
 import com.dainglis.trip_planner.data.TripDatabase;
 
+import java.io.Serializable;
 import java.util.List;
 
 import java.text.DateFormat;
@@ -30,6 +35,8 @@ public class ActivitySetupPage extends AppCompatActivity {
     EditText EditEndCity;
     EditText DateDepartEnter;
     EditText DateArriveEnter;
+    public long currentTripId = 0;
+    Bundle extras;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +44,6 @@ public class ActivitySetupPage extends AppCompatActivity {
         setContentView(R.layout.activity_setup);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         EditName = findViewById(R.id.editName);
         EditStartCity = findViewById(R.id.editStartCity);
@@ -64,6 +70,27 @@ public class ActivitySetupPage extends AppCompatActivity {
                 submitForm();
             }
         });
+
+        extras = getIntent().getExtras();
+
+        if (extras == null) {
+        }
+        else {
+
+            currentTripId = extras.getLong("tripId");
+
+            if (currentTripId != 0) {
+
+                // Query the database and update the layout in a secondary thread
+                AsyncTask.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadTripDetails(currentTripId);
+                    }
+                });
+            }
+        }
+
     }
 
     /*
@@ -112,15 +139,39 @@ public class ActivitySetupPage extends AppCompatActivity {
         String endLocation = EditEndCity.getText().toString();
         String startDate = DateDepartEnter.getText().toString();
         String endDate = DateArriveEnter.getText().toString();
+
         final Trip trip = new Trip(title, startLocation, endLocation, startDate, endDate);
 
-               AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                TripDatabase.getInstance(null).tripDAO().insert(trip);
-                Toast.makeText(ActivitySetupPage.this,"Trip saved", Toast.LENGTH_SHORT).show();
+        try {
+            if (extras == null) {
+                // Save the new trip to the db in a background thread,
+                // then return to the calling Activity
+                AsyncTask.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        TripDatabase.getInstance(null).tripDAO().insert(trip);
+                        //      Toast.makeText(ActivitySetupPage.this,"Trip saved", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            } else {
+                trip.setTripId(currentTripId);
+                AsyncTask.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        TripDatabase.getInstance(null).tripDAO().update(trip);
+                        //     Toast.makeText(ActivitySetupPage.this,"Trip edited", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
-        });
+
+            setResult(RESULT_OK);
+        }
+        // this is bad practice
+        catch (Exception e) {
+            setResult(RESULT_CANCELED);
+        }
+        finish();
     }
 
     // Method       :   dateValidate()
@@ -161,6 +212,38 @@ public class ActivitySetupPage extends AppCompatActivity {
             return true;
         }
     }
+
+    protected void loadTripDetails(long tripId) {
+
+        // Query the database for the Trip associated with tripId
+        Trip currentTrip = getCurrentTrip(tripId);
+
+        if (currentTrip != null) {
+            // Edit texts to be populated
+
+            EditName.setText(currentTrip.getTitle());
+            EditStartCity.setText(currentTrip.getStartLocation());
+            EditEndCity.setText(currentTrip.getEndLocation());
+            DateDepartEnter.setText(currentTrip.getStartDate());
+            DateArriveEnter.setText(currentTrip.getEndDate());
+
+        }
+    }
+
+    /*
+     *  Method      : getCurrentTrip
+     *  Description :
+     *      Queries the `trip_planner` database for the Trip object with the
+     *      specified id
+     *  Parameters  :
+     *      long id : The unique id of the requested Trip
+     *  Returns     :
+     *      Trip : The Trip object with the corresponding id, or null
+     */
+    private Trip getCurrentTrip(long id) {
+        return TripDatabase.getInstance(getApplicationContext()).tripDAO().getById(id);
+    }
+
 
 }
 
