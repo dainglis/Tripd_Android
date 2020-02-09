@@ -55,14 +55,14 @@ import java.util.Date;
 public class EventFormActivity extends AppCompatActivity {
 
     /*Declare variables*/
-    private Button btnCancel;
-    private Button btnConfirm;
-    private long currentTripId = 0;
-    private Trip currentTrip;
-    private EditText eventTitle;
-    private EditText eventDate;
-
-
+    Button btnCancel;
+    Button btnConfirm;
+    long currentTripId = 0;
+    Trip currentTrip;
+    EditText eventTitle;
+    EditText eventDate;
+    Bundle extras;
+    long addTripEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +71,6 @@ public class EventFormActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /*Get tripId passed when Add Event Activity invoked*/
-        Bundle extras = getIntent().getExtras();
-        currentTripId = extras.getLong("tripId");
 
         /*Get trip data members from database*/
         currentTrip = getCurrentTrip(currentTripId);
@@ -105,6 +102,27 @@ public class EventFormActivity extends AppCompatActivity {
                 }
             }
         });
+
+        /*Get tripId passed when Add Event Activity invoked*/
+        extras = getIntent().getExtras();
+
+        if (extras == null) {
+        }
+        else {
+
+            currentTripId = extras.getLong("tripId");
+
+            if (currentTripId != 0) {
+
+                // Query the database and update the layout in a secondary thread
+                AsyncTask.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        getCurrentTrip(currentTripId);
+                    }
+                });
+            }
+        }
 
     }
 
@@ -173,11 +191,17 @@ public class EventFormActivity extends AppCompatActivity {
     */
     private void saveEventForm() {
 
-        long addTripEvent;
+
         final Event newEvent = new Event(eventTitle.toString(),eventDate.toString(),currentTripId);
         try
         {
-            addTripEvent = TripDatabase.getInstance(null).eventDAO().insert(newEvent);
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                  addTripEvent = TripDatabase.getInstance(null).eventDAO().insert(newEvent);
+                }
+            });
+
             if (addTripEvent >= 0) {
                 Toast.makeText(EventFormActivity.this, "Event Added", Toast.LENGTH_SHORT).show();
                 setResult(RESULT_OK);
