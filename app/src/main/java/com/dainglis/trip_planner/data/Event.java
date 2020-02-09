@@ -41,6 +41,12 @@ public class Event {
 
     Event() {}
 
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         Constructor
+        Description:    Instantiate an Event object with provided values for data members.
+
+    --------------------------------------------------------------------------------------------- */
     @Ignore
     public Event(String title, String date, long tripId) {
 

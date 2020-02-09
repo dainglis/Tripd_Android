@@ -60,7 +60,7 @@ public class Trip {
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
 
         Method:         Constructor
-        Description:    Instantiate a Trip object with provided values for data members. 
+        Description:    Instantiate a Trip object with provided values for data members.
 
     --------------------------------------------------------------------------------------------- */
     @Ignore
