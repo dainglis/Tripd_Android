@@ -14,6 +14,16 @@
     tools:context=".ActivitySetupPage"
     tools:showIn="@layout/activity_setup">
 
+    <!--
+FILE:       content_setup.xml
+PROJECT:    Prog3150 Assignment 1
+Name:       David Inglis, Megan Bradshaw,Steven Knapp, Michel Gnomes Lima, Nick Iden
+DATE:       February 8th, 2020
+COMMENT:
+            This is the content setup file that contains all the xml code for the
+            setup activity.
+-->
+
 
     <!-- Trip image
         Commenting out the image because I dont think we will have time for it
