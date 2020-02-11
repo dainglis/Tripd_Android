@@ -11,6 +11,7 @@ The **Tripd** app has four pages:
 * Add/Edit Event
 
 ## A02 ??
+Igor would like us to use Fragments for this assignment
 
 
 ### Group
