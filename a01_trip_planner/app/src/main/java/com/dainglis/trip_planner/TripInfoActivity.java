@@ -1,7 +1,7 @@
 
 /* SOURCE FILE HEADER COMMENT ======================================================================
 
-    FILENAME:       ActivityInfoPage.java
+    FILENAME:       TripInfoActivity.java
     PROJECT:        PROG3150 - Assignment 01
     PROGRAMMERS:    David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
     DATE:           February 8th, 2020
@@ -14,7 +14,6 @@
 package com.dainglis.trip_planner;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -38,7 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ActivityInfoPage extends AppCompatActivity {
+public class TripInfoActivity extends AppCompatActivity {
 
     private static final String KEY_MAIN_TEXT = "main";
     private static final String KEY_SECONDARY_TEXT = "secondary";
@@ -48,7 +47,7 @@ public class ActivityInfoPage extends AppCompatActivity {
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
 
         Method:         onCreate()      -- Override
-        Description:    This method is called on the creation of the ActivityInfoPage
+        Description:    This method is called on the creation of the TripInfoActivity
         Parameters:     Bundle      savedInstanceState      Where the app is coming from
         Returns:        Void.
 
@@ -57,7 +56,7 @@ public class ActivityInfoPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info);
+        setContentView(R.layout.activity_trip_info);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -121,9 +120,9 @@ public class ActivityInfoPage extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_edit_trip) {
 
-            // Selecting the "Edit Trip" menu option will launch the ActivitySetupPage
+            // Selecting the "Edit Trip" menu option will launch the TripFormActivity
             // as an activity with a result, passing the member currentTripId
-            Intent intent = new Intent(getApplicationContext(), ActivitySetupPage.class);
+            Intent intent = new Intent(getApplicationContext(), TripFormActivity.class);
             intent.putExtra(MainActivity.KEY_TRIP_ID, currentTripId);
 
             //startActivity(intent);

@@ -2,7 +2,7 @@
 
 <!-- SOURCE FILE HEADER COMMENT ====================================================================
 
-  FILENAME:     activity_info.xml
+  FILENAME:     activity_trip_info_info.xml
   PROJECT:      PROG3150 - Assignment 01
   PROGRAMMERS:  David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
   DATE:         February 8th, 2020
@@ -16,7 +16,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ActivityInfoPage">
+    tools:context=".TripInfoActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -33,6 +33,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_info" />
+    <include layout="@layout/content_trip_info" />
 
 </android.support.design.widget.CoordinatorLayout>

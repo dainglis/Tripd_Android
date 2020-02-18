@@ -2,7 +2,7 @@
 
 <!-- SOURCE FILE HEADER COMMENT ====================================================================
 
-  FILENAME:     activity_setup.xml
+  FILENAME:     activity_trip_form.xml.xml
   PROJECT:      PROG3150 - Assignment 01
   PROGRAMMERS:  David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
   DATE:         February 8th, 2020
@@ -17,7 +17,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    tools:context=".ActivitySetupPage">
+    tools:context=".TripFormActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -39,7 +39,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize">
 
-        <include layout="@layout/content_setup" />
+        <include layout="@layout/content_trip_form" />
 
     </ScrollView>
 

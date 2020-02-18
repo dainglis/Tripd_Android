@@ -1,7 +1,7 @@
 
 /* SOURCE FILE HEADER COMMENT ======================================================================
 
-    FILENAME:       ActivitySetupPage.java
+    FILENAME:       TripFormActivity.java
     PROJECT:        PROG3150 - Assignment 01
     PROGRAMMERS:    David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
     DATE:           February 8th, 2020
@@ -17,28 +17,19 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.content.Intent;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.dainglis.trip_planner.data.Trip;
-import com.dainglis.trip_planner.data.TripDAO;
 import com.dainglis.trip_planner.data.TripDatabase;
-
-import java.io.Serializable;
-import java.util.List;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ActivitySetupPage extends AppCompatActivity {
+public class TripFormActivity extends AppCompatActivity {
 
     // Create vars for cancel and confirm buttons
     Button CanButt;
@@ -65,7 +56,7 @@ public class ActivitySetupPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setup);
+        setContentView(R.layout.activity_trip_form);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -195,7 +186,7 @@ public class ActivitySetupPage extends AppCompatActivity {
                     @Override
                     public void run() {
                         TripDatabase.getInstance(null).tripDAO().insert(trip);
-                        //      Toast.makeText(ActivitySetupPage.this,"Trip saved", Toast.LENGTH_SHORT).show();
+                        //      Toast.makeText(TripFormActivity.this,"Trip saved", Toast.LENGTH_SHORT).show();
                     }
 
                 });
@@ -208,7 +199,7 @@ public class ActivitySetupPage extends AppCompatActivity {
                     @Override
                     public void run() {
                         TripDatabase.getInstance(null).tripDAO().update(trip);
-                        //     Toast.makeText(ActivitySetupPage.this,"Trip edited", Toast.LENGTH_SHORT).show();
+                        //     Toast.makeText(TripFormActivity.this,"Trip edited", Toast.LENGTH_SHORT).show();
                     }
 
                 });
@@ -254,7 +245,7 @@ public class ActivitySetupPage extends AppCompatActivity {
         }
         catch(Exception e)
         {
-            Toast.makeText(ActivitySetupPage.this,EditTextDate.getText().toString() + " is not a valid date.", Toast.LENGTH_LONG).show();
+            Toast.makeText(TripFormActivity.this,EditTextDate.getText().toString() + " is not a valid date.", Toast.LENGTH_LONG).show();
             return false;
 
         }
@@ -276,7 +267,7 @@ public class ActivitySetupPage extends AppCompatActivity {
     {
         if (editText.getText().toString() == null || editText.getText().toString().trim().length() < 1){
 
-            Toast.makeText(ActivitySetupPage.this,"Fill the complete trip information", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TripFormActivity.this,"Fill the complete trip information", Toast.LENGTH_SHORT).show();
             return false;
 
         } else {

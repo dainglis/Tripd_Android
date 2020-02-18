@@ -20,15 +20,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.dainglis.trip_planner.data.Trip;
 import com.dainglis.trip_planner.data.TripDatabase;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -81,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
 ------------------------------------------------------------------------------------------------- */
     public void launchTripFormForResult() {
-        Intent intent = new Intent(this, ActivitySetupPage.class);
+        Intent intent = new Intent(this, TripFormActivity.class);
         startActivityForResult(intent, ActivityRequest.TRIP_FORM);
     }
 
@@ -138,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(getApplicationContext(), ActivityInfoPage.class);
+                Intent intent = new Intent(getApplicationContext(), TripInfoActivity.class);
                 intent.putExtra(KEY_TRIP_ID, trips.get(position).getId());
                 startActivity(intent);
 

@@ -2,7 +2,7 @@
 
 <!-- SOURCE FILE HEADER COMMENT ====================================================================
 
-  FILENAME:     content_setup.xml
+  FILENAME:     content_trip_formform.xml
   PROJECT:      PROG3150 - Assignment 01
   PROGRAMMERS:  David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
   DATE:         February 8th, 2020
@@ -22,8 +22,8 @@
     android:padding="20dp"
     android:rowCount="10"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ActivitySetupPage"
-    tools:showIn="@layout/activity_setup">
+    tools:context=".TripFormActivity"
+    tools:showIn="@layout/activity_trip_form">
 
     <!-- Trip image
         Commenting out the image because I dont think we will have time for it

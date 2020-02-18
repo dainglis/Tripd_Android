@@ -29,11 +29,11 @@
             android:label="@string/title_activity_event_form"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ActivityInfoPage"
+            android:name=".TripInfoActivity"
             android:label="@string/title_activity_info_page3"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ActivitySetupPage"
+            android:name=".TripFormActivity"
             android:label="@string/title_activity_setup_page2"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
