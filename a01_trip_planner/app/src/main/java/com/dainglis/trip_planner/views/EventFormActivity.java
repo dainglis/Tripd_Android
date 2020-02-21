@@ -11,12 +11,10 @@
 
 ================================================================================================= */
 
-package com.dainglis.trip_planner;
+package com.dainglis.trip_planner.views;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -24,14 +22,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.dainglis.trip_planner.data.Event;
-import com.dainglis.trip_planner.data.EventDAO;
-import com.dainglis.trip_planner.data.Trip;
-import com.dainglis.trip_planner.data.TripDatabase;
+import com.dainglis.trip_planner.R;
+import com.dainglis.trip_planner.models.Event;
+import com.dainglis.trip_planner.models.Trip;
+import com.dainglis.trip_planner.controllers.TripDatabase;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /*
 *   Class:          EventFormActivity

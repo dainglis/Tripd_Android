@@ -11,7 +11,7 @@
 
 ================================================================================================= */
 
-package com.dainglis.trip_planner;
+package com.dainglis.trip_planner.views;
 
 
 import android.content.Intent;
@@ -27,9 +27,11 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dainglis.trip_planner.data.Event;
-import com.dainglis.trip_planner.data.Trip;
-import com.dainglis.trip_planner.data.TripDatabase;
+import com.dainglis.trip_planner.R;
+import com.dainglis.trip_planner.controllers.ActivityRequest;
+import com.dainglis.trip_planner.models.Event;
+import com.dainglis.trip_planner.models.Trip;
+import com.dainglis.trip_planner.controllers.TripDatabase;
 
 import java.util.ArrayList;
 import java.util.HashMap;

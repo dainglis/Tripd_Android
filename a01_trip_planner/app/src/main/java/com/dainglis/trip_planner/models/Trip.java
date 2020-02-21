@@ -11,7 +11,7 @@
 
 ================================================================================================= */
 
-package com.dainglis.trip_planner.data;
+package com.dainglis.trip_planner.models;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
@@ -47,13 +47,13 @@ public class Trip {
     // add property for either direct image blob or
     // file path to image stored in local storage
 
-    Trip(long tripId) {
+    public Trip(long tripId) {
         this.setTripId(tripId);
 
     }
 
     @Ignore
-    Trip(String title) {
+    public Trip(String title) {
         this.setTitle(title);
     }
 

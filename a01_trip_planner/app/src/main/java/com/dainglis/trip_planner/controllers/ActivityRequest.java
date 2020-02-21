@@ -10,7 +10,7 @@
 
 ================================================================================================= */
 
-package com.dainglis.trip_planner;
+package com.dainglis.trip_planner.controllers;
 
 public final class ActivityRequest {
 

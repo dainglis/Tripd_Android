@@ -10,7 +10,7 @@
 
 ================================================================================================= */
 
-package com.dainglis.trip_planner.data;
+package com.dainglis.trip_planner.models;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
@@ -39,7 +39,7 @@ public class Event {
     @ColumnInfo(name = "eventDate")
     public String date;
 
-    Event() {}
+    public Event() {}
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
 

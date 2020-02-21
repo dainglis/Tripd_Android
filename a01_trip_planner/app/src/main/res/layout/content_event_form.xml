@@ -22,7 +22,7 @@
     android:columnCount="2"
     android:rowCount="3"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".EventFormActivity"
+    tools:context=".views.EventFormActivity"
     tools:showIn="@layout/activity_event_form">
 
     <!-- Event title -->

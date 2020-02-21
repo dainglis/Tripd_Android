@@ -11,7 +11,7 @@
 
 ================================================================================================= */
 
-package com.dainglis.trip_planner;
+package com.dainglis.trip_planner.controllers;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -20,7 +20,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import com.dainglis.trip_planner.data.Trip;
+
+import com.dainglis.trip_planner.R;
+import com.dainglis.trip_planner.models.Trip;
 import java.util.List;
 
 public class CustomArrayAdapter extends ArrayAdapter<Trip> {

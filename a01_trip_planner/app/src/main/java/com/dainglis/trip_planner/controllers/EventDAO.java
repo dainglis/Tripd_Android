@@ -10,7 +10,7 @@
 
 ================================================================================================= */
 
-package com.dainglis.trip_planner.data;
+package com.dainglis.trip_planner.controllers;
 
 import java.util.List;
 
@@ -18,6 +18,8 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+
+import com.dainglis.trip_planner.models.Event;
 
 @Dao
 public interface EventDAO {
