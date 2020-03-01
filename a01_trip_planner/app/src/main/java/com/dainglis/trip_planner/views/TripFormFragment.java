@@ -176,8 +176,8 @@ public class TripFormFragment extends Fragment {
 
     --------------------------------------------------------------------------------------------- */
     private void cancelForm() {
-        setResult(RESULT_CANCELED);
-        finish();
+        getActivity().setResult(Activity.RESULT_CANCELED); // changed ..added getActivity()
+        getActivity().finish();
     }
 
 
@@ -192,7 +192,7 @@ public class TripFormFragment extends Fragment {
 
     --------------------------------------------------------------------------------------------- */
     public void openActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class); // changed this to getActivity
         startActivity(intent);
     }
 
@@ -248,15 +248,15 @@ public class TripFormFragment extends Fragment {
 
             }
 
-            setResult(RESULT_OK);
+            getActivity().setResult(Activity.RESULT_OK); // all setResults now have getActivity
         }
 
         // this is bad practice
         catch (Exception e) {
-            setResult(RESULT_CANCELED);
+            getActivity().setResult(Activity.RESULT_CANCELED);
         }
 
-        finish();
+        getActivity().finish();
 
     }
 
@@ -287,7 +287,7 @@ public class TripFormFragment extends Fragment {
         }
         catch(Exception e)
         {
-            Toast.makeText(TripFormActivity.this,EditTextDate.getText().toString() + " is not a valid date.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity().getApplicationContext(),EditTextDate.getText().toString() + " is not a valid date.", Toast.LENGTH_LONG).show(); // getActivity added. no idea if it will work
             return false;
 
         }
@@ -309,7 +309,7 @@ public class TripFormFragment extends Fragment {
     {
         if (editText.getText().toString() == null || editText.getText().toString().trim().length() < 1){
 
-            Toast.makeText(TripFormActivity.this,"Fill the complete trip information", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity().getApplicationContext(),"Fill the complete trip information", Toast.LENGTH_SHORT).show(); // changed this to getActivity
             return false;
 
         } else {
