@@ -54,4 +54,7 @@
     <string name="hint_date">YYYY-MM-DD</string>
     <string name="hint_datetime">YYYY-MM-DD HH:MM:SS</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
