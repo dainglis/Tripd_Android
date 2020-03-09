@@ -293,7 +293,7 @@ public class TripInfoActivity extends AppCompatActivity {
 
     --------------------------------------------------------------------------------------------- */
     private Trip getCurrentTrip(long id) {
-        return TripDatabase.getInstance(getApplicationContext()).tripDAO().getById(id);
+        return TripDatabase.getInstance().tripDAO().getById(id);
     }
 
 
@@ -308,7 +308,7 @@ public class TripInfoActivity extends AppCompatActivity {
 
     --------------------------------------------------------------------------------------------- */
     private List<Event> getEvents(long tripId) {
-        return TripDatabase.getInstance(getApplicationContext()).eventDAO().getAllByTripId(tripId);
+        return TripDatabase.getInstance().eventDAO().getAllByTripId(tripId);
     }
 
 }

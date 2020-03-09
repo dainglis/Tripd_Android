@@ -131,7 +131,7 @@ public class EventFormActivity extends AppCompatActivity {
 
     --------------------------------------------------------------------------------------------- */
     private Trip getCurrentTrip(long id) {
-        return TripDatabase.getInstance(getApplicationContext()).tripDAO().getById(id);
+        return TripDatabase.getInstance().tripDAO().getById(id);
     }
 
 
@@ -221,7 +221,7 @@ public class EventFormActivity extends AppCompatActivity {
             AsyncTask.execute(new Runnable() {
                 @Override
                 public void run() {
-                    TripDatabase.getInstance(null).eventDAO().insert(event);
+                    TripDatabase.getInstance().eventDAO().insert(event);
                 }
             });
 

@@ -21,6 +21,9 @@ import android.util.Log;
 import com.dainglis.trip_planner.models.Event;
 import com.dainglis.trip_planner.models.Trip;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 @Database(entities = {Trip.class, Event.class}, version = 1)
 
 public abstract class TripDatabase extends RoomDatabase {
@@ -28,6 +31,10 @@ public abstract class TripDatabase extends RoomDatabase {
     private static final String databaseName = "trip_planner";
 
     private static TripDatabase instance;
+
+    private static final int NUMBER_OF_THREADS = 4;
+    public static final ExecutorService databaseWriteExecutor =
+            Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
 
@@ -39,8 +46,9 @@ public abstract class TripDatabase extends RoomDatabase {
 
     --------------------------------------------------------------------------------------------- */
     public static void init(Context context) {
-        getInstance(context);
-        loadSampleData();
+        if (instance == null) {
+            instance = Room.databaseBuilder(context.getApplicationContext(), TripDatabase.class, TripDatabase.databaseName).build();
+        }
     }
 
 
@@ -53,14 +61,8 @@ public abstract class TripDatabase extends RoomDatabase {
         Returns:        TripDatabase    instance        The TripDatabase.
 
     --------------------------------------------------------------------------------------------- */
-    public static TripDatabase getInstance(Context context) {
-
-        if (instance == null) {
-            instance = Room.databaseBuilder(context.getApplicationContext(), TripDatabase.class, TripDatabase.databaseName).build();
-        }
-
+    public static TripDatabase getInstance() {
         return instance;
-
     }
 
 

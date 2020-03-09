@@ -187,7 +187,7 @@ public class TripFormActivity extends AppCompatActivity {
 
                     @Override
                     public void run() {
-                        TripDatabase.getInstance(null).tripDAO().insert(trip);
+                        TripDatabase.getInstance().tripDAO().insert(trip);
                         //      Toast.makeText(TripFormActivity.this,"Trip saved", Toast.LENGTH_SHORT).show();
                     }
 
@@ -200,7 +200,7 @@ public class TripFormActivity extends AppCompatActivity {
 
                     @Override
                     public void run() {
-                        TripDatabase.getInstance(null).tripDAO().update(trip);
+                        TripDatabase.getInstance().tripDAO().update(trip);
                         //     Toast.makeText(TripFormActivity.this,"Trip edited", Toast.LENGTH_SHORT).show();
                     }
 
@@ -317,7 +317,7 @@ public class TripFormActivity extends AppCompatActivity {
 
     --------------------------------------------------------------------------------------------- */
     private Trip getCurrentTrip(long id) {
-        return TripDatabase.getInstance(getApplicationContext()).tripDAO().getById(id);
+        return TripDatabase.getInstance().tripDAO().getById(id);
     }
 
 }
