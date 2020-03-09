@@ -30,9 +30,12 @@
     <!-- upload button -->
     <string name="uploadButton">Upload Image</string>
 
+    <!-- Main Activity menu options -->
+    <string name="action_settings">Settings</string>
+    <string name="action_about">About</string>
+
     <string name="action_edit_trip">Edit Trip</string>
     <string name="action_add_event">Add Event</string>
-    <string name="action_settings">Settings</string>
     <string name="title_activity_setup_page2">Enter Trip Info</string>
     <string name="title_activity_info_page3">Trip Info</string>
     <string name="depart_date">depart date</string>
@@ -53,5 +56,8 @@
 
     <string name="hint_date">YYYY-MM-DD</string>
     <string name="hint_datetime">YYYY-MM-DD HH:MM:SS</string>
+
+    <string name="about_title_ver">Tripd v0.2</string>
+    <string name="about_text">Authors: Megan Bradshaw, David Inglis, Nick Iden, Steven Knapp, Michel Lima</string>
 
 </resources>
