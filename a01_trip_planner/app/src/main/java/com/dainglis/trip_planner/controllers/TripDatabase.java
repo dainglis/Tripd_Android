@@ -21,10 +21,17 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.models.City;
 import com.dainglis.trip_planner.models.Event;
 import com.dainglis.trip_planner.models.Trip;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.Buffer;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -120,6 +127,40 @@ public abstract class TripDatabase extends RoomDatabase {
     }
 
 
+    public static void loadSampleDataFromFile(Context context, int resId) {
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(context.getResources().openRawResource(resId)));
+        String line;
+
+        try {
+            Trip currentTrip = null;
+            Event currentEvent = null;
+            while ((line = reader.readLine()) != null) {
+                System.out.println("Read line: **" + line + "**");
+                String[] data = line.split(",");
+
+                if (data.length == 6 && data[0].equals("0")) {
+                    System.out.println("Adding Trip: " + line);
+                    currentTrip = new Trip(data[1], data[2], data[3], data[4], data[5]);
+                    currentTrip.setTripId(instance.tripDAO().insert(currentTrip));
+                }
+                else if (data.length == 3 && data[0].equals("1") && currentTrip != null) {
+                    System.out.println("Adding Event: " + line);
+                    currentEvent = new Event(data[1], data[2], currentTrip.getTripId());
+                    instance.eventDAO().insert(currentEvent);
+                }
+                else {
+                    // test_data.csv is corrupted
+                    return;
+                }
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("All test data added successfully");
+    }
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
 

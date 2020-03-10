@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity
             public void run() {
                 TripDatabase.init(getApplicationContext());
                 TripDatabase.initializeCities();
-                TripDatabase.loadSampleData();
+                TripDatabase.loadSampleDataFromFile(getApplicationContext(), R.raw.test_data);
+                //TripDatabase.loadSampleData();
             }
         });
 

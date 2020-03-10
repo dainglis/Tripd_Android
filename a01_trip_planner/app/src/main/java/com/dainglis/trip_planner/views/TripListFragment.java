@@ -43,8 +43,6 @@ public class TripListFragment extends Fragment {
     private FloatingActionButton mAddButton;
 
 
-
-
     public static TripListFragment newInstance() {
         return new TripListFragment();
     }
