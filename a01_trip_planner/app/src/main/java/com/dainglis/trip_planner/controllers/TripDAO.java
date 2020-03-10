@@ -37,6 +37,9 @@ public interface TripDAO {
     @Query("SELECT * FROM trips WHERE tripId = (:id) LIMIT 1")
     LiveData<Trip> getById(long id);
 
+    @Query("SELECT * FROM trips WHERE tripId = (:id) LIMIT 1")
+    Trip getByIdStatic(long id);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insert(Trip trip);
 

@@ -12,6 +12,8 @@
 
 package com.dainglis.trip_planner.views;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -132,8 +134,23 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onTripSelected(long tripId) {
+    public void onTripSelected(final long tripId) {
         Toast.makeText(this, "Launching trip info page for id " + tripId, Toast.LENGTH_SHORT).show();
+
+        // This is a sample proof-of-concept for opening a Wikipedia link to the selected Trip's destination city
+        TripDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                Trip current = TripDatabase.getInstance().tripDAO().getByIdStatic(tripId);
+
+                if (current != null) {
+                    String url = "https://www.wikipedia.org/wiki/" + current.getEndLocation();
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(url));
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override
