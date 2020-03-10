@@ -31,6 +31,9 @@ public interface TripDAO {
     @Query("SELECT * FROM trips")
     LiveData<List<Trip>> getAll();
 
+    @Query("SELECT * FROM trips")
+    List<Trip> getAllStatic();
+
     @Query("SELECT * FROM trips WHERE tripId = (:id) LIMIT 1")
     LiveData<Trip> getById(long id);
 

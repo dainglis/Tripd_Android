@@ -13,10 +13,12 @@
 package com.dainglis.trip_planner.controllers;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.dainglis.trip_planner.models.City;
@@ -79,6 +81,44 @@ public abstract class TripDatabase extends RoomDatabase {
         return instance;
     }
 
+    public static void initializeCities() {
+        Log.d(null, "Creating Cities table if it does not exist");
+
+        List<City> lCities;
+
+        if (instance == null) {
+            return;
+        }
+
+        lCities = instance.cityDAO().getAll();
+
+        if (lCities == null || lCities.size() > 0) {
+            Log.d(null, "Cities table exists");
+            return;
+        }
+
+        instance.cityDAO().insert(new City("Toronto"));
+        instance.cityDAO().insert(new City("Waterloo"));
+        instance.cityDAO().insert(new City("Kitchener"));
+        instance.cityDAO().insert(new City("Ottawa"));
+        instance.cityDAO().insert(new City("Brampton"));
+        instance.cityDAO().insert(new City("Hamilton"));
+        instance.cityDAO().insert(new City("Richmond Hill"));
+        instance.cityDAO().insert(new City("Vaughan"));
+        instance.cityDAO().insert(new City("Markham"));
+        instance.cityDAO().insert(new City("Newmarket"));
+        instance.cityDAO().insert(new City("Mississauga"));
+        instance.cityDAO().insert(new City("Barrie"));
+        instance.cityDAO().insert(new City("Niagara Falls"));
+        instance.cityDAO().insert(new City("Guelph"));
+
+
+        lCities = instance.cityDAO().getAll();
+        Log.d(null, "Added " + lCities.size() + " cities");
+
+
+    }
+
 
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
@@ -97,22 +137,12 @@ public abstract class TripDatabase extends RoomDatabase {
             return;
         }
 
-        LiveData<List<Trip>> lTrips = instance.tripDAO().getAll();
-        List<Trip> trips = lTrips.getValue();
+        final List<Trip> lTrips = instance.tripDAO().getAllStatic();
 
-
-        if (trips == null) {
-            Log.d(null, "List is null?");
-            return;
-        }
-
-        if (trips.size() > 0) {
+        if (lTrips == null || lTrips.size() > 0) {
             Log.d(null, "List is non-empty");
             return;
         }
-
-
-
 
         Log.d(null, "Generating sample data");
 

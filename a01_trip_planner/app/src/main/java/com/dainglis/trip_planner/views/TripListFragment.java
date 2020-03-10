@@ -32,13 +32,15 @@ import java.util.concurrent.RecursiveAction;
 
 public class TripListFragment extends Fragment {
 
-    private TripListViewModel mViewModel;
-    FloatingActionButton addBtnMove;
-
     private OnFragmentInteractionListener mListener;
 
-    //TripListAdapter adapt;
-    //ListView tripList;
+    private TripListAdapter tAdapter;
+    private RecyclerView mRecyclerView;
+    private TripListViewModel mViewModel;
+    private FloatingActionButton mAddButton;
+
+
+
 
     public static TripListFragment newInstance() {
         return new TripListFragment();
@@ -51,25 +53,14 @@ public class TripListFragment extends Fragment {
         View view = inflater.inflate(R.layout.trip_list_fragment, container, false);
 
 
-        RecyclerView rView = view.findViewById(R.id.trip_card_rec_view);
-        final TripListAdapter tAdapter = new TripListAdapter(view.getContext(), this);
+        mRecyclerView = view.findViewById(R.id.trip_card_rec_view);
+        tAdapter = new TripListAdapter(view.getContext(), this);
 
-        rView.setAdapter(tAdapter);
-        rView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-
-        mViewModel = new TripListViewModel();
-        mViewModel.getTrips().observe(this, new Observer<List<Trip>>() {
-            @Override
-            public void onChanged(@Nullable List<Trip> trips) {
-                tAdapter.setTrips(trips);
-            }
-        });
+        mRecyclerView.setAdapter(tAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         // create action for add button
-        addBtnMove = view.findViewById(R.id.addBtn);
-
-
-        //mViewModel.setTripListView(tripList);
+        mAddButton = view.findViewById(R.id.addBtn);
 
         return view;
     }
@@ -78,27 +69,23 @@ public class TripListFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(TripListViewModel.class);
-        // TODO: Use the ViewModel
 
-
+        mViewModel.getTrips().observe(this, new Observer<List<Trip>>() {
+            @Override
+            public void onChanged(@Nullable List<Trip> trips) {
+                tAdapter.setTrips(trips);
+            }
+        });
 
         //create addBtn listener
-        addBtnMove.setOnClickListener(new View.OnClickListener() {
+        mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //launchTripFormForResult();
+                raiseAddTrip();
             }
         });
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(long tripId) {
-        if (mListener != null) {
-            Toast.makeText(this.getContext(), "Trip ID: " + tripId, Toast.LENGTH_SHORT)
-                    .show();
-            mListener.onFragmentInteraction(tripId);
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -117,8 +104,25 @@ public class TripListFragment extends Fragment {
         mListener = null;
     }
 
+    public void raiseTripSelected(long tripId) {
+        if (mListener != null) {
+            Toast.makeText(this.getContext(), "Trip ID: " + tripId, Toast.LENGTH_SHORT)
+                    .show();
+            mListener.onTripSelected(tripId);
+        }
+    }
+
+    public void raiseAddTrip() {
+        if (mListener != null) {
+            mListener.onAddButtonPressed();
+        }
+    }
+
+
+    // Interface for interaction with the Activity that owns the TripListFragment instance
     public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(long tripId);
+        void onTripSelected(long tripId);
+        void onAddButtonPressed();
     }
 
 

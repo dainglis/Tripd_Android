@@ -13,32 +13,16 @@ import com.dainglis.trip_planner.models.Trip;
 import java.util.List;
 
 public class TripListViewModel extends ViewModel {
-    // TODO: Implement the ViewModel
-
-    private TripListAdapter mTripAdapter;
 
     private LiveData<List<Trip>> mTrips;
 
     public TripListViewModel() {
-        //super(app);
-
         mTrips = TripDatabase.getInstance().tripDAO().getAll();
-
     }
 
     public LiveData<List<Trip>> getTrips() {
         return mTrips;
     }
-
-    /*
-    public void insertTrip(final Trip trip) {
-        TripDatabase.databaseWriteExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                mTripDAO.insert(trip);
-            }
-        });
-    }*/
 
 
     /* METHOD HEADER COMMENT ---------------------------------------------------------------------------

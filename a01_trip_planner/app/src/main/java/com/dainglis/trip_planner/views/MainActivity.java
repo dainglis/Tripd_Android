@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void run() {
                 TripDatabase.init(getApplicationContext());
+                TripDatabase.initializeCities();
                 TripDatabase.loadSampleData();
             }
         });
@@ -101,14 +102,6 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-
-            /*
-            */
-            return true;
-        }
-
         if (id == R.id.action_about) {
             // Show DialogFragment about page
             showAboutDialog();
@@ -119,8 +112,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFragmentInteraction(long tripId) {
+    public void onTripSelected(long tripId) {
         Toast.makeText(this, "Launching trip info page for id " + tripId, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onAddButtonPressed() {
+        //
+        Toast.makeText(this, "Launching fragment to create new Trip", Toast.LENGTH_SHORT).show();
     }
 
     /*

@@ -56,10 +56,6 @@ public class TripListAdapter extends RecyclerView.Adapter<TripListAdapter.TripVi
     private List<Trip> mTrips;
 
 
-    private int resourceLayout;
-    private Context cContext;
-
-
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
 
         Method:         TripListAdapter()        -- Constructor
@@ -95,7 +91,7 @@ public class TripListAdapter extends RecyclerView.Adapter<TripListAdapter.TripVi
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mParent.onButtonPressed(mTrips.get(holder.getAdapterPosition()).getId());
+                    mParent.raiseTripSelected(mTrips.get(holder.getAdapterPosition()).getId());
 
                 }
             });
