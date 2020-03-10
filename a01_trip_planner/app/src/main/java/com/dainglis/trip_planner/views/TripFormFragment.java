@@ -65,7 +65,7 @@ public class TripFormFragment extends Fragment {
     EditText DateArriveEnter;
     public long currentTripId = 0;
     Bundle extras;
-    public long currentTripId = 0;
+
 
 
     public TripFormFragment() {
@@ -73,26 +73,22 @@ public class TripFormFragment extends Fragment {
     }
 
 
-
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_trip_form, container, false);
+        View view = inflater.inflate(R.layout.fragment_trip_form, container, false);
 
 
 
-        EditName = getView().findViewById(R.id.editName);
-        EditStartCity = getView().findViewById(R.id.editStartCity);
-        EditEndCity = getView().findViewById(R.id.editEndCity);
-        DateDepartEnter = getView().findViewById(R.id.dateDepartEnter);
-        DateArriveEnter = getView().findViewById(R.id.dateArriveEnter);
+        EditName = view.findViewById(R.id.editName);
+        EditStartCity = view.findViewById(R.id.editStartCity);
+        EditEndCity = view.findViewById(R.id.editEndCity);
+        DateDepartEnter = view.findViewById(R.id.dateDepartEnter);
+        DateArriveEnter = view.findViewById(R.id.dateArriveEnter);
 
         // create action for cancel button
-        CanButt = getView().findViewById(R.id.buttonSetupCancel);
+        CanButt = view.findViewById(R.id.buttonSetupCancel);
 
         CanButt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +103,7 @@ public class TripFormFragment extends Fragment {
 
 
         // create action for cancel button
-        CanButt = getView().findViewById(R.id.buttonSetupCancel);
+        CanButt = view.findViewById(R.id.buttonSetupCancel);
 
         CanButt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +116,7 @@ public class TripFormFragment extends Fragment {
             }
         });
 
-        BtnConfirm = getView().findViewById(R.id.buttonSetupConfirm); // create action for confirm button
+        BtnConfirm = view.findViewById(R.id.buttonSetupConfirm); // create action for confirm button
 
         BtnConfirm.setOnClickListener(new View.OnClickListener() {
 
