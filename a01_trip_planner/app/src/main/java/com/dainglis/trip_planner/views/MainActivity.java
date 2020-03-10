@@ -23,6 +23,8 @@ import android.widget.Toast;
 import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.controllers.TripDatabase;
 
+import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity
         implements TripListFragment.OnFragmentInteractionListener {
@@ -57,15 +59,31 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        TripListFragment tlFragment = TripListFragment.newInstance();
-        setActiveFragment(tlFragment);
+        setInitialFragment(TripListFragment.newInstance());
 
     }
 
+    /*
+     * Replaces the placeholder fragment layout area with the main navigational fragment.
+     * Prevents a blank fragment from appearing after the back button is pressed
+     */
+    private void setInitialFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .setTransition(android.R.animator.fade_out)
+                .commitNow();
+    }
+
+    /*
+     *  Replaces the current fragment in the FragmentManager with the specified fragment,
+     *  adding the current fragment to the backstack
+     */
     private void setActiveFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, fragment)
-                .commitNow();
+                .setTransition(android.R.animator.fade_out)
+                .addToBackStack(null)
+                .commit();
     }
 
 
@@ -118,8 +136,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onAddButtonPressed() {
+        setActiveFragment(TripFormFragment.newInstance());
         //
-        Toast.makeText(this, "Launching fragment to create new Trip", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Launching fragment to create new Trip", Toast.LENGTH_SHORT).show();
     }
 
     /*
@@ -132,13 +151,16 @@ public class MainActivity extends AppCompatActivity
 
 
     /*
-    *
-    *
-    */
+    *   DEPREC
+    *   this is only appropriate procedure for a DialogFragment, as it is shown
+    *   on top of the current window
+
 
     private void showFormFrag() {
 
         TripFormFragment tff = TripFormFragment.newInstance();
         tff.show(getSupportFragmentManager(),"fragment_trip");
     }
+
+     */
 }

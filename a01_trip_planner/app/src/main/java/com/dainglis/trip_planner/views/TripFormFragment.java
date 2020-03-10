@@ -14,6 +14,7 @@
 
 package com.dainglis.trip_planner.views;
 
+import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -94,8 +95,6 @@ public class TripFormFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_trip_form, container, false);
 
-
-
         EditName = view.findViewById(R.id.editName);
         EditStartCity = view.findViewById(R.id.editStartCity);
         EditEndCity = view.findViewById(R.id.editEndCity);
@@ -104,22 +103,16 @@ public class TripFormFragment extends Fragment {
 
         // create action for cancel button
         CanButt = view.findViewById(R.id.buttonSetupCancel);
-
         CanButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 //create addBtn listener
                 cancelForm();
-                //openActivity();
-
             }
         });
 
 
-
         BtnConfirm = view.findViewById(R.id.buttonSetupConfirm); // create action for confirm button
-
         BtnConfirm.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -136,15 +129,12 @@ public class TripFormFragment extends Fragment {
 
         });
 
-        extras = getArguments().getExtras();
+        //extras = getArguments().getExtras();
 
-        if (extras == null) { }
-        else {
-
+        if (extras != null) {
             currentTripId = extras.getLong("tripId");
 
             if (currentTripId != 0) {
-
                 // Query the database and update the layout in a secondary thread
                 AsyncTask.execute(new Runnable() {
 
@@ -152,19 +142,12 @@ public class TripFormFragment extends Fragment {
                     public void run() {
                         loadTripDetails(currentTripId);
                     }
-
                 });
-
             }
         }
 
-
-
-    return view;
+        return view;
     }
-
-
-
 
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
@@ -175,7 +158,7 @@ public class TripFormFragment extends Fragment {
         Returns:        void.
     --------------------------------------------------------------------------------------------- */
     private void cancelForm() {
-        setResult(RESULT_CANCELED);
+        //setResult(RESULT_CANCELED);
         getActivity().finish();
     }
 
@@ -243,12 +226,12 @@ public class TripFormFragment extends Fragment {
 
             }
 
-            setResult(RESULT_OK);
+//            setResult(RESULT_OK);
         }
 
         // this is bad practice
         catch (Exception e) {
-            setResult(RESULT_CANCELED);
+  //          setResult(RESULT_CANCELED);
         }
 
         getActivity().finish();
@@ -298,7 +281,7 @@ public class TripFormFragment extends Fragment {
     --------------------------------------------------------------------------------------------- */
     public boolean fieldValidation(EditText editText)
     {
-        if (editText.getText().toString() == null || editText.getText().toString().trim().length() < 1){
+        if (editText.getText().toString().equals("") || editText.getText().toString().trim().length() < 1){
 
             Toast.makeText(getActivity(),"Fill the complete trip information", Toast.LENGTH_SHORT).show();
             return false;
@@ -320,7 +303,7 @@ public class TripFormFragment extends Fragment {
     protected void loadTripDetails(long tripId) {
 
         // Query the database for the Trip associated with tripId
-        Trip currentTrip = getCurrentTrip(tripId);
+        Trip currentTrip = getCurrentTrip(tripId).getValue();
 
         if (currentTrip != null) {
             // Edit texts to be populated
@@ -343,7 +326,7 @@ public class TripFormFragment extends Fragment {
         Parameters:     long        id      The unique id of the requested Trip object.
         Returns:        Trip                The Trip object corresponding to the provided Id
     --------------------------------------------------------------------------------------------- */
-    private Trip getCurrentTrip(long id) {
+    private LiveData<Trip> getCurrentTrip(long id) {
         return TripDatabase.getInstance().tripDAO().getById(id);
     }
 

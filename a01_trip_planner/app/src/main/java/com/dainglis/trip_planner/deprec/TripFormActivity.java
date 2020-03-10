@@ -11,7 +11,7 @@
 
 ================================================================================================= */
 
-package com.dainglis.trip_planner.views;
+package com.dainglis.trip_planner.deprec;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.models.Trip;
 import com.dainglis.trip_planner.controllers.TripDatabase;
+import com.dainglis.trip_planner.views.MainActivity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

@@ -84,6 +84,9 @@ public class TripListFragment extends Fragment {
         mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Fire the raiseAddTrip event when the button is pressed,
+                // notifying the parent Activity that the active Fragment
+                // should be switched
               /*
 
                 Fragment fragment = null;
@@ -93,10 +96,9 @@ public class TripListFragment extends Fragment {
                 FragmentTransaction transaction = manager.beginTransaction();
                 transaction.replace(R.id.fragment_container, fragment);
                 transaction.commit();
-
+                */
                 raiseAddTrip();
 
-*/
             }
         });
     }
@@ -121,8 +123,6 @@ public class TripListFragment extends Fragment {
 
     public void raiseTripSelected(long tripId) {
         if (mListener != null) {
-            Toast.makeText(this.getContext(), "Trip ID: " + tripId, Toast.LENGTH_SHORT)
-                    .show();
             mListener.onTripSelected(tripId);
         }
     }

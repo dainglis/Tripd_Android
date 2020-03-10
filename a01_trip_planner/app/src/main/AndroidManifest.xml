@@ -33,7 +33,7 @@
             android:label="@string/title_activity_info_page3"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".views.TripFormActivity"
+            android:name=".deprec.TripFormActivity"
             android:label="@string/title_activity_setup_page2"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

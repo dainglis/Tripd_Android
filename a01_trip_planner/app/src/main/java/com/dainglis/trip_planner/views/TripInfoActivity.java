@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.controllers.ActivityRequest;
+import com.dainglis.trip_planner.deprec.TripFormActivity;
 import com.dainglis.trip_planner.models.Event;
 import com.dainglis.trip_planner.models.Trip;
 import com.dainglis.trip_planner.controllers.TripDatabase;
