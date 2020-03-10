@@ -66,7 +66,7 @@ public class TripListFragment extends Fragment {
                 Fragment fragment = null;
                 fragment = new TripFormFragment();
 
-                FragmentManager manager = getSupportFragmentManager(); // added a onlick to trigger fragment for tripform
+                FragmentManager manager = getFragmentManager(); // added a onclick to trigger fragment for tripform
                 FragmentTransaction transaction = manager.beginTransaction();
                 transaction.replace(R.id.fragment_container, fragment);
                 transaction.commit();
