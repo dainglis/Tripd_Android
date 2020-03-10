@@ -128,6 +128,16 @@ public abstract class TripDatabase extends RoomDatabase {
 
 
     public static void loadSampleDataFromFile(Context context, int resId) {
+        if (instance == null) {
+            Log.d(null, "TripDatabase not instantiated");
+            return;
+        }
+
+        if (instance.tripDAO().getAllStatic().size() > 0) {
+            Log.d(null, "TripDatabase non-empty, ignoring test data");
+            return;
+        }
+
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(context.getResources().openRawResource(resId)));
         String line;
@@ -136,16 +146,13 @@ public abstract class TripDatabase extends RoomDatabase {
             Trip currentTrip = null;
             Event currentEvent = null;
             while ((line = reader.readLine()) != null) {
-                System.out.println("Read line: **" + line + "**");
                 String[] data = line.split(",");
 
                 if (data.length == 6 && data[0].equals("0")) {
-                    System.out.println("Adding Trip: " + line);
                     currentTrip = new Trip(data[1], data[2], data[3], data[4], data[5]);
                     currentTrip.setTripId(instance.tripDAO().insert(currentTrip));
                 }
                 else if (data.length == 3 && data[0].equals("1") && currentTrip != null) {
-                    System.out.println("Adding Event: " + line);
                     currentEvent = new Event(data[1], data[2], currentTrip.getTripId());
                     instance.eventDAO().insert(currentEvent);
                 }

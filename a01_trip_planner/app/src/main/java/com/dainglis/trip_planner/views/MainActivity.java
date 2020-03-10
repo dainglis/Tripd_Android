@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.controllers.TripDatabase;
+import com.dainglis.trip_planner.models.Trip;
 
 import java.util.List;
 
