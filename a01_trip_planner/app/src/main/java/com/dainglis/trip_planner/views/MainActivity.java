@@ -130,4 +130,15 @@ public class MainActivity extends AppCompatActivity
         adf.show(getSupportFragmentManager(), "dialog_fragment_about");
     }
 
+
+    /*
+    *
+    *
+    */
+
+    private void showFormFrag() {
+
+        TripFormFragment tff = TripFormFragment.newInstance();
+        tff.show(getSupportFragmentManager(),"fragment_trip");
+    }
 }
