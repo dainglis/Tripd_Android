@@ -1,49 +1,75 @@
 package com.dainglis.trip_planner.views;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.dainglis.trip_planner.OnFragmentInteractionListener;
 import com.dainglis.trip_planner.R;
-import com.dainglis.trip_planner.controllers.CustomArrayAdapter;
-import com.dainglis.trip_planner.controllers.TripDatabase;
+import com.dainglis.trip_planner.TestFrag;
+import com.dainglis.trip_planner.controllers.TripListAdapter;
 import com.dainglis.trip_planner.controllers.TripListViewModel;
 import com.dainglis.trip_planner.models.Trip;
 
 import java.util.List;
+import java.util.concurrent.RecursiveAction;
 
 public class TripListFragment extends Fragment {
 
     private TripListViewModel mViewModel;
-    ListView tripList;
     FloatingActionButton addBtnMove;
-    CustomArrayAdapter adapt;
+
+    private OnFragmentInteractionListener mListener;
+
+    //TripListAdapter adapt;
+    //ListView tripList;
 
     public static TripListFragment newInstance() {
         return new TripListFragment();
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.trip_list_fragment, container, false);
 
+
+        RecyclerView rView = view.findViewById(R.id.trip_card_rec_view);
+        final TripListAdapter tAdapter = new TripListAdapter(view.getContext(), this);
+
+        rView.setAdapter(tAdapter);
+        rView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+        mViewModel = new TripListViewModel();
+        mViewModel.getTrips().observe(this, new Observer<List<Trip>>() {
+            @Override
+            public void onChanged(@Nullable List<Trip> trips) {
+                tAdapter.setTrips(trips);
+            }
+        });
+
         // create action for add button
         addBtnMove = view.findViewById(R.id.addBtn);
-        tripList = view.findViewById(R.id.tripCardListView);
 
-        setTripListView(view.getContext());
+
+        //mViewModel.setTripListView(tripList);
 
         return view;
     }
@@ -65,48 +91,35 @@ public class TripListFragment extends Fragment {
         });
     }
 
-    /* METHOD HEADER COMMENT ---------------------------------------------------------------------------
-
-        Method:         setTripListView()
-        Description:    This method is called to set the list of trips using a custom array adapter.
-        Parameters:     None.
-        Returns:        Void.
-
-    ------------------------------------------------------------------------------------------------- */
-    public void setTripListView(final Context context) {
-        TripDatabase.databaseWriteExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-
-
-                TripDatabase db = TripDatabase.getInstance();
-
-
-                final List<Trip> trips = db.tripDAO().getAll();
-
-
-
-        // "Card" Array Adapter
-
-                adapt = new CustomArrayAdapter(context, R.layout.card_view_list_item, trips);
-                tripList.setAdapter(adapt);
-            }
-        });
-
-
-        /* temporarily removed onclicklistener, this will need to raise an event in the implementing activity
-        tripList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Intent intent = new Intent(getApplicationContext(), TripInfoActivity.class);
-                intent.putExtra(KEY_TRIP_ID, trips.get(position).getId());
-                startActivity(intent);
-
-            }
-        });
-         */
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(long tripId) {
+        if (mListener != null) {
+            Toast.makeText(this.getContext(), "Trip ID: " + tripId, Toast.LENGTH_SHORT)
+                    .show();
+            mListener.onFragmentInteraction(tripId);
+        }
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof TripListFragment.OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public interface OnFragmentInteractionListener {
+        void onFragmentInteraction(long tripId);
+    }
+
 
 }

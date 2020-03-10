@@ -1,23 +1,85 @@
 package com.dainglis.trip_planner.controllers;
 
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.models.Trip;
-import com.dainglis.trip_planner.views.TripFormActivity;
-import com.dainglis.trip_planner.views.TripInfoActivity;
 
 import java.util.List;
 
 public class TripListViewModel extends ViewModel {
     // TODO: Implement the ViewModel
 
+    private TripListAdapter mTripAdapter;
+
+    private LiveData<List<Trip>> mTrips;
+
+    public TripListViewModel() {
+        //super(app);
+
+        mTrips = TripDatabase.getInstance().tripDAO().getAll();
+
+    }
+
+    public LiveData<List<Trip>> getTrips() {
+        return mTrips;
+    }
+
+    /*
+    public void insertTrip(final Trip trip) {
+        TripDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mTripDAO.insert(trip);
+            }
+        });
+    }*/
+
+
+    /* METHOD HEADER COMMENT ---------------------------------------------------------------------------
+
+        Method:         setTripListView()
+        Description:    This method is called to set the list of trips using a custom array adapter.
+        Parameters:     None.
+        Returns:        Void.
+
+    ------------------------------------------------------------------------------------------------- */
+    public void setTripListView(ListView listView) {
+        /*
+        TripDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                TripDatabase db = TripDatabase.getInstance();
+                final LiveData<List<Trip>> trips = db.tripDAO().getAll();
+
+                // "Card" Array Adapter
+
+                adapt = new TripListAdapter(context, R.layout.card_view_list_item, trips);
+                tripList.setAdapter(adapt);
+            }
+        });
+         */
+
+
+        /* temporarily removed onclicklistener, this will need to raise an event in the implementing activity
+        tripList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent intent = new Intent(getApplicationContext(), TripInfoActivity.class);
+                intent.putExtra(KEY_TRIP_ID, trips.get(position).getId());
+                startActivity(intent);
+
+            }
+        });
+         */
+    }
 
     /* METHOD HEADER COMMENT ---------------------------------------------------------------------------
 
