@@ -12,31 +12,20 @@
 
 package com.dainglis.trip_planner.views;
 
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.dainglis.trip_planner.R;
-import com.dainglis.trip_planner.controllers.ActivityRequest;
-import com.dainglis.trip_planner.controllers.CustomArrayAdapter;
-import com.dainglis.trip_planner.models.Trip;
 import com.dainglis.trip_planner.controllers.TripDatabase;
 
-import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity
+        implements TripListFragment.OnFragmentInteractionListener {
 
     static final String KEY_TRIP_ID = "tripId";
 
@@ -46,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         // On creation of the MainActivity, the initial Fragment
         // TripListFragment is launched
 
-
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -54,13 +42,21 @@ public class MainActivity extends AppCompatActivity {
         /*
             This is a test to ensure that the TripDatabase initializes correctly
          */
-        AsyncTask.execute(new Runnable() {
+        TripDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
                 TripDatabase.init(getApplicationContext());
+                TripDatabase.initializeCities();
+                TripDatabase.loadSampleData();
             }
         });
 
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         TripListFragment tlFragment = TripListFragment.newInstance();
         setActiveFragment(tlFragment);
 
@@ -106,14 +102,6 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-
-            /*
-            */
-            return true;
-        }
-
         if (id == R.id.action_about) {
             // Show DialogFragment about page
             showAboutDialog();
@@ -123,6 +111,16 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onTripSelected(long tripId) {
+        Toast.makeText(this, "Launching trip info page for id " + tripId, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onAddButtonPressed() {
+        //
+        Toast.makeText(this, "Launching fragment to create new Trip", Toast.LENGTH_SHORT).show();
+    }
 
     /*
      *
@@ -131,8 +129,6 @@ public class MainActivity extends AppCompatActivity {
         AboutDialogFragment adf = AboutDialogFragment.newInstance();
         adf.show(getSupportFragmentManager(), "dialog_fragment_about");
     }
-
-
 
 
     /*

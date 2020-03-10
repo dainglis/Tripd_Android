@@ -12,29 +12,41 @@
 
 package com.dainglis.trip_planner.controllers;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.dainglis.trip_planner.models.City;
 import com.dainglis.trip_planner.models.Event;
 import com.dainglis.trip_planner.models.Trip;
 
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Trip.class, Event.class}, version = 1)
+@Database(entities = {Trip.class, Event.class, City.class}, version = 2)
 
 public abstract class TripDatabase extends RoomDatabase {
 
     private static final String databaseName = "trip_planner";
-
-    private static TripDatabase instance;
-
     private static final int NUMBER_OF_THREADS = 4;
     public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+
+
+    // Data Access Object interfaces
+    public abstract TripDAO tripDAO();
+    public abstract EventDAO eventDAO();
+    public abstract CityDAO cityDAO();
+
+
+    private static TripDatabase instance;
+
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
 
@@ -45,10 +57,14 @@ public abstract class TripDatabase extends RoomDatabase {
         Returns:        void.
 
     --------------------------------------------------------------------------------------------- */
-    public static void init(Context context) {
+    public static TripDatabase init(final Context context) {
         if (instance == null) {
-            instance = Room.databaseBuilder(context.getApplicationContext(), TripDatabase.class, TripDatabase.databaseName).build();
+            instance = Room.databaseBuilder(context.getApplicationContext(),
+                    TripDatabase.class, TripDatabase.databaseName)
+                    .build();
         }
+
+        return instance;
     }
 
 
@@ -65,6 +81,44 @@ public abstract class TripDatabase extends RoomDatabase {
         return instance;
     }
 
+    public static void initializeCities() {
+        Log.d(null, "Creating Cities table if it does not exist");
+
+        List<City> lCities;
+
+        if (instance == null) {
+            return;
+        }
+
+        lCities = instance.cityDAO().getAll();
+
+        if (lCities == null || lCities.size() > 0) {
+            Log.d(null, "Cities table exists");
+            return;
+        }
+
+        instance.cityDAO().insert(new City("Toronto"));
+        instance.cityDAO().insert(new City("Waterloo"));
+        instance.cityDAO().insert(new City("Kitchener"));
+        instance.cityDAO().insert(new City("Ottawa"));
+        instance.cityDAO().insert(new City("Brampton"));
+        instance.cityDAO().insert(new City("Hamilton"));
+        instance.cityDAO().insert(new City("Richmond Hill"));
+        instance.cityDAO().insert(new City("Vaughan"));
+        instance.cityDAO().insert(new City("Markham"));
+        instance.cityDAO().insert(new City("Newmarket"));
+        instance.cityDAO().insert(new City("Mississauga"));
+        instance.cityDAO().insert(new City("Barrie"));
+        instance.cityDAO().insert(new City("Niagara Falls"));
+        instance.cityDAO().insert(new City("Guelph"));
+
+
+        lCities = instance.cityDAO().getAll();
+        Log.d(null, "Added " + lCities.size() + " cities");
+
+
+    }
+
 
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
@@ -75,9 +129,18 @@ public abstract class TripDatabase extends RoomDatabase {
         Returns:        void.
 
     --------------------------------------------------------------------------------------------- */
-    private static void loadSampleData() {
+    public static void loadSampleData() {
+        Log.d(null, "Attempting to load sample data...");
 
-        if (instance == null || instance.tripDAO().getAll().size() > 0) {
+        if (instance == null) {
+            Log.d(null, "Database is null");
+            return;
+        }
+
+        final List<Trip> lTrips = instance.tripDAO().getAllStatic();
+
+        if (lTrips == null || lTrips.size() > 0) {
+            Log.d(null, "List is non-empty");
             return;
         }
 
@@ -117,9 +180,4 @@ public abstract class TripDatabase extends RoomDatabase {
         }
         // Insert sample data
     }
-
-    public abstract TripDAO tripDAO();
-
-    public abstract EventDAO eventDAO();
-
 }

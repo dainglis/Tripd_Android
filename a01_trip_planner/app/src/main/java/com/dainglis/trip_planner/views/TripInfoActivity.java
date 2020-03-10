@@ -293,7 +293,8 @@ public class TripInfoActivity extends AppCompatActivity {
 
     --------------------------------------------------------------------------------------------- */
     private Trip getCurrentTrip(long id) {
-        return TripDatabase.getInstance().tripDAO().getById(id);
+        return null;
+        //return TripDatabase.getInstance().tripDAO().getById(id);
     }
 
 
