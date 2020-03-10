@@ -17,6 +17,7 @@ package com.dainglis.trip_planner.views;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -73,6 +74,20 @@ public class TripFormFragment extends Fragment {
     }
 
 
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @return A new instance of fragment AboutDialogFragment.
+     */
+    public static TripFormFragment newInstance() {
+        TripFormFragment fragment = new TripFormFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -102,19 +117,6 @@ public class TripFormFragment extends Fragment {
         });
 
 
-        // create action for cancel button
-        CanButt = view.findViewById(R.id.buttonSetupCancel);
-
-        CanButt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                //create addBtn listener
-                cancelForm();
-                //openActivity();
-
-            }
-        });
 
         BtnConfirm = view.findViewById(R.id.buttonSetupConfirm); // create action for confirm button
 
@@ -134,7 +136,7 @@ public class TripFormFragment extends Fragment {
 
         });
 
-        extras = getIntent().getExtras();
+        extras = getArguments().getExtras();
 
         if (extras == null) { }
         else {
@@ -158,51 +160,48 @@ public class TripFormFragment extends Fragment {
 
 
 
-
+    return view;
     }
 
 
-    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
 
+
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
         Method:         cancelForm()
         Description:    Cancels the form for creating a new Trip, telling the calling activity that
                         it was cancelled.
         Parameters:     void.
         Returns:        void.
-
     --------------------------------------------------------------------------------------------- */
     private void cancelForm() {
-        getActivity().setResult(Activity.RESULT_CANCELED); // changed ..added getActivity()
+        setResult(RESULT_CANCELED);
         getActivity().finish();
     }
 
 
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-
         Method:         openActivity()
         Description:    This method is called when the add button is pressed.
                         When pressed, main page is called.
         Parameters:     None.
         Returns:        Void.
-
     --------------------------------------------------------------------------------------------- */
     public void openActivity() {
-        Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class); // changed this to getActivity
+        Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
     }
 
 
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-
         Method:         submitForm()
         Description:    Submit the form for creating / editing a new Trip.
                         If there are extras, it means that the form action is updating.
                         If there are no extras, it means that the action is creation/insertion.
         Parameters:     void.
         Returns:        void.
-
     --------------------------------------------------------------------------------------------- */
     private void submitForm() {
         String title = EditName.getText().toString();
@@ -223,7 +222,7 @@ public class TripFormFragment extends Fragment {
 
                     @Override
                     public void run() {
-                        TripDatabase.getInstance(null).tripDAO().insert(trip);
+                        TripDatabase.getInstance().tripDAO().insert(trip);
                         //      Toast.makeText(TripFormActivity.this,"Trip saved", Toast.LENGTH_SHORT).show();
                     }
 
@@ -236,7 +235,7 @@ public class TripFormFragment extends Fragment {
 
                     @Override
                     public void run() {
-                        TripDatabase.getInstance(null).tripDAO().update(trip);
+                        TripDatabase.getInstance().tripDAO().update(trip);
                         //     Toast.makeText(TripFormActivity.this,"Trip edited", Toast.LENGTH_SHORT).show();
                     }
 
@@ -244,12 +243,12 @@ public class TripFormFragment extends Fragment {
 
             }
 
-            getActivity().setResult(Activity.RESULT_OK); // all setResults now have getActivity
+            setResult(RESULT_OK);
         }
 
         // this is bad practice
         catch (Exception e) {
-            getActivity().setResult(Activity.RESULT_CANCELED);
+            setResult(RESULT_CANCELED);
         }
 
         getActivity().finish();
@@ -259,14 +258,12 @@ public class TripFormFragment extends Fragment {
 
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-
         Method:         dateValidate()
         Description:    This method is called when the add button is triggered. Validating the
                         date entered by the user.
         Parameters:     EditText        EditTextDate        Date string.
         Returns:        boolean         True                If there are no exceptions thrown
                                         False               If an exception is caught.
-
     --------------------------------------------------------------------------------------------- */
     public boolean dateValidate(EditText EditTextDate)
     {
@@ -283,7 +280,7 @@ public class TripFormFragment extends Fragment {
         }
         catch(Exception e)
         {
-            Toast.makeText(getActivity().getApplicationContext(),EditTextDate.getText().toString() + " is not a valid date.", Toast.LENGTH_LONG).show(); // getActivity added. no idea if it will work
+            Toast.makeText(getActivity(),EditTextDate.getText().toString() + " is not a valid date.", Toast.LENGTH_LONG).show();
             return false;
 
         }
@@ -292,20 +289,18 @@ public class TripFormFragment extends Fragment {
 
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-
         Method:         fieldValidation()
         Description:    This method is called when the add / edit button is pressed. This
                         method validates the input fields as entered by the user
         Parameters:     EditText        editText        The text to be verified.
         Returns:        boolean         False           If the form is incomplete
                                         True            If the form is complete
-
     --------------------------------------------------------------------------------------------- */
     public boolean fieldValidation(EditText editText)
     {
         if (editText.getText().toString() == null || editText.getText().toString().trim().length() < 1){
 
-            Toast.makeText(getActivity().getApplicationContext(),"Fill the complete trip information", Toast.LENGTH_SHORT).show(); // changed this to getActivity
+            Toast.makeText(getActivity(),"Fill the complete trip information", Toast.LENGTH_SHORT).show();
             return false;
 
         } else {
@@ -316,13 +311,11 @@ public class TripFormFragment extends Fragment {
 
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-
         Method:         loadTripDetails()
         Description:    If there were "Extras", given a unique ID for a Trip, the details of the
                         Trip are retrieved from the "trip_planner" database.
         Parameters:     long        id      The unique id of the requested Trip object.
         Returns:        void.
-
     --------------------------------------------------------------------------------------------- */
     protected void loadTripDetails(long tripId) {
 
@@ -344,20 +337,17 @@ public class TripFormFragment extends Fragment {
 
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-
         Method:         getCurrentTrip()
         Description:    Queries the `trip_planner` database for the Trip object with the specified
                         id.
         Parameters:     long        id      The unique id of the requested Trip object.
         Returns:        Trip                The Trip object corresponding to the provided Id
-
     --------------------------------------------------------------------------------------------- */
     private Trip getCurrentTrip(long id) {
-        return TripDatabase.getInstance(getApplicationContext()).tripDAO().getById(id);
+        return TripDatabase.getInstance().tripDAO().getById(id);
     }
 
-
-
-
+    public void show(FragmentManager supportFragmentManager, String fragment_trip) {
+    }
 }
 

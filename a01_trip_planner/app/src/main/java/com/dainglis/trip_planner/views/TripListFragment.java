@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +63,13 @@ public class TripListFragment extends Fragment {
         addBtnMove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //launchTripFormForResult();
+                Fragment fragment = null;
+                fragment = new TripFormFragment();
+
+                FragmentManager manager = getSupportFragmentManager(); // added a onlick to trigger fragment for tripform
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.replace(R.id.fragment_container, fragment);
+                transaction.commit();
             }
         });
     }
