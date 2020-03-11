@@ -25,10 +25,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.content.Intent;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.Spinner;
 
 import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.models.Trip;
@@ -58,6 +60,8 @@ public class TripFormFragment extends Fragment {
     // Create vars for cancel and confirm buttons
     Button CanButt;
     Button BtnConfirm;
+    Spinner Spinner1;
+    Spinner Spinner2;
 
     // Create vars for edit texts
     EditText EditName;
@@ -100,6 +104,18 @@ public class TripFormFragment extends Fragment {
         EditEndCity = view.findViewById(R.id.editEndCity);
         DateDepartEnter = view.findViewById(R.id.dateDepartEnter);
         DateArriveEnter = view.findViewById(R.id.dateArriveEnter);
+
+        // create spinner ref for first spinner
+        Spinner1 = view.findViewById(R.id.StartSpinner);
+
+        // create spinner re for Second spinner
+        Spinner2 = view.findViewById(R.id.EndSpinner);
+
+        // Spinner click listener setup
+        Spinner1.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+        Spinner2.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+
+
 
         // create action for cancel button
         CanButt = view.findViewById(R.id.buttonSetupCancel);
@@ -334,3 +350,32 @@ public class TripFormFragment extends Fragment {
     }
 }
 
+/* METHOD HEADER COMMENT -----------------------------------------------------------------------
+        Method:         addSpinnerCities()
+        Description:    Populate city spinners for selection.
+        Parameters:     void
+        Returns:
+    --------------------------------------------------------------------------------------------- */
+
+    /**
+     * Function to load the spinner data from SQLite database
+     * */
+    private void addSpinnerCities() {
+        // database handler
+        TripDatabase db = new TripDatabase() {
+        };
+
+        // Spinner Drop down elements
+        List<City> cities = db.getAll();
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, cities);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter
+                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        spinner.setAdapter(dataAdapter);
+    }
