@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.content.Intent;
 import android.widget.EditText;
@@ -33,12 +34,16 @@ import android.widget.Toast;
 import android.widget.Spinner;
 
 import com.dainglis.trip_planner.R;
+import com.dainglis.trip_planner.controllers.CityDAO;
+import com.dainglis.trip_planner.models.City;
 import com.dainglis.trip_planner.models.Trip;
 import com.dainglis.trip_planner.controllers.TripDatabase;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 /* SOURCE FILE HEADER COMMENT ======================================================================
@@ -71,6 +76,9 @@ public class TripFormFragment extends Fragment {
     EditText DateArriveEnter;
     public long currentTripId = 0;
     Bundle extras;
+    private Spinner spinnerOne;
+    private Spinner spinnerTwo;
+    private ArrayList<City> cityArrayList;
 
 
 
@@ -104,17 +112,14 @@ public class TripFormFragment extends Fragment {
         EditEndCity = view.findViewById(R.id.editEndCity);
         DateDepartEnter = view.findViewById(R.id.dateDepartEnter);
         DateArriveEnter = view.findViewById(R.id.dateArriveEnter);
+        spinnerOne = (Spinner) view.findViewById(R.id.StartSpinner);
+        spinnerTwo = (Spinner) view.findViewById(R.id.EndSpinner);
 
-        // create spinner ref for first spinner
-        Spinner1 = view.findViewById(R.id.StartSpinner);
+        cityArrayList = new ArrayList<City>();
 
-        // create spinner re for Second spinner
-        Spinner2 = view.findViewById(R.id.EndSpinner);
-
-        // Spinner click listener setup
-        Spinner1.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
-        Spinner2.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
-
+        // spinner listener
+        spinnerOne.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+        spinnerTwo.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
 
 
         // create action for cancel button
@@ -136,7 +141,7 @@ public class TripFormFragment extends Fragment {
 
                 //create addBtn listener
                 if( !fieldValidation(EditName) || !fieldValidation(EditStartCity) || !fieldValidation(EditEndCity)||
-                        !dateValidate(DateDepartEnter) || !dateValidate(DateArriveEnter) )
+                        !dateValidate(DateDepartEnter) || !dateValidate(DateArriveEnter) ) // all are true then submit
                 {
                 }else
                     submitForm();
@@ -348,34 +353,45 @@ public class TripFormFragment extends Fragment {
 
     public void show(FragmentManager supportFragmentManager, String fragment_trip) {
     }
-}
 
-/* METHOD HEADER COMMENT -----------------------------------------------------------------------
-        Method:         addSpinnerCities()
-        Description:    Populate city spinners for selection.
-        Parameters:     void
-        Returns:
-    --------------------------------------------------------------------------------------------- */
 
-    /**
-     * Function to load the spinner data from SQLite database
-     * */
-    private void addSpinnerCities() {
-        // database handler
-        TripDatabase db = new TripDatabase() {
-        };
 
-        // Spinner Drop down elements
-        List<City> cities = db.getAll();
+    private void populateSpinner() {
+
+
+        List<String> cities = new ArrayList<String>();
+
+        for (int i = 0; i < cityArrayList.size(); i++) {
+            cities.add(cityArrayList.get(i).name);
+        }
 
         // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, cities);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, cities);
 
         // Drop down layout style - list view with radio button
-        dataAdapter
+        spinnerAdapter
                 .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        // attaching data adapter to spinner
-        spinner.setAdapter(dataAdapter);
+        // attaching data adapter to spinner1
+        spinnerOne.setAdapter(spinnerAdapter);
+
+        // attaching data adapter to spinner2
+        spinnerOne.setAdapter(spinnerAdapter);
     }
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
