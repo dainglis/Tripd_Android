@@ -11,7 +11,7 @@
 
 ================================================================================================= */
 
-package com.dainglis.trip_planner.views;
+package com.dainglis.trip_planner.deprec;
 
 
 import android.content.Intent;
@@ -29,7 +29,6 @@ import android.widget.Toast;
 
 import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.controllers.ActivityRequest;
-import com.dainglis.trip_planner.deprec.TripFormActivity;
 import com.dainglis.trip_planner.models.Event;
 import com.dainglis.trip_planner.models.Trip;
 import com.dainglis.trip_planner.controllers.TripDatabase;
@@ -97,7 +96,7 @@ public class TripInfoActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_info_page, menu);
+        //getMenuInflater().inflate(R.menu.menu_info_page, menu);
         return true;
     }
 
@@ -114,36 +113,6 @@ public class TripInfoActivity extends AppCompatActivity {
     --------------------------------------------------------------------------------------------- */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_edit_trip) {
-
-            // Selecting the "Edit Trip" menu option will launch the TripFormActivity
-            // as an activity with a result, passing the member currentTripId
-            Intent intent = new Intent(getApplicationContext(), TripFormActivity.class);
-            intent.putExtra(MainActivity.KEY_TRIP_ID, currentTripId);
-
-            //startActivity(intent);
-            startActivityForResult(intent, ActivityRequest.TRIP_FORM);
-            return true;
-        }
-
-        if (id == R.id.action_add_event) {
-
-            // Selecting the "Edit Trip" menu option will launch the EventFormActivity
-            // as an activity with a result, passing the member currentTripId
-            Intent intent = new Intent(getApplicationContext(), EventFormActivity.class);
-            intent.putExtra(MainActivity.KEY_TRIP_ID, currentTripId);
-
-            //startActivity(intent);
-            startActivityForResult(intent, ActivityRequest.EVENT_FORM);
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }

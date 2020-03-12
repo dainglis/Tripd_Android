@@ -20,7 +20,7 @@
     android:columnCount="1"
     android:background="@color/colorBackground"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".views.TripInfoActivity"
+    tools:context=".deprec.TripInfoActivity"
     tools:showIn="@layout/activity_trip_info" >
 
     <!-- Trip title -->
