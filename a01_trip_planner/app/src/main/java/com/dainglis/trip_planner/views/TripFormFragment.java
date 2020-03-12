@@ -15,8 +15,11 @@
 package com.dainglis.trip_planner.views;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -62,6 +65,8 @@ import java.util.List;
 
 public class TripFormFragment extends Fragment {
 
+    private long currentTripId = 0;
+
     // Create vars for cancel and confirm buttons
     Button CanButt;
     Button BtnConfirm;
@@ -74,13 +79,14 @@ public class TripFormFragment extends Fragment {
     EditText EditEndCity;
     EditText DateDepartEnter;
     EditText DateArriveEnter;
-    public long currentTripId = 0;
     Bundle extras;
     private Spinner spinnerOne;
     private Spinner spinnerTwo;
     private ArrayList<City> cityArrayList;
 
+    LiveData<Trip> mTrip;
 
+    private OnFragmentInteractionListener mListener;
 
     public TripFormFragment() {
         // Required empty public constructor
@@ -150,8 +156,17 @@ public class TripFormFragment extends Fragment {
 
         });
 
+        mTrip = TripDatabase.getInstance().tripDAO().getById(currentTripId);
+        mTrip.observe(this, new Observer<Trip>() {
+            @Override
+            public void onChanged(@Nullable Trip trip) {
+                updateTripDetails(trip);
+            }
+        });
+
         //extras = getArguments().getExtras();
 
+        /*
         if (extras != null) {
             currentTripId = extras.getLong("tripId");
 
@@ -167,7 +182,26 @@ public class TripFormFragment extends Fragment {
             }
         }
 
+         */
+
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof TripFormFragment.OnFragmentInteractionListener) {
+            mListener = (TripFormFragment.OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
 
@@ -179,24 +213,8 @@ public class TripFormFragment extends Fragment {
         Returns:        void.
     --------------------------------------------------------------------------------------------- */
     private void cancelForm() {
-        //setResult(RESULT_CANCELED);
-        getActivity().finish();
+        mListener.onTerminateTripForm();
     }
-
-
-
-    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-        Method:         openActivity()
-        Description:    This method is called when the add button is pressed.
-                        When pressed, main page is called.
-        Parameters:     None.
-        Returns:        Void.
-    --------------------------------------------------------------------------------------------- */
-    public void openActivity() {
-        Intent intent = new Intent(getActivity(), MainActivity.class);
-        startActivity(intent);
-    }
-
 
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
@@ -218,29 +236,28 @@ public class TripFormFragment extends Fragment {
 
         try {
 
-            if (extras == null) {
+            if (currentTripId == 0) {
 
                 // Save the new trip to the db in a background thread,
                 // then return to the calling Activity
-                AsyncTask.execute(new Runnable() {
+                TripDatabase.databaseWriteExecutor.execute(new Runnable() {
 
                     @Override
                     public void run() {
                         TripDatabase.getInstance().tripDAO().insert(trip);
-                        //      Toast.makeText(TripFormActivity.this,"Trip saved", Toast.LENGTH_SHORT).show();
                     }
 
                 });
 
-            } else {
-
+            }
+            else {
+                // Save the changes to the existing trip
                 trip.setTripId(currentTripId);
-                AsyncTask.execute(new Runnable() {
+                TripDatabase.databaseWriteExecutor.execute(new Runnable() {
 
                     @Override
                     public void run() {
                         TripDatabase.getInstance().tripDAO().update(trip);
-                        //     Toast.makeText(TripFormActivity.this,"Trip edited", Toast.LENGTH_SHORT).show();
                     }
 
                 });
@@ -255,8 +272,7 @@ public class TripFormFragment extends Fragment {
   //          setResult(RESULT_CANCELED);
         }
 
-        getActivity().finish();
-
+        mListener.onTerminateTripForm();
     }
 
 
@@ -338,6 +354,16 @@ public class TripFormFragment extends Fragment {
         }
     }
 
+    private void updateTripDetails(@Nullable Trip trip) {
+        if (trip != null) {
+            EditName.setText(trip.getTitle());
+            EditStartCity.setText(trip.getStartLocation());
+            EditEndCity.setText(trip.getEndLocation());
+            DateDepartEnter.setText(trip.getStartDate());
+            DateArriveEnter.setText(trip.getEndDate());
+        }
+    }
+
 
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
@@ -351,7 +377,14 @@ public class TripFormFragment extends Fragment {
         return TripDatabase.getInstance().tripDAO().getById(id);
     }
 
-    public void show(FragmentManager supportFragmentManager, String fragment_trip) {
+    public void setTripId(long tripId) {
+        currentTripId = tripId;
+    }
+
+
+
+    public interface OnFragmentInteractionListener {
+        void onTerminateTripForm();
     }
 
 

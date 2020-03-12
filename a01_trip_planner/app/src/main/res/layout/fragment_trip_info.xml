@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- SOURCE FILE HEADER COMMENT ====================================================================
+
+  FILENAME:     content_trip_info_info.xml
+  PROJECT:      PROG3150 - Assignment 01
+  PROGRAMMERS:  David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
+  DATE:         February 8th, 2020
+  DESCRIPTION:  This file contains the xml needed for the content_trip_info activity.
+                This file utilizes GridLayout and TextViews.
+
+===============================================================================================  -->
+<android.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/buttonEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="90dp"
+        android:layout_marginEnd="@dimen/fab_btm_margin"
+        android:layout_marginStart="@dimen/fab_btm_margin"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_gravity="center|bottom|end"
+        app:backgroundTint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="24dp"
+        app:srcCompat="@drawable/ic_edit_black_24dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/buttonAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/fab_btm_margin"
+        android:layout_marginEnd="@dimen/fab_btm_margin"
+        android:layout_marginStart="@dimen/fab_btm_margin"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_gravity="center|bottom|end"
+        app:backgroundTint="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="32dp"
+        app:srcCompat="@drawable/ic_add_black_24dp" />
+
+    <GridLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:rowCount="6"
+    android:columnCount="1"
+    android:background="@color/colorBackground"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".views.TripFormFragment">
+
+        <!-- Trip title -->
+        <TextView
+            android:id="@+id/tripName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="4dp"
+            android:text="@string/trip_placeholder"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:textSize="@dimen/info_trip_title"
+            android:layout_row="0"/>
+
+
+        <!-- Trip image (DEPRECATED)
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/upload_a_trip_image"
+            app:srcCompat="@android:drawable/ic_menu_report_image"
+            android:layout_row="0" />
+            -->
+
+
+        <!-- Date stamp -->
+        <TextView
+            android:id="@+id/tripDateInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:layout_row="2"
+            android:padding="4dp"
+            android:text="@string/city_placeholder"
+            android:textSize="@dimen/info_date_text" />
+
+
+        <!-- Trip locations -->
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="3"
+            android:rowCount="2"
+            android:columnCount="2"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:layout_gravity="start" >
+
+            <TextView
+                android:id="@+id/tripLabelFrom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/label_from"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:textSize="@dimen/info_city_spacer" />
+            <TextView
+                android:id="@+id/tripStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:textAlignment="center"
+                android:layout_gravity="center_horizontal"
+                android:paddingTop="10dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="@string/city_placeholder"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:textSize="@dimen/info_city_text" />
+
+            <TextView
+                android:id="@+id/tripLabelTo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/label_to"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:textSize="@dimen/info_city_spacer" />
+            <TextView
+                android:id="@+id/tripEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:textAlignment="center"
+                android:layout_gravity="center_horizontal"
+                android:paddingTop="10dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="@string/city_placeholder"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:textSize="@dimen/info_city_text" />
+        </GridLayout>
+
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="10dp"
+            android:background="@color/colorPrimary" />
+
+        <!-- Events list -->
+        <TextView
+            android:id="@+id/eventListLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:padding="4dp"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/info_city_text"
+            android:text="@string/events_label"
+            android:layout_row="4" />
+
+        <ListView
+            android:id="@+id/eventListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_row="5" />
+
+    </GridLayout>
+</android.widget.FrameLayout>

@@ -59,6 +59,8 @@
 
     <string name="about_title_ver">Tripd v0.2</string>
     <string name="about_text">Authors: Megan Bradshaw, David Inglis, Nick Iden, Steven Knapp, Michel Lima</string>
+    <string name="about_support_label">Support:</string>
+    <string name="fake_phone_support_num">+1 (519) 888–8888</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
