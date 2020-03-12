@@ -28,18 +28,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.content.Intent;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.Spinner;
 
 import com.dainglis.trip_planner.R;
+import com.dainglis.trip_planner.controllers.CityDAO;
+import com.dainglis.trip_planner.models.City;
 import com.dainglis.trip_planner.models.Trip;
 import com.dainglis.trip_planner.controllers.TripDatabase;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 /* SOURCE FILE HEADER COMMENT ======================================================================
@@ -63,6 +70,8 @@ public class TripFormFragment extends Fragment {
     // Create vars for cancel and confirm buttons
     Button CanButt;
     Button BtnConfirm;
+    Spinner Spinner1;
+    Spinner Spinner2;
 
     // Create vars for edit texts
     EditText EditName;
@@ -71,6 +80,9 @@ public class TripFormFragment extends Fragment {
     EditText DateDepartEnter;
     EditText DateArriveEnter;
     Bundle extras;
+    private Spinner spinnerOne;
+    private Spinner spinnerTwo;
+    private ArrayList<City> cityArrayList;
 
     LiveData<Trip> mTrip;
 
@@ -106,6 +118,15 @@ public class TripFormFragment extends Fragment {
         EditEndCity = view.findViewById(R.id.editEndCity);
         DateDepartEnter = view.findViewById(R.id.dateDepartEnter);
         DateArriveEnter = view.findViewById(R.id.dateArriveEnter);
+        spinnerOne = (Spinner) view.findViewById(R.id.StartSpinner);
+        spinnerTwo = (Spinner) view.findViewById(R.id.EndSpinner);
+
+        cityArrayList = new ArrayList<City>();
+
+        // spinner listener
+        spinnerOne.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+        spinnerTwo.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+
 
         // create action for cancel button
         CanButt = view.findViewById(R.id.buttonSetupCancel);
@@ -126,7 +147,7 @@ public class TripFormFragment extends Fragment {
 
                 //create addBtn listener
                 if( !fieldValidation(EditName) || !fieldValidation(EditStartCity) || !fieldValidation(EditEndCity)||
-                        !dateValidate(DateDepartEnter) || !dateValidate(DateArriveEnter) )
+                        !dateValidate(DateDepartEnter) || !dateValidate(DateArriveEnter) ) // all are true then submit
                 {
                 }else
                     submitForm();
@@ -365,5 +386,45 @@ public class TripFormFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         void onTerminateTripForm();
     }
+
+
+
+    private void populateSpinner() {
+
+
+        List<String> cities = new ArrayList<String>();
+
+        for (int i = 0; i < cityArrayList.size(); i++) {
+            cities.add(cityArrayList.get(i).name);
+        }
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, cities);
+
+        // Drop down layout style - list view with radio button
+        spinnerAdapter
+                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner1
+        spinnerOne.setAdapter(spinnerAdapter);
+
+        // attaching data adapter to spinner2
+        spinnerOne.setAdapter(spinnerAdapter);
+    }
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
 

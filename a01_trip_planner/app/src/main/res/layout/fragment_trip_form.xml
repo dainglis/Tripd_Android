@@ -10,16 +10,14 @@
 
 ===============================================================================================  -->
 
-
-
 <android.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.TripFormFragment">
 
     <GridLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorBackground"
@@ -89,17 +87,6 @@
             android:text="@string/startCity"
             android:textSize="24sp" />
 
-        <EditText
-            android:id="@+id/editStartCity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="3"
-            android:layout_column="1"
-            android:ems="10"
-            android:hint="@string/editStartCity"
-            android:importantForAutofill="no"
-            android:inputType="textPersonName" />
-
 
         <!-- End city -->
         <TextView
@@ -111,17 +98,6 @@
             android:layout_marginBottom="20dp"
             android:text="@string/endCity"
             android:textSize="24sp" />
-
-        <EditText
-            android:id="@+id/editEndCity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="4"
-            android:layout_column="1"
-            android:ems="10"
-            android:hint="@string/editEndCity"
-            android:importantForAutofill="no"
-            android:inputType="textPersonName" />
 
 
         <!-- Depart date -->
@@ -239,6 +215,25 @@
             android:bufferType="normal"
             android:text="@string/cancelButton"
             android:textColor="@android:color/white" />
+
+        <Spinner
+            android:id="@+id/StartSpinner"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:layout_row="3"
+            android:layout_column="1"
+
+            android:prompt="@string/editStartCity" />
+
+
+        <Spinner
+            android:id="@+id/EndSpinner"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:layout_row="4"
+            android:layout_column="1"
+            android:prompt="@string/depart_date"
+            android:spinnerMode="dropdown" />
 
     </GridLayout>
 </android.widget.FrameLayout>
