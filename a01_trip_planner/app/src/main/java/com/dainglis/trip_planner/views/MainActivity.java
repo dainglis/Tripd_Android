@@ -13,19 +13,15 @@
 
 package com.dainglis.trip_planner.views;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.controllers.TripDatabase;
-import com.dainglis.trip_planner.models.Trip;
 
 
 public class MainActivity extends AppCompatActivity implements
@@ -89,8 +85,8 @@ public class MainActivity extends AppCompatActivity implements
     private void setInitialFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, fragment)
-                .setTransition(android.R.animator.fade_out)
-                .commitNow();
+                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                .commit();
     }
 
 
@@ -100,8 +96,9 @@ public class MainActivity extends AppCompatActivity implements
      */
     private void setActiveFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .setTransition(android.R.animator.fade_out)
+                .replace(R.id.fragment_container, fragment, "newFragment")
+                //.setTransition(android.R.animator.fade_out)
+                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                 .addToBackStack(null)
                 .commit();
     }
@@ -157,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements
      */
     @Override
     public void onTripSelected(final long tripId) {
-        Toast.makeText(this, "Launching trip info page for id " + tripId, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Launching trip info page for id " + tripId, Toast.LENGTH_SHORT).show();
 
         TripInfoFragment infoFragment = TripInfoFragment.newInstance();
         infoFragment.setCurrentTripId(tripId);

@@ -89,7 +89,7 @@ public abstract class TripDatabase extends RoomDatabase {
     }
 
     public static void initializeCities() {
-        Log.d(null, "Creating Cities table if it does not exist");
+        Log.d(databaseName, "Creating Cities table if it does not exist");
 
         List<City> lCities;
 
@@ -121,7 +121,7 @@ public abstract class TripDatabase extends RoomDatabase {
 
 
         lCities = instance.cityDAO().getAll();
-        Log.d(null, "Added " + lCities.size() + " cities");
+        Log.d(databaseName, "Added " + lCities.size() + " cities");
 
 
     }
@@ -129,12 +129,12 @@ public abstract class TripDatabase extends RoomDatabase {
 
     public static void loadSampleDataFromFile(Context context, int resId) {
         if (instance == null) {
-            Log.d(null, "TripDatabase not instantiated");
+            Log.d(databaseName, "TripDatabase not instantiated");
             return;
         }
 
         if (instance.tripDAO().getAllStatic().size() > 0) {
-            Log.d(null, "TripDatabase non-empty, ignoring test data");
+            Log.d(databaseName, "TripDatabase non-empty, ignoring test data");
             return;
         }
 

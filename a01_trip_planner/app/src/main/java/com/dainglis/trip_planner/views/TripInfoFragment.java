@@ -193,6 +193,7 @@ public class TripInfoFragment extends Fragment {
 
     private List<Event> getEvents(long tripId) {
         return TripDatabase.getInstance().eventDAO().getAllByTripId(tripId);
+    }
 
 
     public interface OnFragmentInteractionListener {
