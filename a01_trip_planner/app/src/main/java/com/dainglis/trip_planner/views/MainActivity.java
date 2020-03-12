@@ -158,9 +158,12 @@ public class MainActivity extends AppCompatActivity
     public void onTripSelected(final long tripId) {
         Toast.makeText(this, "Launching trip info page for id " + tripId, Toast.LENGTH_SHORT).show();
 
-
-        setActiveFragment(TripInfoFragment.newInstance());
+        TripInfoFragment infoFragment = TripInfoFragment.newInstance();
+        infoFragment.setCurrentTripId(tripId);
+        setActiveFragment(infoFragment);
         // This is a sample proof-of-concept for opening a Wikipedia link to the selected Trip's destination city
+
+        /*
         TripDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -175,10 +178,13 @@ public class MainActivity extends AppCompatActivity
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(url));
                     startActivity(intent);
-                */
+
                 }
             }
         });
+
+         */
+
     }
 
     @Override

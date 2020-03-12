@@ -57,7 +57,7 @@ public class TripInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-         view = inflater.inflate(R.layout.fragment_trip_form, container, false);
+         view = inflater.inflate(R.layout.fragment_trip_info, container, false);
 
 
         if (currentTripId == 0) {
@@ -107,7 +107,7 @@ public class TripInfoFragment extends Fragment {
     protected void displayTripDetails(long tripId) {
 
         // Query the database for the Trip associated with tripId
-        Trip currentTrip = getCurrentTrip(tripId).getValue();
+        Trip currentTrip = getCurrentTrip(tripId);
 
         if (currentTrip != null) {
             // Text views to be populated
@@ -144,7 +144,7 @@ public class TripInfoFragment extends Fragment {
         Parameters:     long        id      The unique id of the requested Trip object.
         Returns:        Trip                The Trip object corresponding to the provided Id
     --------------------------------------------------------------------------------------------- */
-    private LiveData<Trip> getCurrentTrip(long id) {
-        return TripDatabase.getInstance().tripDAO().getById(id);
+    private Trip getCurrentTrip(long id) {
+        return TripDatabase.getInstance().tripDAO().getByIdStatic(id);
     }
 }
