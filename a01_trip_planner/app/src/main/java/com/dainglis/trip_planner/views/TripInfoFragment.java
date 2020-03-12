@@ -14,8 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dainglis.trip_planner.R;
+import com.dainglis.trip_planner.models.Event;
 import com.dainglis.trip_planner.models.Trip;
 import com.dainglis.trip_planner.controllers.TripDatabase;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -125,16 +131,40 @@ public class TripInfoFragment extends Fragment {
             // A simplified two-line list item using the
             // two_line_list_item.xml layout file
 
-/*            SimpleAdapter eventsAdapter = new SimpleAdapter(this,
-         AAAAAAAAAAAAAAAAAAAAAAAA           generateEventInfoList(tripId),
+            SimpleAdapter eventsAdapter = new SimpleAdapter(getActivity().getApplicationContext(),
+                    generateEventInfoList(tripId),
                     R.layout.two_line_list_item,
                     new String[] {KEY_MAIN_TEXT, KEY_SECONDARY_TEXT },
                     new int[] {R.id.main_text, R.id.secondary_text });
 
-            ListView eventList = findViewById(R.id.eventListView);
-            eventList.setAdapter(eventsAdapter);*/
+            ListView eventList = view.findViewById(R.id.eventListView);
+            eventList.setAdapter(eventsAdapter);
 
         }
+    }
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+    Method:         generateEventInfoList()
+    Description:    Queries the local database for all Events matching the specified tripId.
+    Parameters:     long        tripId      The id of the Trip to query the database for and
+                                            populate the layout elements with the Trip data.
+    Returns:        List<Map<String, String>>   The requested data from the database.
+
+--------------------------------------------------------------------------------------------- */
+    private List<Map<String, String>> generateEventInfoList(long tripId) {
+        List<Map<String, String>> data = new ArrayList<>();
+
+        List<Event> events = getEvents(tripId);
+
+        for (int i = 0; i < events.size(); i++) {
+            Map<String, String> datum = new HashMap<>(2);
+            datum.put(KEY_MAIN_TEXT, events.get(i).title);
+            datum.put(KEY_SECONDARY_TEXT,events.get(i).date);
+            data.add(datum);
+        }
+
+        return data;
     }
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
@@ -146,5 +176,20 @@ public class TripInfoFragment extends Fragment {
     --------------------------------------------------------------------------------------------- */
     private Trip getCurrentTrip(long id) {
         return TripDatabase.getInstance().tripDAO().getByIdStatic(id);
+    }
+
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         getEvents()
+        Description:    Queries the "trip_planner" database for the Trip object with the specified
+                        id.
+        Parameters:     long        id          The id of the Trip to query the database for.
+        Returns:        List<Event>             The events in the specified Trip.
+
+    --------------------------------------------------------------------------------------------- */
+
+    private List<Event> getEvents(long tripId) {
+        return TripDatabase.getInstance().eventDAO().getAllByTripId(tripId);
     }
 }

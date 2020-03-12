@@ -20,6 +20,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
 import com.dainglis.trip_planner.models.Event;
+import com.dainglis.trip_planner.models.Trip;
 
 @Dao
 public interface EventDAO {
