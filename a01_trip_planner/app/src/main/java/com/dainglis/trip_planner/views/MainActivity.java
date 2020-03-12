@@ -15,6 +15,8 @@ package com.dainglis.trip_planner.views;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -84,8 +86,8 @@ public class MainActivity extends AppCompatActivity implements
      */
     private void setInitialFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.fragment_container, fragment)
-                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                 .commit();
     }
 
@@ -96,9 +98,8 @@ public class MainActivity extends AppCompatActivity implements
      */
     private void setActiveFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .replace(R.id.fragment_container, fragment, "newFragment")
-                //.setTransition(android.R.animator.fade_out)
-                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                 .addToBackStack(null)
                 .commit();
     }
