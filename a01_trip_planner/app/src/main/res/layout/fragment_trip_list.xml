@@ -16,15 +16,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".views.MainActivity"
-    tools:showIn="@layout/activity_main">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/trip_card_rec_view"
-        android:divider="@android:color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addBtn"
@@ -39,8 +31,15 @@
         app:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:maxImageSize="30dp"
-        
+        app:maxImageSize="32dp"
         app:srcCompat="@drawable/ic_add_black_24dp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/trip_card_rec_view"
+        android:divider="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
 
 </android.widget.FrameLayout>

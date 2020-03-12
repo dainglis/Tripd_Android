@@ -21,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.controllers.TripDatabase;
@@ -28,7 +29,8 @@ import com.dainglis.trip_planner.controllers.TripDatabase;
 
 public class MainActivity extends AppCompatActivity implements
         TripListFragment.OnFragmentInteractionListener,
-        TripFormFragment.OnFragmentInteractionListener {
+        TripFormFragment.OnFragmentInteractionListener,
+        TripInfoFragment.OnFragmentInteractionListener {
 
     static final String KEY_TRIP_ID = "tripId";
 
@@ -150,47 +152,29 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
+    /* Code snippet for launching a Wikipedia page */
+    /*
+    String url = "https://www.wikipedia.org/wiki/" + someString;
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            startActivity(intent);
+
+     */
+
+
     /*
      *  Interface methods from TripListFragment.OnFragmentInteractionListener
      */
     @Override
     public void onTripSelected(final long tripId) {
-        //Toast.makeText(this, "Launching trip info page for id " + tripId, Toast.LENGTH_SHORT).show();
-
         TripInfoFragment infoFragment = TripInfoFragment.newInstance();
         infoFragment.setCurrentTripId(tripId);
         setActiveFragment(infoFragment);
-        // This is a sample proof-of-concept for opening a Wikipedia link to the selected Trip's destination city
-
-        /*
-        TripDatabase.databaseWriteExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                Trip current = TripDatabase.getInstance().tripDAO().getByIdStatic(tripId);
-
-                if (current != null) {
-                    TripInfoFragment tripInfo = TripInfoFragment.newInstance();
-                    tripInfo.setCurrentTripId(tripId);
-                    setActiveFragment(tripInfo);
-
-                    /*    String url = "https://www.wikipedia.org/wiki/" + current.getEndLocation();
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(url));
-                    startActivity(intent);
-
-                }
-            }
-        });
-
-         */
-
     }
 
     @Override
     public void onAddButtonPressed() {
         setActiveFragment(TripFormFragment.newInstance());
-        //
-        //Toast.makeText(this, "Launching fragment to create new Trip", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -200,6 +184,24 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onTerminateTripForm() {
         previousFragment();
+    }
+
+
+    /*
+     *  Interface methods for TripInfoFragment
+     */
+    @Override
+    public void onAddButtonPressed(long tripId) {
+        Toast.makeText(this, "Trying to create a new event", Toast.LENGTH_SHORT)
+                .show();
+    }
+
+    @Override
+    public void onEditButtonPressed(long tripId) {
+        TripFormFragment formFragment = TripFormFragment.newInstance();
+        formFragment.setTripId(tripId);
+
+        setActiveFragment(formFragment);
     }
 
 

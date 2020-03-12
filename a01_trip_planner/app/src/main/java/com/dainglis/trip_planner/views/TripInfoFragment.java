@@ -2,8 +2,10 @@ package com.dainglis.trip_planner.views;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +38,8 @@ public class TripInfoFragment extends Fragment {
     TextView startLocationView;
     TextView endLocationView;
     TextView tripDateView;
+    FloatingActionButton addButton;
+    FloatingActionButton editButton;
 
     public long currentTripId;
     //Bundle extras;
@@ -65,6 +69,9 @@ public class TripInfoFragment extends Fragment {
         endLocationView = view.findViewById(R.id.tripEnd);
         tripDateView = view.findViewById(R.id.tripDateInfo);
 
+        addButton = view.findViewById(R.id.buttonAdd);
+        editButton = view.findViewById(R.id.buttonEdit);
+
         if (currentTripId == 0) {
             Toast.makeText(view.getContext(),"No tripId received", Toast.LENGTH_SHORT)
                     .show();
@@ -72,6 +79,10 @@ public class TripInfoFragment extends Fragment {
         return view;
     }
 
+
+    /*
+     * Add Listeners and Observers to data objects when the Fragment is fully instantiated
+     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -91,6 +102,20 @@ public class TripInfoFragment extends Fragment {
             @Override
             public void onChanged(@Nullable List<Event> events) {
                 updateEventView(events);
+            }
+        });
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                raiseAddButtonPressed(mViewModel.getTripId());
+            }
+        });
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                raiseEditButtonPressed(mViewModel.getTripId());
             }
         });
     }
@@ -118,6 +143,38 @@ public class TripInfoFragment extends Fragment {
             ListView eventList = view.findViewById(R.id.eventListView);
             eventList.setAdapter(eventsAdapter);
         }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof TripInfoFragment.OnFragmentInteractionListener) {
+            mListener = (TripInfoFragment.OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    private void raiseAddButtonPressed(long tripId) {
+        mListener.onAddButtonPressed(tripId);
+    }
+
+    private void raiseEditButtonPressed(long tripId) {
+        mListener.onEditButtonPressed(tripId);
+    }
+
+
+    public interface OnFragmentInteractionListener {
+        //void interfaceFunction();
+        void onAddButtonPressed(long tripId);
+        void onEditButtonPressed(long tripId);
     }
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
@@ -190,10 +247,12 @@ public class TripInfoFragment extends Fragment {
                         id.
         Parameters:     long        id      The unique id of the requested Trip object.
         Returns:        Trip                The Trip object corresponding to the provided Id
-    --------------------------------------------------------------------------------------------- */
+    ---------------------------------------------------------------------------------------------
     private Trip getCurrentTrip(long id) {
         return TripDatabase.getInstance().tripDAO().getByIdStatic(id);
     }
+
+     */
 
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
@@ -213,8 +272,4 @@ public class TripInfoFragment extends Fragment {
 
      */
 
-
-    public interface OnFragmentInteractionListener {
-        void interfaceFunction();
-    }
 }

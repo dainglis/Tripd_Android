@@ -16,14 +16,22 @@ public class TripInfoViewModel extends ViewModel {
     public static final String KEY_MAIN_TEXT = "main";
     public static final String KEY_SECONDARY_TEXT = "secondary";
 
+    private long mTripId;
     private LiveData<Trip> mTrip;
     private LiveData<List<Event>> mTripEvents;
 
-    public TripInfoViewModel() {}
+    public TripInfoViewModel() {
+        mTripId = 0;
+    }
 
     public void setTripId(long tripId) {
-        mTrip = TripDatabase.getInstance().tripDAO().getById(tripId);
-        mTripEvents = TripDatabase.getInstance().eventDAO().getAllByTripId(tripId);
+        mTripId = tripId;
+        mTrip = TripDatabase.getInstance().tripDAO().getById(mTripId);
+        mTripEvents = TripDatabase.getInstance().eventDAO().getAllByTripId(mTripId);
+    }
+
+    public long getTripId() {
+        return mTripId;
     }
 
     public LiveData<Trip> getTrip() { return mTrip; }
