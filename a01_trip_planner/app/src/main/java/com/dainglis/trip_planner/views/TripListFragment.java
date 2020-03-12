@@ -1,37 +1,25 @@
 package com.dainglis.trip_planner.views;
 
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
 
-import com.dainglis.trip_planner.OnFragmentInteractionListener;
 import com.dainglis.trip_planner.R;
-import com.dainglis.trip_planner.TestFrag;
 import com.dainglis.trip_planner.controllers.TripListAdapter;
 import com.dainglis.trip_planner.controllers.TripListViewModel;
 import com.dainglis.trip_planner.models.Trip;
 
 import java.util.List;
-import java.util.concurrent.RecursiveAction;
 
 public class TripListFragment extends Fragment {
 
@@ -82,21 +70,7 @@ public class TripListFragment extends Fragment {
         mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Fire the raiseAddTrip event when the button is pressed,
-                // notifying the parent Activity that the active Fragment
-                // should be switched
-              /*
-
-                Fragment fragment = null;
-                fragment = new TripFormFragment();
-
-                FragmentManager manager = getFragmentManager(); // added a onclick to trigger fragment for tripform
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.fragment_container, fragment);
-                transaction.commit();
-                */
                 raiseAddTrip();
-
             }
         });
     }
