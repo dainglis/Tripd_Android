@@ -1,19 +1,19 @@
 package com.dainglis.trip_planner.controllers;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.widget.ListView;
 
-import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.models.Trip;
 
 import java.util.List;
 
 public class TripListViewModel extends ViewModel {
 
+    private TripListAdapter tripsAdapter;
     private LiveData<List<Trip>> mTrips;
 
     public TripListViewModel() {
@@ -23,6 +23,7 @@ public class TripListViewModel extends ViewModel {
     public LiveData<List<Trip>> getTrips() {
         return mTrips;
     }
+
 
 
     /* METHOD HEADER COMMENT ---------------------------------------------------------------------------

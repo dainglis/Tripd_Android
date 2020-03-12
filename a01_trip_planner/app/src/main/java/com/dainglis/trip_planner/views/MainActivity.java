@@ -5,8 +5,9 @@
     PROJECT:        PROG3150 - Assignment 01
     PROGRAMMERS:    David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
     DATE:           February 8th, 2020
-    DESCRIPTION:    The main activity is the landing page of the Tripd app. This page contains the
-                    code behind to display trip "cards" and add new trips.
+    DESCRIPTION:    The MainActivity is the frame for each of the Fragment pages of the Tripd app.
+                    It creates the AppBar with menu, and provides a container and interaction for
+                    the Fragments
 
 ================================================================================================= */
 
@@ -25,8 +26,6 @@ import android.widget.Toast;
 import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.controllers.TripDatabase;
 import com.dainglis.trip_planner.models.Trip;
-
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity
@@ -56,38 +55,13 @@ public class MainActivity extends AppCompatActivity
                 //TripDatabase.loadSampleData();
             }
         });
-
-
     }
+
 
     @Override
     protected void onStart() {
         super.onStart();
         setInitialFragment(TripListFragment.newInstance());
-
-    }
-
-    /*
-     * Replaces the placeholder fragment layout area with the main navigational fragment.
-     * Prevents a blank fragment from appearing after the back button is pressed
-     */
-    private void setInitialFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .setTransition(android.R.animator.fade_out)
-                .commitNow();
-    }
-
-    /*
-     *  Replaces the current fragment in the FragmentManager with the specified fragment,
-     *  adding the current fragment to the backstack
-     */
-    private void setActiveFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .setTransition(android.R.animator.fade_out)
-                .addToBackStack(null)
-                .commit();
     }
 
 
@@ -104,6 +78,49 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main_activity, menu);
         return true;
+    }
+
+
+    /*
+     * Replaces the placeholder fragment layout area with the main navigational fragment.
+     * Prevents a blank fragment from appearing after the back button is pressed
+     */
+    private void setInitialFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .setTransition(android.R.animator.fade_out)
+                .commitNow();
+    }
+
+
+    /*
+     *  Replaces the current fragment in the FragmentManager with the specified fragment,
+     *  adding the current fragment to the backstack
+     */
+    private void setActiveFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .setTransition(android.R.animator.fade_out)
+                .addToBackStack(null)
+                .commit();
+    }
+
+
+    /*
+     *  Pops the current Fragment off the stack of the FragmentManager, effectively
+     *  returning to the previous Fragment on the stack
+     */
+    private void previousFragment() {
+        getSupportFragmentManager().popBackStack();
+    }
+
+
+    /*
+     *  Launches an AboutDialogFragment over the currently running Activity
+     */
+    private void showAboutDialog() {
+        AboutDialogFragment adf = AboutDialogFragment.newInstance();
+        adf.show(getSupportFragmentManager(), "dialog_fragment_about");
     }
 
 
@@ -133,6 +150,10 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+
+    /*
+     *  Interface methods from TripListFragment.OnFragmentInteractionListener
+     */
     @Override
     public void onTripSelected(final long tripId) {
         Toast.makeText(this, "Launching trip info page for id " + tripId, Toast.LENGTH_SHORT).show();
@@ -160,26 +181,23 @@ public class MainActivity extends AppCompatActivity
         //Toast.makeText(this, "Launching fragment to create new Trip", Toast.LENGTH_SHORT).show();
     }
 
+
     /*
-     *
+     *  Interface methods for other Fragments
+     * TBD
      */
-    private void showAboutDialog() {
-        AboutDialogFragment adf = AboutDialogFragment.newInstance();
-        adf.show(getSupportFragmentManager(), "dialog_fragment_about");
-    }
+
 
 
     /*
     *   DEPREC
     *   this is only appropriate procedure for a DialogFragment, as it is shown
     *   on top of the current window
-
-
     private void showFormFrag() {
 
         TripFormFragment tff = TripFormFragment.newInstance();
         tff.show(getSupportFragmentManager(),"fragment_trip");
     }
-
      */
+    
 }
