@@ -15,6 +15,7 @@
 package com.dainglis.trip_planner.views;
 
 import android.arch.lifecycle.LiveData;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -68,7 +69,7 @@ public class TripFormFragment extends Fragment {
     public long currentTripId = 0;
     Bundle extras;
 
-
+    private OnFragmentInteractionListener mListener;
 
     public TripFormFragment() {
         // Required empty public constructor
@@ -149,6 +150,23 @@ public class TripFormFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof TripFormFragment.OnFragmentInteractionListener) {
+            mListener = (TripFormFragment.OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
         Method:         cancelForm()
@@ -159,22 +177,25 @@ public class TripFormFragment extends Fragment {
     --------------------------------------------------------------------------------------------- */
     private void cancelForm() {
         //setResult(RESULT_CANCELED);
-        getActivity().finish();
+        mListener.onTerminateTripForm();
     }
 
 
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+    DEPREC
         Method:         openActivity()
         Description:    This method is called when the add button is pressed.
                         When pressed, main page is called.
         Parameters:     None.
         Returns:        Void.
-    --------------------------------------------------------------------------------------------- */
+    ---------------------------------------------------------------------------------------------
     public void openActivity() {
         Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
     }
+
+     */
 
 
 
@@ -234,8 +255,7 @@ public class TripFormFragment extends Fragment {
   //          setResult(RESULT_CANCELED);
         }
 
-        getActivity().finish();
-
+        mListener.onTerminateTripForm();
     }
 
 
@@ -330,7 +350,10 @@ public class TripFormFragment extends Fragment {
         return TripDatabase.getInstance().tripDAO().getById(id);
     }
 
-    public void show(FragmentManager supportFragmentManager, String fragment_trip) {
+
+
+    public interface OnFragmentInteractionListener {
+        void onTerminateTripForm();
     }
 }
 

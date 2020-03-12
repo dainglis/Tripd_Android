@@ -2,6 +2,7 @@ package com.dainglis.trip_planner.views;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,9 +24,10 @@ import com.dainglis.trip_planner.controllers.TripDatabase;
  * create an instance of this fragment.
  */
 public class TripInfoFragment extends Fragment {
-
     private static final String KEY_MAIN_TEXT = "main";
     private static final String KEY_SECONDARY_TEXT = "secondary";
+
+    private OnFragmentInteractionListener mListener;
 
     View view;
     TextView tripNameView;
@@ -146,5 +148,12 @@ public class TripInfoFragment extends Fragment {
     --------------------------------------------------------------------------------------------- */
     private Trip getCurrentTrip(long id) {
         return TripDatabase.getInstance().tripDAO().getByIdStatic(id);
+    }
+
+
+
+
+    public interface OnFragmentInteractionListener {
+        void interfaceFunction();
     }
 }

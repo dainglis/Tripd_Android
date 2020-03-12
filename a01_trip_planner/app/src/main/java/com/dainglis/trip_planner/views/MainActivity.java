@@ -28,8 +28,9 @@ import com.dainglis.trip_planner.controllers.TripDatabase;
 import com.dainglis.trip_planner.models.Trip;
 
 
-public class MainActivity extends AppCompatActivity
-        implements TripListFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements
+        TripListFragment.OnFragmentInteractionListener,
+        TripFormFragment.OnFragmentInteractionListener {
 
     static final String KEY_TRIP_ID = "tripId";
 
@@ -196,9 +197,12 @@ public class MainActivity extends AppCompatActivity
 
 
     /*
-     *  Interface methods for other Fragments
-     * TBD
+     *  Interface methods for TripFormFragment
      */
+    @Override
+    public void onTerminateTripForm() {
+        previousFragment();
+    }
 
 
 
