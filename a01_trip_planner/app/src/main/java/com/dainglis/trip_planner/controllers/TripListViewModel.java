@@ -1,10 +1,8 @@
 package com.dainglis.trip_planner.controllers;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.widget.ListView;
 
 import com.dainglis.trip_planner.models.Trip;
@@ -13,7 +11,6 @@ import java.util.List;
 
 public class TripListViewModel extends ViewModel {
 
-    private TripListAdapter tripsAdapter;
     private LiveData<List<Trip>> mTrips;
 
     public TripListViewModel() {

@@ -14,6 +14,7 @@ package com.dainglis.trip_planner.controllers;
 
 import java.util.List;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -26,10 +27,13 @@ import com.dainglis.trip_planner.models.Trip;
 public interface EventDAO {
 
     @Query("SELECT * FROM events")
-    List<Event> getAll();
+    LiveData<List<Event>> getAll();
 
     @Query("SELECT * FROM events WHERE tripId = (:tripId)")
-    List<Event> getAllByTripId(long tripId);
+    LiveData<List<Event>> getAllByTripId(long tripId);
+
+    @Query("SELECT * FROM events WHERE tripId = (:tripId)")
+    List<Event> getAllByTripIdStatic(long tripId);
 
     @Insert
     long insert(Event event);
