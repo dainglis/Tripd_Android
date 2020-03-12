@@ -39,7 +39,7 @@ public class TripListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.trip_list_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_trip_list, container, false);
 
 
         mRecyclerView = view.findViewById(R.id.trip_card_rec_view);
