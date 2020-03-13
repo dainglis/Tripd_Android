@@ -114,18 +114,30 @@ public class TripFormFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_trip_form, container, false);
 
         EditName = view.findViewById(R.id.editName);
-        EditStartCity = view.findViewById(R.id.editStartCity);
-        EditEndCity = view.findViewById(R.id.editEndCity);
+        //EditStartCity = view.findViewById(R.id.editStartCity);
+        //EditEndCity = view.findViewById(R.id.editEndCity);
         DateDepartEnter = view.findViewById(R.id.dateDepartEnter);
         DateArriveEnter = view.findViewById(R.id.dateArriveEnter);
-        spinnerOne = (Spinner) view.findViewById(R.id.StartSpinner);
-        spinnerTwo = (Spinner) view.findViewById(R.id.EndSpinner);
+        spinnerOne = view.findViewById(R.id.StartSpinner);
+        spinnerTwo = view.findViewById(R.id.EndSpinner);
 
         cityArrayList = new ArrayList<City>();
 
         // spinner listener
-        spinnerOne.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
-        spinnerTwo.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+        //spinnerOne.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+        spinnerOne.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getContext(), "Selected " + i, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Toast.makeText(getContext(), "Nothing", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //spinnerTwo.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+        populateSpinner();
 
 
         // create action for cancel button
@@ -146,11 +158,11 @@ public class TripFormFragment extends Fragment {
             public void onClick(View view) {
 
                 //create addBtn listener
-                if( !fieldValidation(EditName) || !fieldValidation(EditStartCity) || !fieldValidation(EditEndCity)||
-                        !dateValidate(DateDepartEnter) || !dateValidate(DateArriveEnter) ) // all are true then submit
-                {
-                }else
+                // all are true then submit
+                if(fieldValidation(EditName) && fieldValidation(EditStartCity) && fieldValidation(EditEndCity)
+                        && dateValidate(DateDepartEnter) && dateValidate(DateArriveEnter) ) {
                     submitForm();
+                }
 
             }
 
@@ -390,8 +402,6 @@ public class TripFormFragment extends Fragment {
 
 
     private void populateSpinner() {
-
-
         List<String> cities = new ArrayList<String>();
 
         for (int i = 0; i < cityArrayList.size(); i++) {
