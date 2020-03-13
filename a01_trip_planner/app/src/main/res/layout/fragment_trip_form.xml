@@ -84,8 +84,17 @@
             android:layout_height="wrap_content"
             android:layout_row="3"
             android:layout_column="0"
+            android:layout_marginBottom="10dp"
             android:text="@string/startCity"
             android:textSize="24sp" />
+
+        <Spinner
+            android:id="@+id/StartSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="3"
+            android:layout_column="1"
+            android:prompt="@string/editStartCity" />
 
 
         <!-- End city -->
@@ -99,6 +108,16 @@
             android:text="@string/endCity"
             android:textSize="24sp" />
 
+        <Spinner
+            android:id="@+id/EndSpinner"
+            android:layout_width="210dp"
+            android:layout_marginBottom="20dp"
+            android:layout_height="wrap_content"
+            android:layout_row="4"
+            android:layout_column="1"
+            android:prompt="@string/depart_date"
+            android:spinnerMode="dropdown" />
+
 
         <!-- Depart date -->
         <TextView
@@ -109,6 +128,7 @@
             android:layout_column="0"
             android:text="@string/departName"
             android:textSize="24sp" />
+
 
         <EditText
             android:id="@+id/dateDepartEnter"
@@ -215,25 +235,6 @@
             android:bufferType="normal"
             android:text="@string/cancelButton"
             android:textColor="@android:color/white" />
-
-        <Spinner
-            android:id="@+id/StartSpinner"
-            android:layout_width="210dp"
-            android:layout_height="wrap_content"
-            android:layout_row="3"
-            android:layout_column="1"
-
-            android:prompt="@string/editStartCity" />
-
-
-        <Spinner
-            android:id="@+id/EndSpinner"
-            android:layout_width="210dp"
-            android:layout_height="wrap_content"
-            android:layout_row="4"
-            android:layout_column="1"
-            android:prompt="@string/depart_date"
-            android:spinnerMode="dropdown" />
 
     </GridLayout>
 </android.widget.FrameLayout>

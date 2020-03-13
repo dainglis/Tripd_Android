@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.dainglis.trip_planner.R;
+import com.dainglis.trip_planner.controllers.CityRepo;
 import com.dainglis.trip_planner.controllers.TripDatabase;
 
 
@@ -51,7 +52,8 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void run() {
                 TripDatabase.init(getApplicationContext());
-                TripDatabase.initializeCities();
+
+                CityRepo.cities = TripDatabase.initializeCities();
                 TripDatabase.loadSampleDataFromFile(getApplicationContext(), R.raw.test_data);
                 //TripDatabase.loadSampleData();
             }
