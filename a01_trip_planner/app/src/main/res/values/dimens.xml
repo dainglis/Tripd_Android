@@ -2,6 +2,8 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="fab_btm_margin">20dp</dimen>
 
+    <!-- Form page dimensions -->
+    <dimen name="form_spacer">12dp</dimen>
 
     <!-- Info Page dimensions -->
     <dimen name="info_trip_title">30sp</dimen>

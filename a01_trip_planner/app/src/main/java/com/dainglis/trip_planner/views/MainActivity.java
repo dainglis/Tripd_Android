@@ -16,6 +16,7 @@ package com.dainglis.trip_planner.views;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -48,7 +49,16 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitle("");
 
+        View title = findViewById(R.id.toolbar_title);
+        title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Clicking the app title returns to the main list Fragment
+                setInitialFragment(TripListFragment.newInstance());
+            }
+        });
         /*
             This is a test to ensure that the TripDatabase initializes correctly
          */
@@ -93,6 +103,11 @@ public class MainActivity extends AppCompatActivity implements
      * Prevents a blank fragment from appearing after the back button is pressed
      */
     private void setInitialFragment(Fragment fragment) {
+        FragmentManager fManager = getSupportFragmentManager();
+        while (fManager.getBackStackEntryCount() > 0) {
+            fManager.popBackStackImmediate();
+        }
+
         getSupportFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.fragment_container, fragment)
