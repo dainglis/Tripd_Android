@@ -118,6 +118,20 @@ public class TripInfoFragment extends Fragment {
                 raiseEditButtonPressed(mViewModel.getTripId());
             }
         });
+
+        startLocationView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                raiseCityPressed(view);
+            }
+        });
+
+        endLocationView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                raiseCityPressed(view);
+            }
+        });
     }
 
     private void updateTripView(@Nullable Trip trip) {
@@ -170,11 +184,16 @@ public class TripInfoFragment extends Fragment {
         mListener.onEditButtonPressed(tripId);
     }
 
+    private void raiseCityPressed(View view) {
+        mListener.onCityClick(view);
+    }
+
 
     public interface OnFragmentInteractionListener {
         //void interfaceFunction();
         void onAddButtonPressed(long tripId);
         void onEditButtonPressed(long tripId);
+        void onCityClick(View view);
     }
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
