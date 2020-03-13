@@ -12,13 +12,14 @@ The **Tripd** app has four pages:
 
 ### Requirements
 Requirements for A02 are as follows:
-- [ ] Great GUI with at least 6 widgets
+- [x] GUI with at least 6 widgets (Menu, DialogFragment, Button, Switch, EditText, Spinner)
 - [x] List view that displays details when an item is selected
-- [ ] Construct and/or download files from the internet
+- [ ] Download files from the internet (downloading image)
+- [x] Working with files (populating the database test data from a file)
 - [ ] Have at least two chained asynchronous tasks
-- [ ] "Go outside to visit internet location (and maybe call out the number)" ... what?
+- [x] Use of intents to start other activities and visit internet sites (Support phone number and Wikipedia browser links)
 - [x] Work with a database
-- [ ] Separate GUI, background, and database code (MVC pattern)
+- [x] Separate GUI, background, and database code (MVC pattern)
 
 
 Also, as he mentioned in class, Igor would like us to use Fragments for this assignment
