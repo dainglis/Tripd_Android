@@ -31,12 +31,14 @@ import android.widget.Toast;
 import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.controllers.CityRepo;
 import com.dainglis.trip_planner.controllers.TripDatabase;
+import com.dainglis.trip_planner.models.Event;
 
 
 public class MainActivity extends AppCompatActivity implements
         TripListFragment.OnFragmentInteractionListener,
         TripFormFragment.OnFragmentInteractionListener,
-        TripInfoFragment.OnFragmentInteractionListener {
+        TripInfoFragment.OnFragmentInteractionListener,
+        EventFormDialogFragment.OnFragmentInteractionListener {
 
     static final String KEY_TRIP_ID = "tripId";
 
@@ -199,6 +201,11 @@ public class MainActivity extends AppCompatActivity implements
         previousFragment();
     }
 
+    @Override
+    public void onTerminateEventForm() {
+        previousFragment();
+    }
+
 
     /*
      *  Interface methods for TripInfoFragment
@@ -206,6 +213,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onAddButtonPressed(long tripId) {
         EventFormDialogFragment eventForm = EventFormDialogFragment.newInstance();
+        eventForm.setCurrentTripId(tripId);
         eventForm.show(getSupportFragmentManager(), "dialog_fragment_event_form");
     }
 

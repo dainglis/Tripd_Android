@@ -47,15 +47,17 @@ import java.text.SimpleDateFormat;
 */
 public class EventFormDialogFragment extends DialogFragment {
 
-    /*Declare variables*/
+    public OnFragmentInteractionListener mListener;
+
+    // Instance variable
+    long currentTripId = 0;
+
+    // View elements
     Button btnCancel;
     Button btnConfirm;
-    long currentTripId = 0;
-    Trip currentTrip;
     EditText eventTitle;
     EditText eventDate;
-    Bundle extras;
-    long addTripEvent;
+
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
 
@@ -67,10 +69,6 @@ public class EventFormDialogFragment extends DialogFragment {
     ---------------------------------------------------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_form);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
 
         //Get trip data members from database
@@ -145,18 +143,53 @@ public class EventFormDialogFragment extends DialogFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.dialog_fragment_event_form, container, false);
 
+        eventTitle = view.findViewById(R.id.eventTitleEdit);
+        eventDate = view.findViewById(R.id.eventDateEdit);
+
+        btnCancel = view.findViewById(R.id.buttonEventFormCancel);
+        btnConfirm = view.findViewById(R.id.buttonEventFormConfirm);
+
+        // Set up on-click listeners for Confirm and Cancel buttons
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                raiseTerminateEventForm();
+            }
+        });
+
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (validateEventForm()) {
+                    saveEventForm();
+                    raiseTerminateEventForm();
+                }
+            }
+        });
+
         return view;
     }
+
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        if (context instanceof EventFormDialogFragment.OnFragmentInteractionListener) {
+            mListener = (EventFormDialogFragment.OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
     }
-
 
     @Override
     public void onDetach() {
         super.onDetach();
+        mListener = null;
+    }
+
+    public void setCurrentTripId(long tripId) {
+        currentTripId = tripId;
     }
 
 
@@ -180,15 +213,15 @@ public class EventFormDialogFragment extends DialogFragment {
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
 
-        Method:         cancelForm()
-        Description:    Cancels the form for creating a new Trip, telling the calling activity
-                        that it was cancelled.
+        Method:         raiseTerminateEventForm()
+        Description:    Closes the form for creating a new Trip
         Parameters:     void
-        Returns:        void;       Sets result to RESULT_CANCELED
+        Returns:        void
 
     --------------------------------------------------------------------------------------------- */
-    private void cancelForm() {
-
+    private void raiseTerminateEventForm() {
+        dismiss();
+        //mListener.onTerminateEventForm();
     }
 
 
@@ -259,21 +292,22 @@ public class EventFormDialogFragment extends DialogFragment {
                         eventDate.getText().toString(),
                         currentTripId);
         try {
-            AsyncTask.execute(new Runnable() {
+            TripDatabase.databaseWriteExecutor.execute(new Runnable() {
                 @Override
                 public void run() {
                     TripDatabase.getInstance().eventDAO().insert(event);
                 }
             });
 
-            //setResult(RESULT_OK);
-            //finish();
         }
         catch(Exception e)
         {
             Toast.makeText(getContext(), "Error adding event", Toast.LENGTH_SHORT).show();
-            //setResult(RESULT_CANCELED);
 
         }
+    }
+
+    public interface OnFragmentInteractionListener {
+        void onTerminateEventForm();
     }
 }
