@@ -3,25 +3,39 @@ package com.dainglis.trip_planner.views;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dainglis.trip_planner.R;
-import com.dainglis.trip_planner.controllers.TripDatabase;
 import com.dainglis.trip_planner.controllers.TripInfoViewModel;
 import com.dainglis.trip_planner.models.Event;
 import com.dainglis.trip_planner.models.Trip;
 
+import org.xml.sax.InputSource;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,6 +52,7 @@ public class TripInfoFragment extends Fragment {
     TextView startLocationView;
     TextView endLocationView;
     TextView tripDateView;
+    ImageView imageView;
     FloatingActionButton addButton;
     FloatingActionButton editButton;
 
@@ -68,7 +83,7 @@ public class TripInfoFragment extends Fragment {
         startLocationView = view.findViewById(R.id.tripStart);
         endLocationView = view.findViewById(R.id.tripEnd);
         tripDateView = view.findViewById(R.id.tripDateInfo);
-
+        imageView = view.findViewById(R.id.imageView);
         addButton = view.findViewById(R.id.buttonAdd);
         editButton = view.findViewById(R.id.buttonEdit);
 
@@ -140,9 +155,19 @@ public class TripInfoFragment extends Fragment {
             startLocationView.setText(trip.getStartLocation());
             endLocationView.setText(trip.getEndLocation());
             tripDateView.setText(trip.getDateStamp());
+
+            new DownloadCityImage().execute(new String[]{ "https://mada2.000webhostapp.com/" + trip.getEndLocation() + ".jpg"});
         }
     }
 
+    private void setTripImage(Bitmap img){
+        try {
+            imageView.setImageBitmap(img);
+        } catch (Exception e){
+            e.printStackTrace();
+
+        }
+    }
     private void updateEventView(@Nullable List<Event> events) {
         if (events != null && events.size() > 0) {
             // A simplified two-line list item using the
@@ -290,5 +315,58 @@ public class TripInfoFragment extends Fragment {
     }
 
      */
+    class DownloadCityImage extends AsyncTask<String, Void, Void> {
+        Bitmap img;
+        @Override
+        protected Void doInBackground(String... params) {
 
+            try {
+                // get the URL
+                URL url = new URL(params[0]);
+
+                // get the input stream
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+
+                con.connect();
+
+                InputStream inputStream = con.getInputStream();
+
+                img = BitmapFactory.decodeStream(inputStream);
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            Log.d("Image downloaded", "Loading");
+            new ReadImage().execute(img);
+        }
+    }
+
+    class ReadImage extends AsyncTask<Bitmap, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Bitmap... img) {
+            try {
+                TripInfoFragment.this.setTripImage(img[0]);
+            } catch (Exception e) {
+                Log.e("News reader", e.toString());
+                return null;
+            }
+        return null;
+        }
+
+        // This is executed after the feed has been read
+        @Override
+        protected void onPostExecute(Void result) {
+            Log.d("News reader", "Feed read: " + new Date());
+
+
+        }
+    }
 }
