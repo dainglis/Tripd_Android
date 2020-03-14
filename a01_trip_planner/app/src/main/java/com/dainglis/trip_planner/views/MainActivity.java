@@ -181,8 +181,11 @@ public class MainActivity extends AppCompatActivity implements
      */
     @Override
     public void onTripSelected(final long tripId) {
+        //Creates a InfoFragment instance
         TripInfoFragment infoFragment = TripInfoFragment.newInstance();
+        //Sends the tripId of the selected trip and also the Context
         infoFragment.setCurrentTripId(tripId, MainActivity.this);
+        //Change the Active Fragment
         setActiveFragment(infoFragment);
     }
 
@@ -218,12 +221,13 @@ public class MainActivity extends AppCompatActivity implements
 
         setActiveFragment(formFragment);
     }
-
+        //Method responsible for accessing Wikipedia pages of the cities
     public void onCityClick(View view){
 
         TextView tv = (TextView)view;
-
+        //Sets the URL of the Wikipedia page we're going to visit
         String url = "https://www.wikipedia.org/wiki/" + tv.getText().toString() + ",_Ontario";
+        //Creates the intent and start the Activity to reach the external site
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
         startActivity(intent);
