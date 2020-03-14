@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -183,8 +184,15 @@ public class TripInfoFragment extends Fragment {
                     new String[] {TripInfoViewModel.KEY_MAIN_TEXT, TripInfoViewModel.KEY_SECONDARY_TEXT },
                     new int[] {R.id.main_text, R.id.secondary_text });
 
-            ListView eventList = view.findViewById(R.id.eventListView);
-            eventList.setAdapter(eventsAdapter);
+            LinearLayout linearLayout = view.findViewById(R.id.eventLayout);
+            linearLayout.removeAllViews();
+
+            for (int i = 0; i < eventsAdapter.getCount(); i++) {
+                linearLayout.addView(eventsAdapter.getView(i, null, null));
+            }
+
+            //ListView eventList = view.findViewById(R.id.eventListView);
+            //eventList.setAdapter(eventsAdapter);
         }
     }
 
