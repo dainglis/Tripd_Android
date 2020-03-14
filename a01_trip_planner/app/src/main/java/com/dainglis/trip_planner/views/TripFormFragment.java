@@ -23,7 +23,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,7 +33,6 @@ import android.widget.Toast;
 import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.controllers.CityRepo;
 import com.dainglis.trip_planner.controllers.TripDatabase;
-import com.dainglis.trip_planner.models.City;
 import com.dainglis.trip_planner.models.Trip;
 
 import java.text.DateFormat;
@@ -48,20 +46,13 @@ public class TripFormFragment extends Fragment {
     private long currentTripId = 0;
 
     // View elements
-    // Create vars for cancel and confirm buttons
     Button CanButt;
     Button BtnConfirm;
     Spinner CityStartSpinner;
     Spinner CityEndSpinner;
-    // Create vars for edit texts
     EditText EditName;
-    //EditText EditStartCity;
-    //EditText EditEndCity;
     EditText DateDepartEnter;
     EditText DateArriveEnter;
-    //Bundle extras;
-
-    //private ArrayList<City> cityArrayList;
 
     LiveData<Trip> mTrip;
 
@@ -93,31 +84,12 @@ public class TripFormFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_trip_form, container, false);
 
         EditName = view.findViewById(R.id.editName);
-        //EditStartCity = view.findViewById(R.id.editStartCity);
-        //EditEndCity = view.findViewById(R.id.editEndCity);
         DateDepartEnter = view.findViewById(R.id.dateDepartEnter);
         DateArriveEnter = view.findViewById(R.id.dateArriveEnter);
         CityStartSpinner = view.findViewById(R.id.StartSpinner);
         CityEndSpinner = view.findViewById(R.id.EndSpinner);
 
-        //cityArrayList = new ArrayList<City>();
-
-        // Spinner listeners
-        /*
-        CityStartSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getContext(), "Selected " + i, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                Toast.makeText(getContext(), "Nothing", Toast.LENGTH_SHORT).show();
-            }
-        });
-        */
         populateSpinners();
-
 
         // create action for cancel button
         CanButt = view.findViewById(R.id.buttonSetupCancel);
@@ -155,26 +127,6 @@ public class TripFormFragment extends Fragment {
                 updateTripDetails(trip);
             }
         });
-
-        //extras = getArguments().getExtras();
-
-        /*
-        if (extras != null) {
-            currentTripId = extras.getLong("tripId");
-
-            if (currentTripId != 0) {
-                // Query the database and update the layout in a secondary thread
-                AsyncTask.execute(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        loadTripDetails(currentTripId);
-                    }
-                });
-            }
-        }
-
-         */
 
         return view;
     }
@@ -219,8 +171,6 @@ public class TripFormFragment extends Fragment {
     --------------------------------------------------------------------------------------------- */
     private void submitForm() {
         String title = EditName.getText().toString();
-        //String startLocation = EditStartCity.getText().toString();
-        //String endLocation = EditEndCity.getText().toString();
         String startLocation = CityStartSpinner.getSelectedItem().toString();
         String endLocation = CityEndSpinner.getSelectedItem().toString();
         String startDate = DateDepartEnter.getText().toString();
@@ -229,9 +179,7 @@ public class TripFormFragment extends Fragment {
         final Trip trip = new Trip(title, startLocation, endLocation, startDate, endDate);
 
         try {
-
             if (currentTripId == 0) {
-
                 // Save the new trip to the db in a background thread,
                 // then return to the calling Activity
                 TripDatabase.databaseWriteExecutor.execute(new Runnable() {
@@ -242,7 +190,6 @@ public class TripFormFragment extends Fragment {
                     }
 
                 });
-
             }
             else {
                 // Save the changes to the existing trip
@@ -255,15 +202,13 @@ public class TripFormFragment extends Fragment {
                     }
 
                 });
-
             }
-
-//            setResult(RESULT_OK);
         }
 
         // this is bad practice
         catch (Exception e) {
-  //          setResult(RESULT_CANCELED);
+            Toast.makeText(getContext(), "Error writing to TripDatabase", Toast.LENGTH_SHORT)
+                    .show();
         }
 
         mListener.onTerminateTripForm();
@@ -343,6 +288,19 @@ public class TripFormFragment extends Fragment {
         return true;
     }
 
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+        Method:         spinnerValidation()
+        Description:    This method is called when the add / edit button is pressed. This
+                        method validates the input fields as entered by the user
+        Parameters:     String      field
+                            The name of the editable field
+                        int         selection
+                            The String value in the selected field
+        Returns:        boolean
+                            true    If a valid City is selected
+                            false   Otherwise
+    --------------------------------------------------------------------------------------------- */
     public boolean spinnerValidation(String field, int selection) {
         if (selection == 0) {
             String fieldToast = "Select an option for \"" + field + "\"";
@@ -352,67 +310,13 @@ public class TripFormFragment extends Fragment {
         return true;
     }
 
-
-
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-        Method:         loadTripDetails()
-        Description:    Given a Trip from the "trip_planner" database, the View elements are updated
-        Parameters:     Trip trip
-                            The unique id of the requested Trip object.
-        Returns:        void.
+        Method:         populateSpinners()
+        Description:    Creates and populates the appropriate ArrayAdapter of City names for the
+                        StartCity and EndCity Spinner widgets
+        Parameters:     void
+        Returns:        void
     --------------------------------------------------------------------------------------------- */
-    private void updateTripDetails(@Nullable Trip trip) {
-        if (trip != null) {
-            EditName.setText(trip.getTitle());
-            //EditStartCity.setText(trip.getStartLocation());
-            //EditEndCity.setText(trip.getEndLocation());
-
-            CityStartSpinner.setSelection(getCityIndex(CityStartSpinner, trip.getStartLocation()));
-            CityEndSpinner.setSelection(getCityIndex(CityEndSpinner, trip.getEndLocation()));
-
-            DateDepartEnter.setText(trip.getStartDate());
-            DateArriveEnter.setText(trip.getEndDate());
-        }
-    }
-
-    private int getCityIndex(Spinner spinner, String city) {
-        SpinnerAdapter adapter = spinner.getAdapter();
-        if (adapter != null) {
-            for (int i = 0; i < adapter.getCount(); i++) {
-                if (city.equals(adapter.getItem(i))) {
-                    return i;
-                }
-            }
-        }
-
-        return 0;
-    }
-
-
-
-    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-        Method:         getCurrentTrip()
-        Description:    Queries the `trip_planner` database for the Trip object with the specified
-                        id.
-        Parameters:     long        id      The unique id of the requested Trip object.
-        Returns:        Trip                The Trip object corresponding to the provided Id
-    --------------------------------------------------------------------------------------------- */
-    private LiveData<Trip> getCurrentTrip(long id) {
-        return TripDatabase.getInstance().tripDAO().getById(id);
-    }
-
-    public void setTripId(long tripId) {
-        currentTripId = tripId;
-    }
-
-
-
-    public interface OnFragmentInteractionListener {
-        void onTerminateTripForm();
-    }
-
-
-
     private void populateSpinners() {
         List<String> cities = new ArrayList<>();
 
@@ -438,6 +342,58 @@ public class TripFormFragment extends Fragment {
 
 
 
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+        Method:         loadTripDetails()
+        Description:    Given a Trip from the "trip_planner" database, the View elements are updated
+        Parameters:     Trip trip
+                            The unique id of the requested Trip object.
+        Returns:        void.
+    --------------------------------------------------------------------------------------------- */
+    private void updateTripDetails(@Nullable Trip trip) {
+        if (trip != null) {
+            EditName.setText(trip.getTitle());
+
+            CityStartSpinner.setSelection(getCityIndex(CityStartSpinner, trip.getStartLocation()));
+            CityEndSpinner.setSelection(getCityIndex(CityEndSpinner, trip.getEndLocation()));
+
+            DateDepartEnter.setText(trip.getStartDate());
+            DateArriveEnter.setText(trip.getEndDate());
+        }
+    }
+
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+        Method:         getCityIndex()
+        Description:    Returns the index in the Spinner's Array adapter at which the 'city' string
+                        can be found
+        Parameters:     Spinner spinner
+                        String city
+        Returns:        int
+                            Index in the specified Spinner's ArrayAdapter at which the 'city'
+                            string can be found
+    --------------------------------------------------------------------------------------------- */
+    private int getCityIndex(Spinner spinner, String city) {
+        SpinnerAdapter adapter = spinner.getAdapter();
+        if (adapter != null) {
+            for (int i = 0; i < adapter.getCount(); i++) {
+                if (city.equals(adapter.getItem(i))) {
+                    return i;
+                }
+            }
+        }
+
+        return 0;
+    }
+
+    
+    public void setTripId(long tripId) {
+        currentTripId = tripId;
+    }
+
+
+    public interface OnFragmentInteractionListener {
+        void onTerminateTripForm();
+    }
 }
 
 
