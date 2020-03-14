@@ -385,7 +385,7 @@ public class TripFormFragment extends Fragment {
         return 0;
     }
 
-    
+
     public void setTripId(long tripId) {
         currentTripId = tripId;
     }

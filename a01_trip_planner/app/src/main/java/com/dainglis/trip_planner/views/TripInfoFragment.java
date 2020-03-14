@@ -29,7 +29,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,18 +38,14 @@ import com.dainglis.trip_planner.controllers.TripInfoViewModel;
 import com.dainglis.trip_planner.models.Event;
 import com.dainglis.trip_planner.models.Trip;
 
-import org.xml.sax.InputSource;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -78,8 +73,7 @@ public class TripInfoFragment extends Fragment {
     //Create variables for FloatingButtons
     FloatingActionButton addButton;
     FloatingActionButton editButton;
-
-
+    
 
     public TripInfoFragment() {
         // Required empty public constructor
@@ -207,12 +201,11 @@ public class TripInfoFragment extends Fragment {
     }
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-    Method:         setTripImage(Bitmap img)
-    Description:    This method receives a Bitmap object from an Asynchronous call and use it to update a ImageView
-    Parameters:     Bitmap        img        Bitmap object that will be placed on the ImageView
-    Returns:        void.
-
- */
+        Method:         setTripImage(Bitmap img)
+        Description:    This method receives a Bitmap object from an Asynchronous call and use it to update a ImageView
+        Parameters:     Bitmap        img        Bitmap object that will be placed on the ImageView
+        Returns:        void.
+     */
     private void setTripImage(Bitmap img){
 
         try {
@@ -223,12 +216,11 @@ public class TripInfoFragment extends Fragment {
         }
     }
 
-        /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-    Method:         updateEventView(List<Event> events)
-    Description:    This method receives a instance of the Model event and use it to populate the List Adapter
-    Parameters:     List<Event>        events        List of events that will be shown at the fragment
-    Returns:        void.
-
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+        Method:         updateEventView(List<Event> events)
+        Description:    This method receives a instance of the Model event and use it to populate the List Adapter
+        Parameters:     List<Event>        events        List of events that will be shown at the fragment
+        Returns:        void.
     */
     private void updateEventView(@Nullable List<Event> events) {
         if (events != null && events.size() > 0) {
@@ -247,9 +239,6 @@ public class TripInfoFragment extends Fragment {
             for (int i = 0; i < eventsAdapter.getCount(); i++) {
                 linearLayout.addView(eventsAdapter.getView(i, null, null));
             }
-
-            //ListView eventList = view.findViewById(R.id.eventListView);
-            //eventList.setAdapter(eventsAdapter);
         }
     }
 
@@ -291,100 +280,6 @@ public class TripInfoFragment extends Fragment {
         void onCityClick(View view);
     }
 
-    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-
-       Method:         displayTripDetailsAsync()
-       Description:    This method executes the displayTripDetails method as an asynchronous task.
-       Parameters:     final long  tripId      The trip for which details are required.
-       Returns:        Void.
-
-   --------------------------------------------------------------------------------------------- */
-    /*
-    protected void displayTripDetailsAsync(final long tripId) {
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                displayTripDetails(tripId);
-            }
-        });
-    }
-
-     */
-
-
-
-    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-
-        Method:         displayTripDetails()
-        Description:    Given a unique id for a Trip, the details of the Trip are retrieved from
-                        the "trip_planner" database.
-        Parameters:     long        tripId      The id of the Trip to query the database for and
-                                                populate the layout elements with the Trip data.
-        Returns:        Void.
-
-    --------------------------------------------------------------------------------------------- */
-    /*
-    protected void displayTripDetails(long tripId) {
-
-        // Query the database for the Trip associated with tripId
-        Trip currentTrip = getCurrentTrip(tripId);
-
-        if (currentTrip != null) {
-            // Text views to be populated
-
-
-            tripNameView.setText(currentTrip.getTitle());
-            startLocationView.setText(currentTrip.getStartLocation());
-            endLocationView.setText(currentTrip.getEndLocation());
-            tripDateView.setText(currentTrip.getDateStamp());
-
-
-            // A simplified two-line list item using the
-            // two_line_list_item.xml layout file
-
-            SimpleAdapter eventsAdapter = new SimpleAdapter(getActivity().getApplicationContext(),
-                    generateEventInfoList(tripId),
-                    R.layout.two_line_list_item,
-                    new String[] {KEY_MAIN_TEXT, KEY_SECONDARY_TEXT },
-                    new int[] {R.id.main_text, R.id.secondary_text });
-
-            ListView eventList = view.findViewById(R.id.eventListView);
-            eventList.setAdapter(eventsAdapter);
-
-        }
-    }
-     */
-
-    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-        Method:         getCurrentTrip()
-        Description:    Queries the `trip_planner` database for the Trip object with the specified
-                        id.
-        Parameters:     long        id      The unique id of the requested Trip object.
-        Returns:        Trip                The Trip object corresponding to the provided Id
-    ---------------------------------------------------------------------------------------------
-    private Trip getCurrentTrip(long id) {
-        return TripDatabase.getInstance().tripDAO().getByIdStatic(id);
-    }
-
-     */
-
-
-    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-
-        Method:         getEvents()
-        Description:    Queries the "trip_planner" database for the Trip object with the specified
-                        id.
-        Parameters:     long        id          The id of the Trip to query the database for.
-        Returns:        List<Event>             The events in the specified Trip.
-
-    --------------------------------------------------------------------------------------------- */
-
-    /*
-    private List<Event> getEvents(long tripId) {
-        return TripDatabase.getInstance().eventDAO().getAllByTripId(tripId);
-    }
-
-     */
 
     /* CLASS HEADER COMMENT ======================================================================
 
