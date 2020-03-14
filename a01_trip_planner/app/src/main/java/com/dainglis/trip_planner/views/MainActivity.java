@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onTripSelected(final long tripId) {
         TripInfoFragment infoFragment = TripInfoFragment.newInstance();
-        infoFragment.setCurrentTripId(tripId);
+        infoFragment.setCurrentTripId(tripId, MainActivity.this);
         setActiveFragment(infoFragment);
     }
 

@@ -28,6 +28,7 @@ import com.dainglis.trip_planner.models.Trip;
 import org.xml.sax.InputSource;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -48,6 +49,8 @@ public class TripInfoFragment extends Fragment {
     private TripInfoViewModel mViewModel;
 
     View view;
+    Context context;
+    String FILENAME;
     TextView tripNameView;
     TextView startLocationView;
     TextView endLocationView;
@@ -63,8 +66,9 @@ public class TripInfoFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public void setCurrentTripId(long id){
+    public void setCurrentTripId(long id, Context c){
         currentTripId = id;
+        context = c;
     }
     public static TripInfoFragment newInstance() {
         TripInfoFragment fragment = new TripInfoFragment();
@@ -156,7 +160,7 @@ public class TripInfoFragment extends Fragment {
             endLocationView.setText(trip.getEndLocation());
             tripDateView.setText(trip.getDateStamp());
 
-            new DownloadCityImage().execute(new String[]{ "https://mada2.000webhostapp.com/" + trip.getEndLocation() + ".jpg"});
+            new getCityImage().execute(new String[]{ trip.getEndLocation()});
         }
     }
 
@@ -315,23 +319,37 @@ public class TripInfoFragment extends Fragment {
     }
 
      */
-    class DownloadCityImage extends AsyncTask<String, Void, Void> {
-        Bitmap img;
+    class getCityImage extends AsyncTask<String, Void, Void> {
+
         @Override
         protected Void doInBackground(String... params) {
 
             try {
+
+                FILENAME = params[0] + ".jpg";
                 // get the URL
-                URL url = new URL(params[0]);
+                URL url = new URL("https://mada2.000webhostapp.com/" + FILENAME);
 
-                // get the input stream
-                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                InputStream in = url.openStream();
 
-                con.connect();
+                // get the output stream
 
-                InputStream inputStream = con.getInputStream();
+                FileOutputStream out =
+                        context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
 
-                img = BitmapFactory.decodeStream(inputStream);
+                // read input and write output
+                byte[] buffer = new byte[1024];
+                int bytesRead = in.read(buffer);
+                StringBuffer sb = new StringBuffer();
+                while (bytesRead != -1)
+                {
+                    sb.append(new String(buffer, "UTF-8"));
+                    out.write(buffer, 0, bytesRead);
+                    bytesRead = in.read(buffer);
+                }
+                Log.i("MyApp", sb.toString());
+                out.close();
+                in.close();
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -344,16 +362,19 @@ public class TripInfoFragment extends Fragment {
         @Override
         protected void onPostExecute(Void result) {
             Log.d("Image downloaded", "Loading");
-            new ReadImage().execute(img);
+            new ReadImage().execute(FILENAME);
         }
     }
 
-    class ReadImage extends AsyncTask<Bitmap, Void, Void> {
-
+    class ReadImage extends AsyncTask<String, Void, Void> {
+        Bitmap img;
         @Override
-        protected Void doInBackground(Bitmap... img) {
+        protected Void doInBackground(String... FILENAME) {
             try {
-                TripInfoFragment.this.setTripImage(img[0]);
+                // read the file from internal storage
+                FileInputStream in = context.openFileInput(FILENAME[0]);
+                img = BitmapFactory.decodeStream(in);
+
             } catch (Exception e) {
                 Log.e("News reader", e.toString());
                 return null;
@@ -365,7 +386,7 @@ public class TripInfoFragment extends Fragment {
         @Override
         protected void onPostExecute(Void result) {
             Log.d("News reader", "Feed read: " + new Date());
-
+            TripInfoFragment.this.setTripImage(img);
 
         }
     }
