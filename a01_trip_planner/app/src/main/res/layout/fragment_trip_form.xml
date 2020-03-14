@@ -228,7 +228,8 @@
                 android:bufferType="normal"
                 android:background="@color/colorPrimary"
                 android:text="@string/confirmButton"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                tools:ignore="ButtonStyle" />
 
             <Button
                 android:id="@+id/buttonSetupCancel"
@@ -239,7 +240,8 @@
                 android:background="@color/colorPrimary"
                 android:bufferType="normal"
                 android:text="@string/cancelButton"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                tools:ignore="ButtonStyle" />
         </LinearLayout>
 
     </GridLayout>
