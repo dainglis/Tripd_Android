@@ -28,7 +28,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,18 +38,14 @@ import com.dainglis.trip_planner.controllers.TripInfoViewModel;
 import com.dainglis.trip_planner.models.Event;
 import com.dainglis.trip_planner.models.Trip;
 
-import org.xml.sax.InputSource;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -189,12 +185,11 @@ public class TripInfoFragment extends Fragment {
     }
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-    Method:         setTripImage(Bitmap img)
-    Description:    This method receives a Bitmap object from an Asynchronous call and use it to update a ImageView
-    Parameters:     Bitmap        img        Bitmap object that will be placed on the ImageView
-    Returns:        void.
-
- */
+        Method:         setTripImage(Bitmap img)
+        Description:    This method receives a Bitmap object from an Asynchronous call and use it to update a ImageView
+        Parameters:     Bitmap        img        Bitmap object that will be placed on the ImageView
+        Returns:        void.
+     */
     private void setTripImage(Bitmap img){
 
         try {
@@ -205,12 +200,11 @@ public class TripInfoFragment extends Fragment {
         }
     }
 
-        /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-    Method:         updateEventView(List<Event> events)
-    Description:    This method receives a instance of the Model event and use it to populate the List Adapter
-    Parameters:     List<Event>        events        List of events that will be shown at the fragment
-    Returns:        void.
-
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+        Method:         updateEventView(List<Event> events)
+        Description:    This method receives a instance of the Model event and use it to populate the List Adapter
+        Parameters:     List<Event>        events        List of events that will be shown at the fragment
+        Returns:        void.
     */
     private void updateEventView(@Nullable List<Event> events) {
         if (events != null && events.size() > 0) {
@@ -223,8 +217,12 @@ public class TripInfoFragment extends Fragment {
                     new String[] {TripInfoViewModel.KEY_MAIN_TEXT, TripInfoViewModel.KEY_SECONDARY_TEXT },
                     new int[] {R.id.main_text, R.id.secondary_text });
 
-            ListView eventList = view.findViewById(R.id.eventListView);
-            eventList.setAdapter(eventsAdapter);
+            LinearLayout linearLayout = view.findViewById(R.id.eventLayout);
+            linearLayout.removeAllViews();
+
+            for (int i = 0; i < eventsAdapter.getCount(); i++) {
+                linearLayout.addView(eventsAdapter.getView(i, null, null));
+            }
         }
     }
 
