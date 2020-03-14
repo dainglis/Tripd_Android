@@ -1,3 +1,15 @@
+/* SOURCE FILE HEADER COMMENT ======================================================================
+
+    FILENAME:       AboutDialogFragment.java
+    PROJECT:        PROG3150 - Assignment 01
+    PROGRAMMERS:    David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
+    DATE:           February 8th, 2020
+    DESCRIPTION:    This file contains the definition of the AboutDialogFragment class.
+                    An object of this class presents a simple DialogFragment with information
+                    about the "Tripd" application
+
+================================================================================================= */
+
 package com.dainglis.trip_planner.views;
 
 import android.content.Context;

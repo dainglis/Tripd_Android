@@ -1,3 +1,15 @@
+/* SOURCE FILE HEADER COMMENT ======================================================================
+
+    FILENAME:       TripListFragment.java
+    PROJECT:        PROG3150 - Assignment 02
+    PROGRAMMERS:    David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
+    DATE:           March 10th, 2020
+    DESCRIPTION:    The TripListFragment presents a list of all Trips in the TripDatabase
+                    Selecting a single Trip from the list signals the calling Activity to launch
+                    an informational page for the Trip
+
+ */
+
 package com.dainglis.trip_planner.views;
 
 import android.arch.lifecycle.Observer;
@@ -26,7 +38,6 @@ public class TripListFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private TripListAdapter tAdapter;
-    private RecyclerView mRecyclerView;
     private TripListViewModel mViewModel;
     private FloatingActionButton mAddButton;
 
@@ -42,7 +53,7 @@ public class TripListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_trip_list, container, false);
 
 
-        mRecyclerView = view.findViewById(R.id.trip_card_rec_view);
+        RecyclerView mRecyclerView = view.findViewById(R.id.trip_card_rec_view);
         tAdapter = new TripListAdapter(view.getContext(), this);
 
         mRecyclerView.setAdapter(tAdapter);
@@ -111,6 +122,4 @@ public class TripListFragment extends Fragment {
         void onTripSelected(long tripId);
         void onAddButtonPressed();
     }
-
-
 }

@@ -73,7 +73,7 @@ public class TripInfoFragment extends Fragment {
     //Create variables for FloatingButtons
     FloatingActionButton addButton;
     FloatingActionButton editButton;
-    
+
 
     public TripInfoFragment() {
         // Required empty public constructor
