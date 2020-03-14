@@ -1,3 +1,16 @@
+
+/* SOURCE FILE HEADER COMMENT ======================================================================
+
+    FILENAME:       TripInfoFragment.java
+    PROJECT:        PROG3150 - Assignment 02
+    PROGRAMMERS:    David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
+    DATE:           March 10th, 2020
+    DESCRIPTION:    The TripInfo Fragment presents the information about a created trip.
+                    This file contains the classes and methods used to load a existing trip and display its info
+                    to the user. In order to use Asynchronous tasks, this file has 2 classes extending AsynchronousTask.
+
+ */
+
 package com.dainglis.trip_planner.views;
 
 import android.arch.lifecycle.Observer;
@@ -48,28 +61,44 @@ public class TripInfoFragment extends Fragment {
 
     private TripInfoViewModel mViewModel;
 
+    //Create variables  to maintain the Fragment Context
     View view;
     Context context;
     String FILENAME;
+    public long currentTripId;
+
+    //Create variables for Text and Image Views
     TextView tripNameView;
     TextView startLocationView;
     TextView endLocationView;
     TextView tripDateView;
     ImageView imageView;
+
+    //Create variables for FloatingButtons
     FloatingActionButton addButton;
     FloatingActionButton editButton;
 
-    public long currentTripId;
-    //Bundle extras;
+
 
     public TripInfoFragment() {
         // Required empty public constructor
     }
 
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+        Method:         setCurrentTripId(long id, Context c)
+        Description:    This method is load when the user select a trip on the TripList.
+                        It receives the trip selected and the context of the Main Activity.
+        Parameters:     Long        id        Id of the trip selected on the previous fragment.
+                        Context      c        Context of the MainActivity.
+        Returns:        void.
+
+     */
     public void setCurrentTripId(long id, Context c){
         currentTripId = id;
         context = c;
     }
+
+
     public static TripInfoFragment newInstance() {
         TripInfoFragment fragment = new TripInfoFragment();
         Bundle args = new Bundle();
@@ -81,8 +110,10 @@ public class TripInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //Receives the view
         view = inflater.inflate(R.layout.fragment_trip_info, container, false);
 
+        //Set the variables
         tripNameView = view.findViewById(R.id.tripName);
         startLocationView = view.findViewById(R.id.tripStart);
         endLocationView = view.findViewById(R.id.tripEnd);
@@ -95,6 +126,7 @@ public class TripInfoFragment extends Fragment {
             Toast.makeText(view.getContext(),"No tripId received", Toast.LENGTH_SHORT)
                     .show();
         }
+        //And return the view
         return view;
     }
 
@@ -152,19 +184,36 @@ public class TripInfoFragment extends Fragment {
             }
         });
     }
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+        Method:         updateTripView(Trip trip)
+        Description:    The purpose of this method is to receive a trip object and use its data to
+                        update the datafields, showing the trip info to the user.
+        Parameters:     Trip        trip        The instance of the Model Trip that will have its info loaded
+        Returns:        void.
 
+     */
     private void updateTripView(@Nullable Trip trip) {
         if (trip != null) {
+            //Set the text of the text views
             tripNameView.setText(trip.getTitle());
             startLocationView.setText(trip.getStartLocation());
             endLocationView.setText(trip.getEndLocation());
             tripDateView.setText(trip.getDateStamp());
 
+            //Call, Asynchronously, the method responsible for loading the image of the city visited
             new getCityImage().execute(new String[]{ trip.getEndLocation()});
         }
     }
 
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+    Method:         setTripImage(Bitmap img)
+    Description:    This method receives a Bitmap object from an Asynchronous call and use it to update a ImageView
+    Parameters:     Bitmap        img        Bitmap object that will be placed on the ImageView
+    Returns:        void.
+
+ */
     private void setTripImage(Bitmap img){
+
         try {
             imageView.setImageBitmap(img);
         } catch (Exception e){
@@ -172,6 +221,14 @@ public class TripInfoFragment extends Fragment {
 
         }
     }
+
+        /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+    Method:         updateEventView(List<Event> events)
+    Description:    This method receives a instance of the Model event and use it to populate the List Adapter
+    Parameters:     List<Event>        events        List of events that will be shown at the fragment
+    Returns:        void.
+
+    */
     private void updateEventView(@Nullable List<Event> events) {
         if (events != null && events.size() > 0) {
             // A simplified two-line list item using the
@@ -217,9 +274,10 @@ public class TripInfoFragment extends Fragment {
         mListener.onCityClick(view);
     }
 
-
+    //Interface used to make the interactions contained on this fragment work.
+    //This interface is implemented on the mainActivity, and each method if developed there.
     public interface OnFragmentInteractionListener {
-        //void interfaceFunction();
+
         void onAddButtonPressed(long tripId);
         void onEditButtonPressed(long tripId);
         void onCityClick(View view);
@@ -319,21 +377,38 @@ public class TripInfoFragment extends Fragment {
     }
 
      */
+
+    /* CLASS HEADER COMMENT ======================================================================
+
+    CLASS:          getCityImage
+    DESCRIPTION:    The purpose of this class is to perform Asynchronous tasks
+                    in order to download and store an image of the end city.
+
+ */
     class getCityImage extends AsyncTask<String, Void, Void> {
+
+            /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         doInBackground()
+        Description:    Downloads a file from the internet and stores it on the
+                        phone's internal storage.
+        Parameters:     String[]        params          The name of the City.
+    --------------------------------------------------------------------------------------------- */
 
         @Override
         protected Void doInBackground(String... params) {
 
             try {
-
+                //Gets the filename
                 FILENAME = params[0] + ".jpg";
-                // get the URL
+                // get the URL of image required on the Mobile App Dev A2 website
                 URL url = new URL("https://mada2.000webhostapp.com/" + FILENAME);
 
+                //Creates the InputStream
                 InputStream in = url.openStream();
 
-                // get the output stream
-
+                // Get the output stream so we can write the content of the
+                // download to a file
                 FileOutputStream out =
                         context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
 
@@ -359,20 +434,40 @@ public class TripInfoFragment extends Fragment {
             return null;
         }
 
+        /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+        Method:          onPostExecute(Void result) {()
+        Description:    After executing the method for download, call an another AsyncTask,
+                        to continue the process to load the image
+        --------------------------------------------------------------------------------------------- */
         @Override
         protected void onPostExecute(Void result) {
             Log.d("Image downloaded", "Loading");
             new ReadImage().execute(FILENAME);
         }
     }
+        /* CLASS HEADER COMMENT ======================================================================
 
+        CLASS:          ReadImage
+        DESCRIPTION:    The purpose of this class is to perform Asynchronous tasks
+                        in order to load an image of the end city on the screen.
+
+     */
     class ReadImage extends AsyncTask<String, Void, Void> {
+        //Set the variable that will receive the decoded image
         Bitmap img;
+
+        /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         doInBackground()
+        Description:    Gets a file from the internal storage and decode it as a bitmap.
+        Parameters:     String[]        params          The name of the City.
+        --------------------------------------------------------------------------------------------- */
         @Override
         protected Void doInBackground(String... FILENAME) {
             try {
                 // read the file from internal storage
                 FileInputStream in = context.openFileInput(FILENAME[0]);
+                // Decodes the stream in order the get a Bitmap object
                 img = BitmapFactory.decodeStream(in);
 
             } catch (Exception e) {
@@ -382,7 +477,11 @@ public class TripInfoFragment extends Fragment {
         return null;
         }
 
-        // This is executed after the feed has been read
+            /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+            Method:          onPostExecute(Void result) {()
+            Description:    After executing the method for decoding the image,
+                            call the method responsible for seting/changing the trip's image
+            --------------------------------------------------------------------------------------------- */
         @Override
         protected void onPostExecute(Void result) {
             Log.d("News reader", "Feed read: " + new Date());
