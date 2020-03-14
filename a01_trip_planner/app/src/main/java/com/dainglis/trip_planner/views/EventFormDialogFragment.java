@@ -47,8 +47,6 @@ import java.text.SimpleDateFormat;
 */
 public class EventFormDialogFragment extends DialogFragment {
 
-    public OnFragmentInteractionListener mListener;
-
     // Instance variable
     long currentTripId = 0;
 
@@ -153,7 +151,7 @@ public class EventFormDialogFragment extends DialogFragment {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                raiseTerminateEventForm();
+                terminateEventForm();
             }
         });
 
@@ -162,7 +160,7 @@ public class EventFormDialogFragment extends DialogFragment {
             public void onClick(View view) {
                 if (validateEventForm()) {
                     saveEventForm();
-                    raiseTerminateEventForm();
+                    terminateEventForm();
                 }
             }
         });
@@ -171,28 +169,9 @@ public class EventFormDialogFragment extends DialogFragment {
     }
 
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof EventFormDialogFragment.OnFragmentInteractionListener) {
-            mListener = (EventFormDialogFragment.OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
     public void setCurrentTripId(long tripId) {
         currentTripId = tripId;
     }
-
-
 
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
@@ -213,15 +192,15 @@ public class EventFormDialogFragment extends DialogFragment {
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
 
-        Method:         raiseTerminateEventForm()
-        Description:    Closes the form for creating a new Trip
+        Method:         terminateEventForm()
+        Description:    Closes the form for creating a new Event
         Parameters:     void
         Returns:        void
 
     --------------------------------------------------------------------------------------------- */
-    private void raiseTerminateEventForm() {
+    private void terminateEventForm() {
         dismiss();
-        //mListener.onTerminateEventForm();
+
     }
 
 
@@ -305,9 +284,5 @@ public class EventFormDialogFragment extends DialogFragment {
             Toast.makeText(getContext(), "Error adding event", Toast.LENGTH_SHORT).show();
 
         }
-    }
-
-    public interface OnFragmentInteractionListener {
-        void onTerminateEventForm();
     }
 }

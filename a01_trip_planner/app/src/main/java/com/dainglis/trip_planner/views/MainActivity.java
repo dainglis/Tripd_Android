@@ -37,8 +37,7 @@ import com.dainglis.trip_planner.models.Event;
 public class MainActivity extends AppCompatActivity implements
         TripListFragment.OnFragmentInteractionListener,
         TripFormFragment.OnFragmentInteractionListener,
-        TripInfoFragment.OnFragmentInteractionListener,
-        EventFormDialogFragment.OnFragmentInteractionListener {
+        TripInfoFragment.OnFragmentInteractionListener {
 
     static final String KEY_TRIP_ID = "tripId";
 
@@ -198,11 +197,6 @@ public class MainActivity extends AppCompatActivity implements
      */
     @Override
     public void onTerminateTripForm() {
-        previousFragment();
-    }
-
-    @Override
-    public void onTerminateEventForm() {
         previousFragment();
     }
 
