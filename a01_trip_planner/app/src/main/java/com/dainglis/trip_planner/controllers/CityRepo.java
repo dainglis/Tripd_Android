@@ -1,3 +1,13 @@
+/* SOURCE FILE HEADER COMMENT ======================================================================
+
+    FILENAME:       CityRepo.java
+    PROJECT:        PROG3150 - Assignment 02
+    PROGRAMMERS:    David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
+    DATE:           March 14, 2020
+    DESCRIPTION:    This file provides a singleton Object for accessing City objects
+
+================================================================================================= */
+
 package com.dainglis.trip_planner.controllers;
 
 import com.dainglis.trip_planner.models.City;

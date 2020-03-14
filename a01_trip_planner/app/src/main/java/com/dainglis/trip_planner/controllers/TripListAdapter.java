@@ -13,16 +13,13 @@
 
 package com.dainglis.trip_planner.controllers;
 
-import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.models.Trip;
@@ -113,60 +110,5 @@ public class TripListAdapter extends RecyclerView.Adapter<TripListAdapter.TripVi
 
         return 0;
     }
-
-
-
-    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-
-        Method:         getView()        -- Override
-        Description:    Creates a view for a row of the TripListAdapter list.
-        Parameters:     int         position        The row to be created
-                        View        convertView     The view to be created
-                        ViewGroup   parent          The type of view to be adapted.
-        Returns:        View        newView         The newly adapted view.
-
-    --------------------------------------------------------------------------------------------- */
-    /*
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        View newView = convertView;
-
-        if (newView == null) {
-            LayoutInflater li;
-            li = LayoutInflater.from(cContext);
-            newView = li.inflate(resourceLayout, null);
-        }
-
-        Trip p = Trips.get(position);
-
-        if (p != null) {
-            TextView tv1 = newView.findViewById(R.id.tripTitleID);
-            TextView tv2 = newView.findViewById(R.id.startCityID);
-            TextView tv3 = newView.findViewById(R.id.endCityID);
-            TextView tv4 = newView.findViewById(R.id.startDateID);
-            TextView tv5 = newView.findViewById(R.id.endDateID);
-
-            if (tv1 != null) {
-                tv1.setText(p.getTitle());
-            }
-            if (tv2 != null) {
-                tv2.setText(p.getStartLocation());
-            }
-            if (tv3 != null) {
-                tv3.setText(p.getEndLocation());
-            }
-            if (tv4 != null) {
-                tv4.setText(p.getStartDate());
-            }
-            if (tv5 != null) {
-                tv5.setText(p.getEndDate());
-            }
-        }
-
-        return newView;
-    }
-    */
-
 }
 

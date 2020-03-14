@@ -1,8 +1,18 @@
+/* =================================================================================================
+
+    FILENAME:       CityDAO.java
+    PROJECT:        PROG3150 - Assignment 02
+    PROGRAMMERS:    David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
+    DATE:           March 14, 2020
+    DESCRIPTION:    This file contains the interface for between the TripDatabase and the CityDAO
+                    data object.
+
+================================================================================================= */
+
 package com.dainglis.trip_planner.controllers;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
-import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 

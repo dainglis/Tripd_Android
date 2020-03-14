@@ -1,3 +1,14 @@
+/* SOURCE FILE HEADER COMMENT ======================================================================
+
+    FILENAME:       TripInfoViewModel.java
+    PROJECT:        PROG3150 - Assignment 02
+    PROGRAMMERS:    David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
+    DATE:           March 14, 2020
+    DESCRIPTION:    This file provides the ViewModel for the TripInfoFragment to abstract the Model
+                    from the View
+
+================================================================================================= */
+
 package com.dainglis.trip_planner.controllers;
 
 import android.arch.lifecycle.LiveData;
