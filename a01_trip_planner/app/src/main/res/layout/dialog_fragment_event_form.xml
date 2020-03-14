@@ -2,7 +2,7 @@
 
 <!-- SOURCE FILE HEADER COMMENT ====================================================================
 
-  FILENAME:     content_event_form.xml
+  FILENAME:     dialog_fragment_event_form.xmll
   PROJECT:      PROG3150 - Assignment 01
   PROGRAMMERS:  David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
   DATE:         February 8th, 2020
@@ -13,8 +13,8 @@
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:background="@color/colorBackground"
     android:focusable="true"
     android:focusableInTouchMode="true"
@@ -22,8 +22,7 @@
     android:columnCount="2"
     android:rowCount="3"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".views.EventFormActivity"
-    tools:showIn="@layout/activity_event_form">
+    tools:context=".views.EventFormDialogFragment" >
 
     <!-- Event title -->
     <TextView

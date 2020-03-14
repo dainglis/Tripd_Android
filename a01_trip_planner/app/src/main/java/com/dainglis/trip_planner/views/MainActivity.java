@@ -137,13 +137,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-    /*
-     *  Launches an AboutDialogFragment over the currently running Activity
-     */
-    private void showAboutDialog() {
-        AboutDialogFragment adf = AboutDialogFragment.newInstance();
-        adf.show(getSupportFragmentManager(), "dialog_fragment_about");
-    }
+
 
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
@@ -172,15 +166,13 @@ public class MainActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-
-    /* Code snippet for launching a Wikipedia page */
     /*
-    String url = "https://www.wikipedia.org/wiki/" + someString;
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(url));
-            startActivity(intent);
-
+     *  Launches an AboutDialogFragment over the currently running Activity
      */
+    private void showAboutDialog() {
+        AboutDialogFragment adf = AboutDialogFragment.newInstance();
+        adf.show(getSupportFragmentManager(), "dialog_fragment_about");
+    }
 
 
     /*
@@ -213,8 +205,8 @@ public class MainActivity extends AppCompatActivity implements
      */
     @Override
     public void onAddButtonPressed(long tripId) {
-        Toast.makeText(this, "Trying to create a new event", Toast.LENGTH_SHORT)
-                .show();
+        EventFormDialogFragment eventForm = EventFormDialogFragment.newInstance();
+        eventForm.show(getSupportFragmentManager(), "dialog_fragment_event_form");
     }
 
     @Override
@@ -234,16 +226,4 @@ public class MainActivity extends AppCompatActivity implements
         intent.setData(Uri.parse(url));
         startActivity(intent);
     }
-
-    /*
-    *   DEPREC
-    *   this is only appropriate procedure for a DialogFragment, as it is shown
-    *   on top of the current window
-    private void showFormFrag() {
-
-        TripFormFragment tff = TripFormFragment.newInstance();
-        tff.show(getSupportFragmentManager(),"fragment_trip");
-    }
-     */
-    
 }

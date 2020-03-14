@@ -1,11 +1,11 @@
 
 /* SOURCE FILE HEADER COMMENT ======================================================================
 
-    FILENAME:       EventFormActivity.java
+    FILENAME:       EventFormDialogFragment.java
     PROJECT:        PROG3150 - Assignment 01
     PROGRAMMERS:    David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
     DATE:           February 8th, 2020
-    DESCRIPTION:    This file contains the definition of the EventFormActivity class.
+    DESCRIPTION:    This file contains the definition of the EventFormDialogFragment class.
                     An object of this class has a Trip, event title, event date, and allows the
                     user to edit, or save an event.
 
@@ -13,43 +13,39 @@
 
 package com.dainglis.trip_planner.views;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dainglis.trip_planner.R;
+import com.dainglis.trip_planner.controllers.TripDatabase;
 import com.dainglis.trip_planner.models.Event;
 import com.dainglis.trip_planner.models.Trip;
-import com.dainglis.trip_planner.controllers.TripDatabase;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 /*
-*   Class:          EventFormActivity
+*   Class:          EventFormDialogFragment
 *
 *   Members:
-*   private:        Button btnCancel
-*                   Button btnConfirm
-*                   long currentTripId
-*                   Trip currentTrip
-*                   EditText eventTitle
-*                   EditText eventDate
+*   private:
 *
 *   Methods:
-*   private:        getCurrentTrip()
-*                   cancelForm()
-*                   validateEventForm()
-*                   saveEventForm()
-*
+*   private:
 *
 */
-public class EventFormActivity extends AppCompatActivity {
+public class EventFormDialogFragment extends DialogFragment {
 
     /*Declare variables*/
     Button btnCancel;
@@ -68,7 +64,7 @@ public class EventFormActivity extends AppCompatActivity {
         Parameters:     Bundle      savedInstanceState
         Returns:        void.
 
-    --------------------------------------------------------------------------------------------- */
+    ---------------------------------------------------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,10 +73,10 @@ public class EventFormActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        /*Get trip data members from database*/
+        //Get trip data members from database
         //currentTrip = getCurrentTrip(currentTripId);
 
-        /*Connect title and date variables to EditText fields*/
+        //Connect title and date variables to EditText fields
         eventTitle = findViewById(R.id.eventTitleEdit);
         eventDate = findViewById(R.id.eventDateEdit);
 
@@ -98,14 +94,14 @@ public class EventFormActivity extends AppCompatActivity {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*validate non-empty title and valid date within trip date range*/
+                //validate non-empty title and valid date within trip date range
                 if (validateEventForm()) {
                     saveEventForm();
                 }
             }
         });
 
-        /*Get tripId passed when Add Event Activity invoked*/
+        //Get tripId passed when Add Event Activity invoked
         extras = getIntent().getExtras();
 
         if (extras != null) {
@@ -116,6 +112,51 @@ public class EventFormActivity extends AppCompatActivity {
             }
         }
 
+    }
+    */
+
+
+
+    public EventFormDialogFragment() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @return A new instance of fragment AboutDialogFragment.
+     */
+    public static EventFormDialogFragment newInstance() {
+        EventFormDialogFragment fragment = new EventFormDialogFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.dialog_fragment_event_form, container, false);
+
+        return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
     }
 
 
@@ -147,8 +188,7 @@ public class EventFormActivity extends AppCompatActivity {
 
     --------------------------------------------------------------------------------------------- */
     private void cancelForm() {
-        setResult(RESULT_CANCELED);
-        finish();
+
     }
 
 
@@ -172,7 +212,7 @@ public class EventFormActivity extends AppCompatActivity {
 
         // Ensure Event title is not empty
         if (eventTitle.getText().length() == 0) {
-            Toast.makeText(getApplicationContext(),
+            Toast.makeText(getContext(),
                     "Event title cannot be blank",
                     Toast.LENGTH_SHORT).show();
             return false;
@@ -194,7 +234,7 @@ public class EventFormActivity extends AppCompatActivity {
         }
         catch(Exception e)
         {
-            Toast.makeText(getApplicationContext(),
+            Toast.makeText(getContext(),
                     "Date is not in the correct format",
                     Toast.LENGTH_SHORT).show();
             return false;
@@ -226,13 +266,13 @@ public class EventFormActivity extends AppCompatActivity {
                 }
             });
 
-            setResult(RESULT_OK);
-            finish();
+            //setResult(RESULT_OK);
+            //finish();
         }
         catch(Exception e)
         {
-            Toast.makeText(EventFormActivity.this, "Error adding event", Toast.LENGTH_SHORT).show();
-            setResult(RESULT_CANCELED);
+            Toast.makeText(getContext(), "Error adding event", Toast.LENGTH_SHORT).show();
+            //setResult(RESULT_CANCELED);
 
         }
     }
