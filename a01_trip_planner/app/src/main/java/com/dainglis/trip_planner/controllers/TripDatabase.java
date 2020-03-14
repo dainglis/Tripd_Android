@@ -12,26 +12,19 @@
 
 package com.dainglis.trip_planner.controllers;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.models.City;
 import com.dainglis.trip_planner.models.Event;
 import com.dainglis.trip_planner.models.Trip;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.Buffer;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
