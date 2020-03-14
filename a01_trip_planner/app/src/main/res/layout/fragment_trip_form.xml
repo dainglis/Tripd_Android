@@ -184,7 +184,7 @@
             android:layout_height="wrap_content"
             android:layout_row="7"
             android:layout_column="1"
-            android:layout_gravity="center"
+            android:layout_gravity="center|end"
             android:textSize="18sp" />
 
         <TextView
@@ -203,39 +203,44 @@
             android:layout_height="wrap_content"
             android:layout_row="8"
             android:layout_column="1"
-            android:layout_gravity="center"
+            android:layout_gravity="center|end"
             android:textSize="18sp" />
 
 
-        <!-- Buttons -->
-        <Button
-            android:id="@+id/buttonSetupConfirm"
-            android:layout_width="140dp"
-            android:layout_height="46dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textAlignment="center"
             android:layout_row="9"
+            android:padding="0dp"
             android:layout_column="0"
-            android:layout_gravity="center"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="10dp"
-            android:background="@color/colorPrimary"
-            android:text="@string/confirmButton"
-            android:textColor="@android:color/white" />
+            android:layout_columnSpan="2" >
 
-        <Button
-            android:id="@+id/buttonSetupCancel"
-            android:layout_width="140dp"
-            android:layout_height="46dp"
-            android:layout_row="9"
-            android:layout_column="1"
-            android:layout_gravity="center"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="10dp"
-            android:background="@color/colorPrimary"
-            android:bufferType="normal"
-            android:text="@string/cancelButton"
-            android:textColor="@android:color/white" />
+            <!-- Buttons -->
+            <Button
+                android:id="@+id/buttonSetupConfirm"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="20dp"
+                android:layout_gravity="center"
+                android:bufferType="normal"
+                android:background="@color/colorPrimary"
+                android:text="@string/confirmButton"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/buttonSetupCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center|end"
+                android:layout_margin="20dp"
+                android:background="@color/colorPrimary"
+                android:bufferType="normal"
+                android:text="@string/cancelButton"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
 
     </GridLayout>
 </android.widget.FrameLayout>
