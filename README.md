@@ -17,9 +17,17 @@ The **Tripd** app has four pages:
 - [ ] Use at least one system content provider (ie Contacts)
 - [ ] System Dialogs and Permissions for Android v.6+
 - [ ] Make sure our application can run on Android v.6+ and the earlier version without recompile
-- [ ] "Show the application widget with information pertinent to the application activities" *need clarification*
-- [ ] "Use application maps if they add value only" *need clarification, Maps API probably*
+- [ ] Create an Application Widget with information pertinent to the application activities
+- [ ] Implement Maps API
 - [ ] Provide documentation with the names of classes responsible for each of the elements
+
+
+#### Consideration for A03
+With Igor's provided feedback from A02, we should ensure:
+- [ ] "class names START WITH UPPERCASE!!!!!!!" I believe he means object names, since all of our classes actually do start with uppercase letters
+- [ ] "please, spend a couple of second and check that event date is within the trip dates :)"
+- [ ] Increase volume of log messages
+- [ ] Ensure all exception handling is implemented
 
 
 ### Features Added for A02
