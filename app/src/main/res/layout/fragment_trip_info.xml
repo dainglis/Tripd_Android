@@ -21,7 +21,7 @@
         android:id="@+id/buttonEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="90dp"
+        android:layout_marginBottom="160dp"
         android:layout_marginEnd="@dimen/fab_btm_margin"
         android:layout_marginStart="@dimen/fab_btm_margin"
         android:clickable="true"
@@ -32,6 +32,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:maxImageSize="24dp"
         app:srcCompat="@drawable/ic_edit_black_24dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/buttonShare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="90dp"
+        android:layout_marginEnd="@dimen/fab_btm_margin"
+        android:layout_marginStart="@dimen/fab_btm_margin"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_gravity="center|bottom|end"
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="30dp"
+        app:srcCompat="@drawable/ic_share_white_24dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/buttonAdd"

@@ -16,7 +16,6 @@ package com.dainglis.trip_planner.views;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -26,12 +25,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dainglis.trip_planner.R;
-import com.dainglis.trip_planner.controllers.CityRepo;
-import com.dainglis.trip_planner.controllers.TripDatabase;
-import com.dainglis.trip_planner.models.Event;
 
 
 public class MainActivity extends AppCompatActivity implements
@@ -39,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements
         TripFormFragment.OnFragmentInteractionListener,
         TripInfoFragment.OnFragmentInteractionListener {
 
-    static final String KEY_TRIP_ID = "tripId";
+    //static final String KEY_TRIP_ID = "tripId"; // DEPRECATED
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements
         /*
             This is a test to ensure that the TripDatabase initializes correctly
          */
+
+        /*
         TripDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
@@ -73,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements
                 //TripDatabase.loadSampleData();
             }
         });
+         */
     }
 
 
@@ -80,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements
     protected void onStart() {
         super.onStart();
         setInitialFragment(TripListFragment.newInstance());
+        //setInitialFragment(ContactsFragment.newInstance());
     }
 
 
@@ -220,6 +219,13 @@ public class MainActivity extends AppCompatActivity implements
         formFragment.setTripId(tripId);
 
         setActiveFragment(formFragment);
+    }
+
+    @Override
+    public void onShareButtonPressed(long tripId) {
+        ContactShareFragment contactShare = ContactShareFragment.newInstance();
+        setActiveFragment(contactShare);
+
     }
         //Method responsible for accessing Wikipedia pages of the cities
     public void onCityClick(View view){

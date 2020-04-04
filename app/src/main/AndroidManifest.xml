@@ -16,6 +16,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.dainglis.trip_planner">
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:allowBackup="true"
@@ -37,11 +38,17 @@
 
         </activity>
 
+        <provider
+            android:name=".providers.TripDataContentProvider"
+            android:authorities=".providers.TripDataContentProvider"
+            android:exported="false" />
+
         <!-- round logo needed for adaptive icon -->
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
+
 
 </manifest>
