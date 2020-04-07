@@ -13,7 +13,9 @@
 
 package com.dainglis.trip_planner.views;
 
+import android.content.ContentProvider;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,12 +23,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.dainglis.trip_planner.R;
+import com.dainglis.trip_planner.controllers.CityRepo;
+import com.dainglis.trip_planner.controllers.TripDatabase;
+import com.dainglis.trip_planner.providers.TripDataContentProvider;
 
 
 public class MainActivity extends AppCompatActivity implements
@@ -59,18 +65,16 @@ public class MainActivity extends AppCompatActivity implements
             This is a test to ensure that the TripDatabase initializes correctly
          */
 
-        /*
-        TripDatabase.databaseWriteExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                TripDatabase.init(getApplicationContext());
-
-                CityRepo.cities = TripDatabase.initializeCities();
-                TripDatabase.loadSampleDataFromFile(getApplicationContext(), R.raw.test_data);
-                //TripDatabase.loadSampleData();
-            }
-        });
-         */
+        if (TripDatabase.getInstance() == null) {
+            TripDatabase.databaseWriteExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    Log.d("Tripd", "Initializing TripDB instance");
+                    TripDatabase.init(getApplicationContext());
+                    CityRepo.cities = TripDatabase.initializeCities();
+                }
+            });
+        }
     }
 
 
@@ -162,8 +166,48 @@ public class MainActivity extends AppCompatActivity implements
             showAboutDialog();
             return true;
         }
+        else if (id == R.id.action_test_data) {
+            addAppTestData();
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void addAppTestData() {
+        TripDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                TripDatabase.loadSampleDataFromFile(getApplicationContext(), R.raw.test_data);
+
+                // Running tests on ContentProvider
+                Uri uri = (new Uri.Builder()).scheme("content")
+                        .authority(TripDataContentProvider.PROVIDER)
+                        .appendPath("trips")
+                        .build();
+
+                Cursor c = getContentResolver().query(uri, null, null, null, null);
+                if (c == null) {
+                    Log.e("TripD_TEST", "Null cursor after query for all Trips");
+                }
+                else {
+                    int i = 0;
+                    Log.d("TripD_TEST", "Obtained cursor of Trips");
+                    while (c.moveToNext()) {
+                        StringBuilder resBuilder = new StringBuilder();
+
+                        for (int j = 0; j < c.getColumnCount(); j++) {
+                            if (j != 0) {
+                                resBuilder.append(", ");
+                            }
+                            resBuilder.append(c.getString(j));
+
+                        }
+                        Log.d("TripD_TEST", "Cursor index " + i + " provides Trip '" + resBuilder.toString());
+                    }
+                    c.close();
+                }
+            }
+        });
     }
 
     /*
@@ -223,9 +267,9 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onShareButtonPressed(long tripId) {
-        ContactShareFragment contactShare = ContactShareFragment.newInstance();
-        setActiveFragment(contactShare);
-
+        // Not using share menu, will remove
+        //ContactShareFragment contactShare = ContactShareFragment.newInstance();
+        //setActiveFragment(contactShare);
     }
         //Method responsible for accessing Wikipedia pages of the cities
     public void onCityClick(View view){

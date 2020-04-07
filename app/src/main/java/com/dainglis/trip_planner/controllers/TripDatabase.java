@@ -96,7 +96,7 @@ public abstract class TripDatabase extends RoomDatabase {
             return null;
         }
         if (lCities.size() > 0) {
-            Log.d(null, "Cities table exists");
+            Log.d(databaseName, "Cities table exists");
             return lCities;
         }
 

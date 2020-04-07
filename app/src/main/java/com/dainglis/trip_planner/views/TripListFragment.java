@@ -27,11 +27,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.controllers.TripListAdapter;
 import com.dainglis.trip_planner.controllers.TripListViewModel;
 import com.dainglis.trip_planner.models.Trip;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -42,6 +45,9 @@ public class TripListFragment extends Fragment {
     private TripListAdapter tAdapter;
     private TripListViewModel mViewModel;
     private FloatingActionButton mAddButton;
+    private TextView textInfo;
+
+    private static final String INFO = "Create a Trip by selecting the \"+\" button";
 
 
     public static TripListFragment newInstance() {
@@ -64,6 +70,8 @@ public class TripListFragment extends Fragment {
         // create action for add button
         mAddButton = view.findViewById(R.id.addBtn);
 
+        textInfo = view.findViewById(R.id.text_info);
+
         return view;
     }
 
@@ -76,6 +84,12 @@ public class TripListFragment extends Fragment {
             @Override
             public void onChanged(@Nullable List<Trip> trips) {
                 tAdapter.setTrips(trips);
+                if (trips == null || trips.size() == 0) {
+                    textInfo.setText(INFO);
+                }
+                else {
+                    textInfo.setText("");
+                }
             }
         });
 

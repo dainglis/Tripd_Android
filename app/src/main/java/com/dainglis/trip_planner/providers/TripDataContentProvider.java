@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.controllers.CityRepo;
 import com.dainglis.trip_planner.controllers.EventDAO;
 import com.dainglis.trip_planner.controllers.TripDAO;
@@ -17,12 +16,21 @@ import com.dainglis.trip_planner.controllers.TripDatabase;
 
 public class TripDataContentProvider extends ContentProvider {
 
-    static final String PROVIDER_NAME = "com.dainglis.trip_planner.providers.TripDataContentProvider";
+    // Content providers are awful and abstract
+    // There is no need for a ContentProvider for internal use,
+    // so this ContentProvider is used to provide Trip information access
+    // to an external widget for the Tripd application
+
+    // As such, it needs to only expose the query() method to "provide content"
+    // to this widget
+
+    public static final String PROVIDER = "com.dainglis.trip_planner.provider";
 
     private static final int TRIPS_ALL = 1;
     private static final int TRIPS_ONE = 2;
     private static final int EVENTS_ALL = 10;
     private static final int EVENTS_ONE = 11;
+    private static final int CITIES_ALL = 21;
 
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -30,40 +38,38 @@ public class TripDataContentProvider extends ContentProvider {
         // Trips
 
         // URI for all elements in the "trips" table
-        uriMatcher.addURI(PROVIDER_NAME, "trips", TRIPS_ALL);
+        uriMatcher.addURI(PROVIDER, "trips", TRIPS_ALL);
         // URI for a single element in the "trips" table, by Id
-        uriMatcher.addURI(PROVIDER_NAME, "trips/#", TRIPS_ONE);
+        uriMatcher.addURI(PROVIDER, "trips/#", TRIPS_ONE);
 
         // Events
 
         // URI for all elements in the "events" table
-        uriMatcher.addURI(PROVIDER_NAME, "events", EVENTS_ALL);
+        uriMatcher.addURI(PROVIDER, "events", EVENTS_ALL);
         // URI for a single element in the "events" table, by Id
-        uriMatcher.addURI(PROVIDER_NAME, "events/#", EVENTS_ONE);
+        uriMatcher.addURI(PROVIDER, "events/#", EVENTS_ONE);
+
+        uriMatcher.addURI(PROVIDER, "cities", CITIES_ALL);
 
     }
 
-    private TripDatabase tripDatabase;
     private TripDAO tripDAO;
     private EventDAO eventDAO;
 
     @Override
     public boolean onCreate() {
 
-        Log.d("tripDB", "Initializing trip database content provider");
+        Log.d("TDCP", "Initializing trip database content provider");
 
-        tripDatabase = TripDatabase.init(getContext());
+        TripDatabase tripDB = TripDatabase.init(getContext());
 
-        tripDAO = tripDatabase.tripDAO();
-        eventDAO = tripDatabase.eventDAO();
+        tripDAO = tripDB.tripDAO();
+        eventDAO = tripDB.eventDAO();
 
         TripDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
-
-
                 CityRepo.cities = TripDatabase.initializeCities();
-                TripDatabase.loadSampleDataFromFile(getContext(), R.raw.test_data);
             }
         });
 
@@ -78,7 +84,27 @@ public class TripDataContentProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public Cursor query(@NonNull Uri uri, @Nullable String[] strings, @Nullable String s, @Nullable String[] strings1, @Nullable String s1) {
+    public Cursor query(@NonNull Uri uri, @Nullable String[] proj, @Nullable String sel, @Nullable String[] selArgs, @Nullable String sort) {
+        switch (uriMatcher.match(uri)) {
+            case TRIPS_ALL:
+                return tripDAO.getAllAsCursor();
+
+            case TRIPS_ONE:
+
+                if (uri.getLastPathSegment() != null) {
+                    long id = 0;
+                    try {
+                        id = Long.parseLong(uri.getLastPathSegment());
+                        return tripDAO.getByIdAsCursor(id);
+                    } catch (Exception e) {
+                        Log.e("TDCP", "Malformed URI: " + uri.toString());
+                    }
+                }
+                break;
+            default:
+                Log.e("TDCP", "Unknown URI: " + uri.toString());
+
+        }
         return null;
     }
 
@@ -88,6 +114,7 @@ public class TripDataContentProvider extends ContentProvider {
         return null;
     }
 
+
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s, @Nullable String[] strings) {
         return 0;
@@ -95,6 +122,7 @@ public class TripDataContentProvider extends ContentProvider {
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String s, @Nullable String[] strings) {
+        // At this time data deletion is not supported
         return 0;
     }
 

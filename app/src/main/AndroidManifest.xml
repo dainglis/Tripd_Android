@@ -40,7 +40,7 @@
 
         <provider
             android:name=".providers.TripDataContentProvider"
-            android:authorities=".providers.TripDataContentProvider"
+            android:authorities="com.dainglis.trip_planner.provider"
             android:exported="false" />
 
         <!-- round logo needed for adaptive icon -->

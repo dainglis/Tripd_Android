@@ -34,6 +34,13 @@
         app:maxImageSize="32dp"
         app:srcCompat="@drawable/ic_add_black_24dp" />
 
+    <TextView
+        android:id="@+id/text_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        android:paddingTop="100dp" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/trip_card_rec_view"
         android:divider="@android:color/white"
