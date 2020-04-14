@@ -1,3 +1,9 @@
+<!-- Remote views can support Frame, Linear, Relative, or Grid Layout
+ Remote views can support the following widget classes
+ Analog Clock, Button, Chronometer, ImageButton, ImageView,
+ ProgressBar, TextView, ViewFlipper, ListView, GridView,
+ StackView, and AdapterViewFlipper (and ViewStub) -->
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
