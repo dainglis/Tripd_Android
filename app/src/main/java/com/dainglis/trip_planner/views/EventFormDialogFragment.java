@@ -54,62 +54,6 @@ public class EventFormDialogFragment extends DialogFragment {
     EditText eventDate;
 
 
-    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-
-        Method:         onCreate()        -- Override
-        Description:    Creates and populates an Event Form Activity.
-        Parameters:     Bundle      savedInstanceState
-        Returns:        void.
-
-    ---------------------------------------------------------------------------------------------
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-
-        //Get trip data members from database
-        //currentTrip = getCurrentTrip(currentTripId);
-
-        //Connect title and date variables to EditText fields
-        eventTitle = findViewById(R.id.eventTitleEdit);
-        eventDate = findViewById(R.id.eventDateEdit);
-
-        //Connect Cancel button and set click listener
-        btnCancel = findViewById(R.id.buttonEventFormCancel);
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cancelForm();
-            }
-        });
-
-        // Connect Confirm button and set click listener
-        btnConfirm = findViewById(R.id.buttonEventFormConfirm);
-        btnConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //validate non-empty title and valid date within trip date range
-                if (validateEventForm()) {
-                    saveEventForm();
-                }
-            }
-        });
-
-        //Get tripId passed when Add Event Activity invoked
-        extras = getIntent().getExtras();
-
-        if (extras != null) {
-            currentTripId = extras.getLong("tripId");
-
-            if (currentTripId == 0) {
-                cancelForm();
-            }
-        }
-
-    }
-    */
-
-
-
     public EventFormDialogFragment() {
         // Required empty public constructor
     }
@@ -229,17 +173,7 @@ public class EventFormDialogFragment extends DialogFragment {
 
         // use try catch to compare string with df format
         try {
-
             df.parse(eventDate.getText().toString());
-
-            /*
-
-            if ( ObjDate.before( df.parse(currentTrip.getStartDate())) || ObjDate.after( df.parse(currentTrip.getEndDate())))
-            {
-                Toast.makeText(getApplicationContext(), "Invalid Date Entered", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-            */
         }
         catch(Exception e)
         {
