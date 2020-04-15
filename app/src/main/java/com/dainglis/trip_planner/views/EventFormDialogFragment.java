@@ -26,9 +26,11 @@ import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.controllers.TripDatabase;
 import com.dainglis.trip_planner.models.Event;
 import com.dainglis.trip_planner.models.Trip;
+import com.dainglis.trip_planner.providers.TripDataContract;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 /*
 *   Class:          EventFormDialogFragment
@@ -50,62 +52,6 @@ public class EventFormDialogFragment extends DialogFragment {
     Button btnConfirm;
     EditText eventTitle;
     EditText eventDate;
-
-
-    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-
-        Method:         onCreate()        -- Override
-        Description:    Creates and populates an Event Form Activity.
-        Parameters:     Bundle      savedInstanceState
-        Returns:        void.
-
-    ---------------------------------------------------------------------------------------------
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-
-        //Get trip data members from database
-        //currentTrip = getCurrentTrip(currentTripId);
-
-        //Connect title and date variables to EditText fields
-        eventTitle = findViewById(R.id.eventTitleEdit);
-        eventDate = findViewById(R.id.eventDateEdit);
-
-        //Connect Cancel button and set click listener
-        btnCancel = findViewById(R.id.buttonEventFormCancel);
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cancelForm();
-            }
-        });
-
-        // Connect Confirm button and set click listener
-        btnConfirm = findViewById(R.id.buttonEventFormConfirm);
-        btnConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //validate non-empty title and valid date within trip date range
-                if (validateEventForm()) {
-                    saveEventForm();
-                }
-            }
-        });
-
-        //Get tripId passed when Add Event Activity invoked
-        extras = getIntent().getExtras();
-
-        if (extras != null) {
-            currentTripId = extras.getLong("tripId");
-
-            if (currentTripId == 0) {
-                cancelForm();
-            }
-        }
-
-    }
-    */
-
 
 
     public EventFormDialogFragment() {
@@ -214,7 +160,7 @@ public class EventFormDialogFragment extends DialogFragment {
     private boolean validateEventForm() {
 
         // set the date format
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        DateFormat df = new SimpleDateFormat(TripDataContract.DATETIME_FORMAT, Locale.CANADA);
         df.setLenient(false);
 
         // Ensure Event title is not empty
@@ -227,17 +173,7 @@ public class EventFormDialogFragment extends DialogFragment {
 
         // use try catch to compare string with df format
         try {
-
             df.parse(eventDate.getText().toString());
-
-            /*
-
-            if ( ObjDate.before( df.parse(currentTrip.getStartDate())) || ObjDate.after( df.parse(currentTrip.getEndDate())))
-            {
-                Toast.makeText(getApplicationContext(), "Invalid Date Entered", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-            */
         }
         catch(Exception e)
         {

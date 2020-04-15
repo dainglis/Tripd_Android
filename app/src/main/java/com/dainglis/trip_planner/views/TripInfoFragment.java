@@ -16,6 +16,7 @@ package com.dainglis.trip_planner.views;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -73,6 +74,7 @@ public class TripInfoFragment extends Fragment {
     //Create variables for FloatingButtons
     FloatingActionButton addButton;
     FloatingActionButton editButton;
+    FloatingActionButton shareButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,8 +88,11 @@ public class TripInfoFragment extends Fragment {
         endLocationView = view.findViewById(R.id.tripEnd);
         tripDateView = view.findViewById(R.id.tripDateInfo);
         imageView = view.findViewById(R.id.imageView);
+
+        // FloatActionButtons from the view
         addButton = view.findViewById(R.id.buttonAdd);
         editButton = view.findViewById(R.id.buttonEdit);
+        shareButton = view.findViewById(R.id.buttonShare);
 
         if (currentTripId == 0) {
             Toast.makeText(view.getContext(),"No tripId received", Toast.LENGTH_SHORT)
@@ -146,6 +151,13 @@ public class TripInfoFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 raiseEditButtonPressed(mViewModel.getTripId());
+            }
+        });
+
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                raiseShareButtonPressed();
             }
         });
 
@@ -254,6 +266,16 @@ public class TripInfoFragment extends Fragment {
         mListener.onEditButtonPressed(tripId);
     }
 
+    private void raiseShareButtonPressed() {
+
+        Intent calTripIntent = mViewModel.getTripAsCalendarIntent();
+
+        if (calTripIntent != null) {
+            startActivity(calTripIntent);
+        }
+
+    }
+
     private void raiseCityPressed(View view) {
         mListener.onCityClick(view);
     }
@@ -271,6 +293,7 @@ public class TripInfoFragment extends Fragment {
 
         void onAddButtonPressed(long tripId);
         void onEditButtonPressed(long tripId);
+        void onShareButtonPressed(long tripId);
         void onCityClick(View view);
     }
 
