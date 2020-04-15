@@ -26,9 +26,11 @@ import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.controllers.TripDatabase;
 import com.dainglis.trip_planner.models.Event;
 import com.dainglis.trip_planner.models.Trip;
+import com.dainglis.trip_planner.providers.TripDataContract;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 /*
 *   Class:          EventFormDialogFragment
@@ -214,7 +216,7 @@ public class EventFormDialogFragment extends DialogFragment {
     private boolean validateEventForm() {
 
         // set the date format
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        DateFormat df = new SimpleDateFormat(TripDataContract.DATETIME_FORMAT, Locale.CANADA);
         df.setLenient(false);
 
         // Ensure Event title is not empty
