@@ -28,7 +28,7 @@ import com.dainglis.trip_planner.models.Trip;
 @Dao
 public interface TripDAO {
 
-    String QUERY_SEL_ALL = "SELECT * FROM trips";
+    String QUERY_SEL_ALL = "SELECT * FROM trips ORDER BY startDate ASC";
     String QUERY_SEL_ONE_ID = "SELECT * FROM trips WHERE tripId = (:id) LIMIT 1";
 
 
