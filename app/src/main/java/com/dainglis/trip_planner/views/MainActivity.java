@@ -33,6 +33,7 @@ import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.controllers.CityRepo;
 import com.dainglis.trip_planner.controllers.TripDatabase;
 import com.dainglis.trip_planner.providers.TripDataContentProvider;
+import com.dainglis.trip_planner.providers.TripDataContract;
 
 
 public class MainActivity extends AppCompatActivity implements
@@ -181,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements
 
                 // Running tests on ContentProvider
                 Uri uri = (new Uri.Builder()).scheme("content")
-                        .authority(TripDataContentProvider.PROVIDER)
+                        .authority(TripDataContract.AUTHORITY)
                         .appendPath("trips")
                         .build();
 
@@ -190,7 +191,6 @@ public class MainActivity extends AppCompatActivity implements
                     Log.e("TripD_TEST", "Null cursor after query for all Trips");
                 }
                 else {
-                    int i = 0;
                     Log.d("TripD_TEST", "Obtained cursor of Trips");
                     while (c.moveToNext()) {
                         StringBuilder resBuilder = new StringBuilder();
@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements
                             resBuilder.append(c.getString(j));
 
                         }
-                        Log.d("TripD_TEST", "Cursor index " + i + " provides Trip '" + resBuilder.toString());
+                        Log.d("TripD_TEST", "Cursor provides Trip '" + resBuilder.toString());
                     }
                     c.close();
                 }

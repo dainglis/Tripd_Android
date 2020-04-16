@@ -30,6 +30,8 @@ public interface TripDAO {
 
     String QUERY_SEL_ALL = "SELECT * FROM trips ORDER BY startDate ASC";
     String QUERY_SEL_ONE_ID = "SELECT * FROM trips WHERE tripId = (:id) LIMIT 1";
+    String QUERY_NEXT_AFTER_DATE = "SELECT * FROM trips WHERE startDate >= (:date) ORDER BY startDate ASC LIMIT 1";
+    String QUERY_ACTIVE_TRIP = "SELECT * FROM trips WHERE startDate <= (:date) AND endDate >= (:date) ORDER BY startDate ASC LIMIT 1";
 
 
 
@@ -50,6 +52,12 @@ public interface TripDAO {
 
     @Query(QUERY_SEL_ONE_ID)
     Cursor getByIdAsCursor(long id);
+
+    @Query(QUERY_NEXT_AFTER_DATE)
+    Cursor getNextTripAfterDate(String date);
+
+    @Query(QUERY_ACTIVE_TRIP)
+    Cursor getFirstActiveTrip(String date);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insert(Trip trip);
