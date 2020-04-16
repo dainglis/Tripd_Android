@@ -16,6 +16,7 @@ package com.dainglis.trip_planner.views;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -156,7 +157,7 @@ public class TripInfoFragment extends Fragment {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                raiseShareButtonPressed(mViewModel.getTripId());
+                raiseShareButtonPressed();
             }
         });
 
@@ -265,7 +266,15 @@ public class TripInfoFragment extends Fragment {
         mListener.onEditButtonPressed(tripId);
     }
 
-    private void raiseShareButtonPressed(long tripId) { mListener.onShareButtonPressed(tripId); }
+    private void raiseShareButtonPressed() {
+
+        Intent calTripIntent = mViewModel.getTripAsCalendarIntent();
+
+        if (calTripIntent != null) {
+            startActivity(calTripIntent);
+        }
+
+    }
 
     private void raiseCityPressed(View view) {
         mListener.onCityClick(view);
@@ -332,7 +341,8 @@ public class TripInfoFragment extends Fragment {
                     out.write(buffer, 0, bytesRead);
                     bytesRead = in.read(buffer);
                 }
-                Log.i("MyApp", sb.toString());
+//                Log.i("MyApp", sb.toString());
+                Log.i("Tripd/ASYNC", "Image downloaded");
                 out.close();
                 in.close();
 
@@ -351,7 +361,7 @@ public class TripInfoFragment extends Fragment {
         --------------------------------------------------------------------------------------------- */
         @Override
         protected void onPostExecute(Void result) {
-            Log.d("Image downloaded", "Loading");
+            Log.i("Tripd/ASYNC", "Download complete, changing view");
             new ReadImage().execute(FILENAME);
         }
     }

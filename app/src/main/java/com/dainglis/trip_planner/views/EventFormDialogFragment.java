@@ -13,22 +13,36 @@
 
 package com.dainglis.trip_planner.views;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.controllers.TripDatabase;
 import com.dainglis.trip_planner.models.Event;
 import com.dainglis.trip_planner.models.Trip;
+import com.dainglis.trip_planner.providers.TripDataContract;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 /*
 *   Class:          EventFormDialogFragment
@@ -40,71 +54,27 @@ import java.text.SimpleDateFormat;
 *   private:
 *
 */
-public class EventFormDialogFragment extends DialogFragment {
+public class EventFormDialogFragment extends DialogFragment implements
+        DatePickerDialog.OnDateSetListener,
+        TimePickerDialog.OnTimeSetListener {
 
     // Instance variable
     long currentTripId = 0;
 
     // View elements
+    EditText eventTitle;
+
     Button btnCancel;
     Button btnConfirm;
-    EditText eventTitle;
-    EditText eventDate;
 
+    Button btnSelectTime;
+    Button btnSelectDate;
 
-    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+    boolean formDateSet;
+    boolean formTimeSet;
 
-        Method:         onCreate()        -- Override
-        Description:    Creates and populates an Event Form Activity.
-        Parameters:     Bundle      savedInstanceState
-        Returns:        void.
-
-    ---------------------------------------------------------------------------------------------
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-
-        //Get trip data members from database
-        //currentTrip = getCurrentTrip(currentTripId);
-
-        //Connect title and date variables to EditText fields
-        eventTitle = findViewById(R.id.eventTitleEdit);
-        eventDate = findViewById(R.id.eventDateEdit);
-
-        //Connect Cancel button and set click listener
-        btnCancel = findViewById(R.id.buttonEventFormCancel);
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cancelForm();
-            }
-        });
-
-        // Connect Confirm button and set click listener
-        btnConfirm = findViewById(R.id.buttonEventFormConfirm);
-        btnConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //validate non-empty title and valid date within trip date range
-                if (validateEventForm()) {
-                    saveEventForm();
-                }
-            }
-        });
-
-        //Get tripId passed when Add Event Activity invoked
-        extras = getIntent().getExtras();
-
-        if (extras != null) {
-            currentTripId = extras.getLong("tripId");
-
-            if (currentTripId == 0) {
-                cancelForm();
-            }
-        }
-
-    }
-    */
+    Trip currentTrip;
+    LiveData<Trip> mTrip;
 
 
 
@@ -136,11 +106,18 @@ public class EventFormDialogFragment extends DialogFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.dialog_fragment_event_form, container, false);
 
+        formDateSet = false;
+        formTimeSet = false;
+        currentTrip = null;
+
         eventTitle = view.findViewById(R.id.eventTitleEdit);
-        eventDate = view.findViewById(R.id.eventDateEdit);
 
         btnCancel = view.findViewById(R.id.buttonEventFormCancel);
         btnConfirm = view.findViewById(R.id.buttonEventFormConfirm);
+
+        btnSelectDate = view.findViewById(R.id.eventDateSelect);
+        btnSelectTime = view.findViewById(R.id.eventTimeSelect);
+
 
         // Set up on-click listeners for Confirm and Cancel buttons
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -160,27 +137,79 @@ public class EventFormDialogFragment extends DialogFragment {
             }
         });
 
+        btnSelectDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchDatePicker(view.getContext());
+            }
+        });
+
+        btnSelectTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchTimePicker(view.getContext());
+            }
+        });
+
+        Log.d("EventForm", "Accessed with Trip id: " + currentTripId);
+        mTrip = TripDatabase.getInstance().tripDAO().getById(currentTripId);
+        mTrip.observe(this, new Observer<Trip>() {
+            @Override
+            public void onChanged(@Nullable Trip trip) {
+                updateCurrentTrip(trip);
+            }
+        });
+
         return view;
+    }
+
+    private void updateCurrentTrip(Trip trip) {
+        currentTrip = trip;
+    }
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         launchDatePicker()
+        Description:    Launches a DatePickerDialog, whose result is captured by the OnDateSetListener
+        Parameters:     Context context - The current Context
+        Returns:        void
+
+    --------------------------------------------------------------------------------------------- */
+    public void launchDatePicker(Context context) {
+        if (currentTrip != null) {
+            Calendar localCal = Calendar.getInstance();
+            DateFormat eventDateFormat = new SimpleDateFormat(TripDataContract.DATE_FORMAT, Locale.CANADA);
+
+            try {
+                localCal.setTime(eventDateFormat.parse(currentTrip.getStartDate()));
+
+                new DatePickerDialog(context,
+                        0,
+                        this,
+                        localCal.get(Calendar.YEAR),
+                        localCal.get(Calendar.MONTH),
+                        localCal.get(Calendar.DAY_OF_MONTH)).show();
+            } catch (ParseException exc) {
+                Log.e("DatePicker", "Malformed date from Trip");
+            }
+        }
+    }
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+
+        Method:         launchTimePicker()
+        Description:    Launches a TimePickerDialog, whose result is captured by the OnTimeSetListener
+        Parameters:     Context context - The current Context
+        Returns:        void
+
+    --------------------------------------------------------------------------------------------- */
+    public void launchTimePicker(Context context) {
+        new TimePickerDialog(context, this, 0, 0, true).show();
     }
 
 
     public void setCurrentTripId(long tripId) {
         currentTripId = tripId;
-    }
-
-
-    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-
-        Method:         getCurrentTrip()
-        Description:    Queries the `trip_planner` database for the Trip object with the specified
-                        id.
-        Parameters:     long        id      The unique id of the requested Trip object.
-        Returns:        Trip                The Trip object corresponding to the provided Id
-
-    --------------------------------------------------------------------------------------------- */
-    private Trip getCurrentTrip(long id) {
-        return null;
-        //return TripDatabase.getInstance().tripDAO().getById(id);
     }
 
 
@@ -204,50 +233,38 @@ public class EventFormDialogFragment extends DialogFragment {
 
         Method:         validateEventForm()
         Description:    Validates the EditText fields of the form's layout, ensuring the "Title" is
-                        a valid string, and the "DateTime" is in the correct DateTime format:
-                        i.e. YYYY-MM-DD HH:MM:SS
+                        a valid string.
+                        Checks to see if the Date and Time fields of the form have been set by their
+                        respective Dialog Pickers. Validation of the dates is performed in the listener
         Parameters:     void
         Returns:        boolean         True            If the form is valid
                                         False           If the form is invalid.
 
     --------------------------------------------------------------------------------------------- */
     private boolean validateEventForm() {
+        boolean isValid = false;
+        String toastData = "";
 
-        // set the date format
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        df.setLenient(false);
+        if (eventTitle.getText().toString().trim().length() < 1) {
+            toastData = "Event title cannot be blank";
+        }
+        else if (!formDateSet) {
+            toastData = "Please select a date for the event";
+        }
+        else if (!formTimeSet) {
+            toastData = "Please select a time for the event";
+        }
+        else {
+            isValid = true;
+        }
 
-        // Ensure Event title is not empty
-        if (eventTitle.getText().length() == 0) {
+        if (!isValid) {
             Toast.makeText(getContext(),
-                    "Event title cannot be blank",
+                    toastData,
                     Toast.LENGTH_SHORT).show();
-            return false;
         }
 
-        // use try catch to compare string with df format
-        try {
-
-            df.parse(eventDate.getText().toString());
-
-            /*
-
-            if ( ObjDate.before( df.parse(currentTrip.getStartDate())) || ObjDate.after( df.parse(currentTrip.getEndDate())))
-            {
-                Toast.makeText(getApplicationContext(), "Invalid Date Entered", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-            */
-        }
-        catch(Exception e)
-        {
-            Toast.makeText(getContext(),
-                    "Date is not in the correct format",
-                    Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        return true;
+        return isValid;
     }
 
 
@@ -263,7 +280,7 @@ public class EventFormDialogFragment extends DialogFragment {
     private void saveEventForm() {
         final Event event =
                 new Event(eventTitle.getText().toString(),
-                        eventDate.getText().toString(),
+                        btnSelectDate.getText().toString() + " " + btnSelectTime.getText().toString(),
                         currentTripId);
         try {
             TripDatabase.databaseWriteExecutor.execute(new Runnable() {
@@ -278,6 +295,70 @@ public class EventFormDialogFragment extends DialogFragment {
         {
             Toast.makeText(getContext(), "Error adding event", Toast.LENGTH_SHORT).show();
 
+        }
+    }
+
+    private boolean eventDateBetweenTripDates(String eventDate) {
+        return ( (currentTrip != null)
+            && (eventDate.compareTo(currentTrip.getStartDate()) >= 0)
+            && (eventDate.compareTo(currentTrip.getEndDate()) <= 0) );
+    }
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int yr, int mo, int day) {
+        ++mo;
+
+        DateFormat eventDateFormat = new SimpleDateFormat(TripDataContract.DATE_FORMAT, Locale.CANADA);
+        StringBuilder eventDate = new StringBuilder();
+        eventDate.append(yr );
+        eventDate.append("-");
+        eventDate.append( (mo < 10) ? "0" + mo : mo);
+        eventDate.append("-");
+        eventDate.append( (day < 10) ? "0" + day : day);
+
+
+        try {
+            eventDateFormat.parse(eventDate.toString());
+
+            // No ParseException, the date is valid
+            if (eventDateBetweenTripDates(eventDate.toString())) {
+
+                formDateSet = true;
+                btnSelectDate.setText(eventDate.toString());
+                Log.i("DatePicker", "Date has been set: " + eventDate.toString());
+            }
+            else {
+                Log.d("DatePicker", "Event must be within trip dates");
+                Toast.makeText(getContext(),
+                        "Event must be within trip dates",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
+        }
+        catch (ParseException exc) {
+            Log.e("DatePicker", "Malformed date from picker");
+            formDateSet = false;
+        }
+
+    }
+
+    @Override
+    public void onTimeSet(TimePicker timePicker, int hr, int min) {
+        DateFormat eventTimeFormat = new SimpleDateFormat(TripDataContract.TIME_FORMAT, Locale.CANADA);
+        StringBuilder eventTime = new StringBuilder();
+        eventTime.append( (hr < 10) ? "0" + hr : hr);
+        eventTime.append(":");
+        eventTime.append( (min < 10) ? "0" + min : min);
+
+        try {
+            eventTimeFormat.parse(eventTime.toString());
+            formTimeSet = true;
+            btnSelectTime.setText(eventTime.toString());
+            Log.d("DatePicker", "Time has been set: " + eventTime.toString());
+        }
+        catch (ParseException exc) {
+            Log.e("DatePicker", "Malformed time from picker");
+            formTimeSet = false;
         }
     }
 }

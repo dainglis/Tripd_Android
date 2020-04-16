@@ -130,16 +130,16 @@
             android:layout_marginBottom="@dimen/form_spacer" />
 
 
-        <EditText
-            android:id="@+id/dateDepartEnter"
+        <Button
+            android:id="@+id/dateDepartSelect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="5"
             android:layout_column="1"
             android:autofillHints=""
+            android:layout_gravity="center"
             android:ems="10"
-            android:hint="@string/hint_date"
-            android:inputType="date"
+            android:hint="@string/hint_date_select"
             tools:targetApi="o" />
 
 
@@ -154,17 +154,17 @@
             android:text="@string/arriveName"
             android:textSize="24sp" />
 
-        <EditText
-            android:id="@+id/dateArriveEnter"
+        <Button
+            android:id="@+id/dateArriveSelect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_row="6"
             android:layout_column="1"
             android:ems="10"
-            android:hint="@string/hint_date"
+            android:hint="@string/hint_date_select"
             android:importantForAutofill="no"
-            android:layout_marginBottom="@dimen/form_spacer"
-            android:inputType="date" />
+            android:layout_marginBottom="@dimen/form_spacer" />
 
 
         <!-- Switches -->
@@ -237,7 +237,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center|end"
                 android:layout_margin="20dp"
-                android:background="@color/colorPrimary"
+                android:background="@android:color/darker_gray"
                 android:bufferType="normal"
                 android:text="@string/cancelButton"
                 android:textColor="@android:color/white"
