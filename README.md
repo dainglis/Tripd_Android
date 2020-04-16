@@ -58,3 +58,33 @@ Michel - System broadcast when the time and date happens for a particular event
 Service: Brainstorm for ideas. 
 Issues with the repo or building: Message David
 Next Meeting: Check in on Thursday Next Week.(Apr 2, 12pm) 
+
+### Rubric Notes
+Use of Services and Notifications - 15% 
+    Application uses at least one application level service with notifications properly set. 
+    Application uses at least 2 system services
+Use of broadcasts and recievers - 15%
+    Application uses at least one application broadcase and at least one system broadcast. 
+Use of content providers - 15% 
+    Application uses application content provider and one system provider
+Use of dialogs and permissions - 10%
+    Application uses both custom dialogs. 
+    Application uses Marshmallow style permission requests
+Use of Application Widgets - 10%
+    Application uses a properly formed application widget. 
+    The communication between the widget and the application is clear and proper. 
+    Widget leads to a proper place in the application. 
+Use of Maps - 5%
+    Map is properly set up. 
+    It is meaningful and dispayed in the proper place and scale. 
+Documentation of all required elements - 15%
+    Documentation is clear and concise. 
+    It describes location and use of every feature implemented in the application.
+Coding practices (logs, exception handling, comments) - 15%
+    All code is properly commented.
+    The use of log and exception handling is widespread. 
+    The code is easy to read and understand. 
+
+From you I will need an archived project with all code. Please, unhook it from GIT and make sure that your own path names are no longer than 150 chars. We have 240 total and I have no intention to place your code at C:\ level!!!!! 
+
+I will also need a description document. The groups not submitting such document will get 20% reduction in mark. If it is not in the description, I have a right of overlooking it!!!!!
