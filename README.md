@@ -25,7 +25,7 @@ The **Tripd** app has four pages:
 #### Consideration for A03
 With Igor's provided feedback from A02, we should ensure:
 - [x] Class names START WITH UPPERCASE!!!
-- [ ] [Steve] Check that event date is within the trip dates
+- [x] Check that event date is within the trip dates
 - [ ] Increase volume of log messages
 - [ ] Ensure all exception handling is implemented
 
