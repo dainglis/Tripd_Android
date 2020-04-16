@@ -52,39 +52,56 @@ The following requirements were met for A02:
 
 ### Meeting Minutes - March 27th 2020
 Igor changed the deadline to the April 17th instead of the 11th. 
-Megan - App widget (in android homescreen). Cardview of next upcoming trip, click launches the app directly to trip breakdown for that page. 
-Everyon e- Refactor your file so Objects use uppercase names
-Michel - System broadcast when the time and date happens for a particular event 
+
+Megan:
+* App widget (in android homescreen). 
+* Cardview of next upcoming trip, click launches the app directly to trip breakdown for that page. 
+
+Everyone:
+* Refactor your file so Objects use uppercase names
+
+Michel: 
+* System broadcast when the time and date happens for a particular event 
+
 Service: Brainstorm for ideas. 
+
 Issues with the repo or building: Message David
+
 Next Meeting: Check in on Thursday Next Week.(Apr 2, 12pm) 
 
 
 ### Rubric Notes
-Use of Services and Notifications - 15% 
-    Application uses at least one application level service with notifications properly set. 
-    Application uses at least 2 system services
+Use of Services and Notifications - 15%
+* Application uses at least one application level service with notifications properly set. 
+* Application uses at least 2 system services
+
 Use of broadcasts and recievers - 15%
-    Application uses at least one application broadcase and at least one system broadcast. 
+* Application uses at least one application broadcase and at least one system broadcast. 
+
 Use of content providers - 15% 
-    Application uses application content provider and one system provider
+* Application uses application content provider and one system provider
+
 Use of dialogs and permissions - 10%
-    Application uses both custom dialogs. 
-    Application uses Marshmallow style permission requests
+* Application uses both custom dialogs. 
+* Application uses Marshmallow style permission requests
+
 Use of Application Widgets - 10%
-    Application uses a properly formed application widget. 
-    The communication between the widget and the application is clear and proper. 
-    Widget leads to a proper place in the application. 
+* Application uses a properly formed application widget. 
+* The communication between the widget and the application is clear and proper. 
+* Widget leads to a proper place in the application. 
+
 Use of Maps - 5%
-    Map is properly set up. 
-    It is meaningful and dispayed in the proper place and scale. 
+* Map is properly set up. 
+* It is meaningful and dispayed in the proper place and scale. 
+
 Documentation of all required elements - 15%
-    Documentation is clear and concise. 
-    It describes location and use of every feature implemented in the application.
+* Documentation is clear and concise. 
+* It describes location and use of every feature implemented in the application.
+
 Coding practices (logs, exception handling, comments) - 15%
-    All code is properly commented.
-    The use of log and exception handling is widespread. 
-    The code is easy to read and understand. 
+* All code is properly commented.
+* The use of log and exception handling is widespread. 
+* The code is easy to read and understand. 
 
 From you I will need an archived project with all code. Please, unhook it from GIT and make sure that your own path names are no longer than 150 chars. We have 240 total and I have no intention to place your code at C:\ level!!!!! 
 
