@@ -341,7 +341,8 @@ public class TripInfoFragment extends Fragment {
                     out.write(buffer, 0, bytesRead);
                     bytesRead = in.read(buffer);
                 }
-                Log.i("MyApp", sb.toString());
+//                Log.i("MyApp", sb.toString());
+                Log.i("Tripd/ASYNC", "Image downloaded");
                 out.close();
                 in.close();
 
@@ -360,7 +361,7 @@ public class TripInfoFragment extends Fragment {
         --------------------------------------------------------------------------------------------- */
         @Override
         protected void onPostExecute(Void result) {
-            Log.d("Image downloaded", "Loading");
+            Log.i("Tripd/ASYNC", "Download complete, changing view");
             new ReadImage().execute(FILENAME);
         }
     }

@@ -26,13 +26,16 @@ import com.dainglis.trip_planner.models.Trip;
 @Dao
 public interface EventDAO {
 
-    @Query("SELECT * FROM events")
+    String QUERY_ALL = "SELECT * FROM events";
+    String QUERY_ALL_BY_ID = "SELECT * FROM events WHERE tripId = (:tripId) ORDER BY eventDate ASC";
+
+    @Query(QUERY_ALL)
     LiveData<List<Event>> getAll();
 
-    @Query("SELECT * FROM events WHERE tripId = (:tripId)")
+    @Query(QUERY_ALL_BY_ID)
     LiveData<List<Event>> getAllByTripId(long tripId);
 
-    @Query("SELECT * FROM events WHERE tripId = (:tripId)")
+    @Query(QUERY_ALL_BY_ID)
     List<Event> getAllByTripIdStatic(long tripId);
 
     @Insert

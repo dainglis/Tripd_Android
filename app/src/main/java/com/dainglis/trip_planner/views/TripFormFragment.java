@@ -14,17 +14,20 @@
 
 package com.dainglis.trip_planner.views;
 
+import android.app.DatePickerDialog;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -34,16 +37,25 @@ import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.controllers.CityRepo;
 import com.dainglis.trip_planner.controllers.TripDatabase;
 import com.dainglis.trip_planner.models.Trip;
+import com.dainglis.trip_planner.providers.TripDataContract;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
-public class TripFormFragment extends Fragment {
+public class TripFormFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
+
+    private static final int DATE_PICKER_DEPART = 0;
+    private static final int DATE_PICKER_ARRIVE = 1;
 
     private long currentTripId = 0;
+
+    DateFormat tripDateFormat;
 
     // View elements
     Button CanButt;
@@ -51,8 +63,11 @@ public class TripFormFragment extends Fragment {
     Spinner CityStartSpinner;
     Spinner CityEndSpinner;
     EditText EditName;
-    EditText DateDepartEnter;
-    EditText DateArriveEnter;
+    Button DateDepartSelect;
+    Button DateArriveSelect;
+
+    // Pointer for active elements
+    Button activeDateSelection;
 
     LiveData<Trip> mTrip;
 
@@ -83,9 +98,12 @@ public class TripFormFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_trip_form, container, false);
 
+        activeDateSelection = null;
+        tripDateFormat = new SimpleDateFormat(TripDataContract.DATE_FORMAT, Locale.CANADA);
+
         EditName = view.findViewById(R.id.editName);
-        DateDepartEnter = view.findViewById(R.id.dateDepartEnter);
-        DateArriveEnter = view.findViewById(R.id.dateArriveEnter);
+        DateDepartSelect = view.findViewById(R.id.dateDepartSelect);
+        DateArriveSelect = view.findViewById(R.id.dateArriveSelect);
         CityStartSpinner = view.findViewById(R.id.StartSpinner);
         CityEndSpinner = view.findViewById(R.id.EndSpinner);
 
@@ -111,13 +129,28 @@ public class TripFormFragment extends Fragment {
                 if (fieldValidation("Trip Name", EditName.getText().toString())
                         && spinnerValidation("Start City", CityStartSpinner.getSelectedItemPosition())
                         && spinnerValidation("End City", CityEndSpinner.getSelectedItemPosition())
-                        && dateValidate(DateDepartEnter)
-                        && dateValidate(DateArriveEnter) ) {
+                        && selectedDatesValidation(DateDepartSelect.getText().toString(),
+                                DateArriveSelect.getText().toString()) ) {
                     submitForm();
                 }
 
             }
 
+        });
+
+
+        DateDepartSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchDatePicker(view.getContext(), DATE_PICKER_DEPART);
+            }
+        });
+
+        DateArriveSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchDatePicker(view.getContext(), DATE_PICKER_ARRIVE);
+            }
         });
 
         mTrip = TripDatabase.getInstance().tripDAO().getById(currentTripId);
@@ -173,8 +206,8 @@ public class TripFormFragment extends Fragment {
         String title = EditName.getText().toString();
         String startLocation = CityStartSpinner.getSelectedItem().toString();
         String endLocation = CityEndSpinner.getSelectedItem().toString();
-        String startDate = DateDepartEnter.getText().toString();
-        String endDate = DateArriveEnter.getText().toString();
+        String startDate = DateDepartSelect.getText().toString();
+        String endDate = DateArriveSelect.getText().toString();
 
         final Trip trip = new Trip(title, startLocation, endLocation, startDate, endDate);
 
@@ -224,48 +257,29 @@ public class TripFormFragment extends Fragment {
         Returns:        boolean         True                If there are no exceptions thrown
                                         False               If an exception is caught.
     --------------------------------------------------------------------------------------------- */
-    public boolean dateValidate(EditText EditTextDate)
-    {
-        // set the date format
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        Date ObjDate = null;
-        df.setLenient(false);
+    public boolean selectedDatesValidation(String departDateString, String arriveDateString) {
+        // String.compareTo() allows the date strings to be compared
+        // This comparison asserts that the arrival date must be "greater than
+        // or equal to" the departure date, which indicates that the arrival date is
+        // on or after the departure date
 
-        // use try catch to compare string with df format
-        try
-        {
-            ObjDate = df.parse(EditTextDate.getText().toString());
-            return true;
-        }
-        catch(Exception e)
-        {
-            Toast.makeText(getActivity(),EditTextDate.getText().toString() + " is not a valid date.", Toast.LENGTH_LONG).show();
+        if (departDateString.trim().length() < 1) {
+            Toast.makeText(getActivity(), "Please select a departure date", Toast.LENGTH_SHORT).show();
             return false;
-
         }
+        else if (arriveDateString.trim().length() < 1) {
+            Toast.makeText(getActivity(), "Please select an arrival date", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if (arriveDateString.compareTo(departDateString) < 0) {
+            Toast.makeText(getActivity(), "Arrival date cannot be before departure date", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 
 
-
-    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-        Method:         fieldValidation()
-        Description:    This method is called when the add / edit button is pressed. This
-                        method validates the input fields as entered by the user
-        Parameters:     EditText        editText        The text to be verified.
-        Returns:        boolean         False           If the form is incomplete
-                                        True            If the form is complete
-    --------------------------------------------------------------------------------------------- */
-    public boolean fieldValidation(EditText editText)
-    {
-        if (editText.getText().toString().equals("") || editText.getText().toString().trim().length() < 1){
-
-            Toast.makeText(getActivity(),"Fill the complete trip information", Toast.LENGTH_SHORT).show();
-            return false;
-
-        } else {
-            return true;
-        }
-    }
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
         Method:         fieldValidation()
@@ -356,8 +370,8 @@ public class TripFormFragment extends Fragment {
             CityStartSpinner.setSelection(getCityIndex(CityStartSpinner, trip.getStartLocation()));
             CityEndSpinner.setSelection(getCityIndex(CityEndSpinner, trip.getEndLocation()));
 
-            DateDepartEnter.setText(trip.getStartDate());
-            DateArriveEnter.setText(trip.getEndDate());
+            DateDepartSelect.setText(trip.getStartDate());
+            DateArriveSelect.setText(trip.getEndDate());
         }
     }
 
@@ -388,6 +402,63 @@ public class TripFormFragment extends Fragment {
 
     public void setTripId(long tripId) {
         currentTripId = tripId;
+    }
+
+
+    public void launchDatePicker(Context context, int resource) {
+        Calendar localCal = Calendar.getInstance();
+
+        if (resource == DATE_PICKER_ARRIVE) {
+            activeDateSelection = DateArriveSelect;
+        }
+        else if (resource == DATE_PICKER_DEPART) {
+            activeDateSelection = DateDepartSelect;
+        }
+        else {
+            return;
+        }
+
+        if (!activeDateSelection.getText().toString().equals("")) {
+            try {
+                localCal.setTime(tripDateFormat.parse(activeDateSelection.getText().toString()));
+            } catch (ParseException exc) {
+                return;
+            }
+        }
+
+        new DatePickerDialog(context,
+                0,
+                this,
+                localCal.get(Calendar.YEAR),
+                localCal.get(Calendar.MONTH),
+                localCal.get(Calendar.DAY_OF_MONTH))
+                .show();
+    }
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int yr, int mo, int day) {
+        if (activeDateSelection == null) {
+            Log.e("DatePicker", "No active date selected");
+            return;
+        }
+
+        ++mo; // For some reason, the DatePickerDialog Zero-indexes the month
+
+        StringBuilder eventDate = new StringBuilder();
+        eventDate.append(yr );
+        eventDate.append("-");
+        eventDate.append( (mo < 10) ? "0" + mo : mo);
+        eventDate.append("-");
+        eventDate.append( (day < 10) ? "0" + day : day);
+
+        try {
+            tripDateFormat.parse(eventDate.toString());
+            activeDateSelection.setText(eventDate.toString());
+            Log.d("DatePicker", "Date has been set: " + eventDate.toString());
+        }
+        catch (ParseException exc) {
+            Log.e("DatePicker", "Malformed date from picker");;
+        }
     }
 
 

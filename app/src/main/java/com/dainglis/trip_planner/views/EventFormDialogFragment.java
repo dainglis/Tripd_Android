@@ -15,8 +15,11 @@ package com.dainglis.trip_planner.views;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +40,7 @@ import com.dainglis.trip_planner.providers.TripDataContract;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -68,7 +72,9 @@ public class EventFormDialogFragment extends DialogFragment implements
 
     boolean formDateSet;
     boolean formTimeSet;
-    boolean currentTripSet;
+
+    Trip currentTrip;
+    LiveData<Trip> mTrip;
 
 
 
@@ -102,6 +108,7 @@ public class EventFormDialogFragment extends DialogFragment implements
 
         formDateSet = false;
         formTimeSet = false;
+        currentTrip = null;
 
         eventTitle = view.findViewById(R.id.eventTitleEdit);
 
@@ -144,9 +151,21 @@ public class EventFormDialogFragment extends DialogFragment implements
             }
         });
 
+        Log.d("EventForm", "Accessed with Trip id: " + currentTripId);
+        mTrip = TripDatabase.getInstance().tripDAO().getById(currentTripId);
+        mTrip.observe(this, new Observer<Trip>() {
+            @Override
+            public void onChanged(@Nullable Trip trip) {
+                updateCurrentTrip(trip);
+            }
+        });
+
         return view;
     }
 
+    private void updateCurrentTrip(Trip trip) {
+        currentTrip = trip;
+    }
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
 
@@ -157,7 +176,23 @@ public class EventFormDialogFragment extends DialogFragment implements
 
     --------------------------------------------------------------------------------------------- */
     public void launchDatePicker(Context context) {
-        new DatePickerDialog(context, 0, this, 2020, 1,1).show();
+        if (currentTrip != null) {
+            Calendar localCal = Calendar.getInstance();
+            DateFormat eventDateFormat = new SimpleDateFormat(TripDataContract.DATE_FORMAT, Locale.CANADA);
+
+            try {
+                localCal.setTime(eventDateFormat.parse(currentTrip.getStartDate()));
+
+                new DatePickerDialog(context,
+                        0,
+                        this,
+                        localCal.get(Calendar.YEAR),
+                        localCal.get(Calendar.MONTH),
+                        localCal.get(Calendar.DAY_OF_MONTH)).show();
+            } catch (ParseException exc) {
+                Log.e("DatePicker", "Malformed date from Trip");
+            }
+        }
     }
 
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
@@ -175,21 +210,6 @@ public class EventFormDialogFragment extends DialogFragment implements
 
     public void setCurrentTripId(long tripId) {
         currentTripId = tripId;
-    }
-
-
-    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-
-        Method:         getCurrentTrip()
-        Description:    Queries the `trip_planner` database for the Trip object with the specified
-                        id.
-        Parameters:     long        id      The unique id of the requested Trip object.
-        Returns:        Trip                The Trip object corresponding to the provided Id
-
-    --------------------------------------------------------------------------------------------- */
-    private Trip getCurrentTrip(long id) {
-        return null;
-        //return TripDatabase.getInstance().tripDAO().getById(id);
     }
 
 
@@ -278,9 +298,16 @@ public class EventFormDialogFragment extends DialogFragment implements
         }
     }
 
+    private boolean eventDateBetweenTripDates(String eventDate) {
+        return ( (currentTrip != null)
+            && (eventDate.compareTo(currentTrip.getStartDate()) >= 0)
+            && (eventDate.compareTo(currentTrip.getEndDate()) <= 0) );
+    }
 
     @Override
     public void onDateSet(DatePicker datePicker, int yr, int mo, int day) {
+        ++mo;
+
         DateFormat eventDateFormat = new SimpleDateFormat(TripDataContract.DATE_FORMAT, Locale.CANADA);
         StringBuilder eventDate = new StringBuilder();
         eventDate.append(yr );
@@ -292,9 +319,21 @@ public class EventFormDialogFragment extends DialogFragment implements
 
         try {
             eventDateFormat.parse(eventDate.toString());
-            formDateSet = true;
-            btnSelectDate.setText(eventDate.toString());
-            Log.d("DatePicker", "Date has been set: " + eventDate.toString());
+
+            // No ParseException, the date is valid
+            if (eventDateBetweenTripDates(eventDate.toString())) {
+
+                formDateSet = true;
+                btnSelectDate.setText(eventDate.toString());
+                Log.i("DatePicker", "Date has been set: " + eventDate.toString());
+            }
+            else {
+                Log.d("DatePicker", "Event must be within trip dates");
+                Toast.makeText(getContext(),
+                        "Event must be within trip dates",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
         }
         catch (ParseException exc) {
             Log.e("DatePicker", "Malformed date from picker");
