@@ -13,14 +13,14 @@
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/colorBackground"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:padding="20dp"
     android:columnCount="2"
-    android:rowCount="3"
+    android:rowCount="4"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".views.EventFormDialogFragment" >
 
@@ -38,7 +38,7 @@
 
     <EditText
         android:id="@+id/eventTitleEdit"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_row="0"
         android:layout_column="1"
@@ -53,6 +53,7 @@
         android:id="@+id/eventDateLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_row="1"
         android:layout_column="0"
         android:layout_marginBottom="20dp"
@@ -61,16 +62,41 @@
         android:paddingEnd="10dp"
         android:textSize="24sp" />
 
-    <EditText
-        android:id="@+id/eventDateEdit"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/eventDateSelect"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_row="1"
         android:layout_column="1"
-        android:hint="@string/hint_datetime"
+        android:hint="@string/hint_date_select"
         android:ems="10"
-        android:importantForAutofill="no"
-        android:inputType="datetime" />
+        android:importantForAutofill="no"/>
+
+
+    <!-- Event time -->
+    <TextView
+        android:id="@+id/eventTimeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_row="2"
+        android:layout_column="0"
+        android:layout_marginBottom="20dp"
+        android:text="@string/label_event_time"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/eventTimeSelect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_row="2"
+        android:layout_column="1"
+        android:hint="@string/hint_time_select"
+        android:ems="10"
+        android:importantForAutofill="no" />
 
 
 
@@ -78,7 +104,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top|center"
-        android:layout_row="2"
+        android:layout_row="3"
         android:layout_column="0"
         android:layout_columnSpan="2" >
 
@@ -86,9 +112,10 @@
         <Button
             android:id="@+id/buttonEventFormConfirm"
             android:layout_width="wrap_content"
+
             android:layout_height="40dp"
             android:layout_margin="20dp"
-            android:layout_gravity="center"
+            android:layout_gravity="center|start"
             android:background="@color/colorPrimary"
             android:bufferType="normal"
             android:text="@string/confirmButton"
@@ -100,8 +127,8 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_margin="20dp"
-            android:layout_gravity="center"
-            android:background="@color/colorPrimary"
+            android:layout_gravity="center|end"
+            android:background="@android:color/darker_gray"
             android:bufferType="normal"
             android:text="@string/cancelButton"
             android:textColor="@android:color/white"

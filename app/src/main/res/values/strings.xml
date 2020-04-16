@@ -53,10 +53,13 @@
     <string name="label_event_title">Title:</string>
     <string name="event_title_hint">Event</string>
     <string name="label_event_date">Date:</string>
+    <string name="label_event_time">Time:</string>
 
 
     <string name="hint_date">YYYY-MM-DD</string>
-    <string name="hint_datetime">YYYY-MM-DD HH:MM:SS</string>
+    <string name="hint_datetime">YYYY-MM-DD HH:MM</string>
+    <string name="hint_date_select">Select date</string>
+    <string name="hint_time_select">Select time</string>
 
     <string name="about_title_ver">Tripd v0.2</string>
     <string name="about_text">Authors: Megan Bradshaw, David Inglis, Nick Iden, Steven Knapp, Michel Lima</string>
