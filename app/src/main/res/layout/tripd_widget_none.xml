@@ -1,0 +1,47 @@
+<!-- Remote views can support Frame, Linear, Relative, or Grid Layout
+ Remote views can support the following widget classes
+ Analog Clock, Button, Chronometer, ImageButton, ImageView,
+ ProgressBar, TextView, ViewFlipper, ListView, GridView,
+ StackView, and AdapterViewFlipper (and ViewStub) -->
+
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_id"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/colorBackground"
+    android:padding="10dp">
+
+    <!-- Trip Title -->
+    <TextView
+        android:id="@+id/trip_widget_none_title"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="No upcoming trips"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_column="0"
+        android:layout_columnSpan="2"
+        android:layout_row="0"
+        android:paddingBottom="5dp"/>
+
+    <TextView
+        android:id="@+id/trip_widget_none_subtitle"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Launch the Tripd app to create a trip"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:layout_column="0"
+        android:layout_columnSpan="2"
+        android:layout_row="1"
+        android:paddingBottom="5dp"/>
+
+
+
+</GridLayout>
