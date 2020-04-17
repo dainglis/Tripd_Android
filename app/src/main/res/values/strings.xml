@@ -69,4 +69,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!-- This is a temp location for google map API -->
+    <string name="Google_Map_API">AIzaSyD3cx7JYBn3jpSbKslLipkI5wm92o4huek</string>
+
 </resources>
