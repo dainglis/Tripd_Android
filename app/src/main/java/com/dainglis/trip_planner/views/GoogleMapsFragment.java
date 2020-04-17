@@ -27,14 +27,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
-public class Google_Maps_Fragment extends Fragment implements OnMapReadyCallback {
+public class GoogleMapsFragment extends Fragment implements OnMapReadyCallback {
 
     GoogleMap mGoogleMap;
     MapView mMapView;
     View mView;
 
     // public constructor
-    public Google_Maps_Fragment() {
+    public GoogleMapsFragment() {
 
     }
 
