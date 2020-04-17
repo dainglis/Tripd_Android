@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 
 import com.dainglis.trip_planner.R;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -86,6 +87,8 @@ public class GoogleMapsFragment extends Fragment implements OnMapReadyCallback {
             // set map type
             mGoogleMap = googleMap;
             googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+            // enable liteMode for minimal functionality and gestures
+            GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
 
             googleMap.addMarker(new MarkerOptions().position(new LatLng(43, -80)));
         }
