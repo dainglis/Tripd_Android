@@ -12,8 +12,8 @@
 
     <!-- Trip Title -->
     <TextView
-        android:id="@+id/appwidget_text"
-        android:layout_width="wrap_content"
+        android:id="@+id/widget_trip_name"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="@string/tripNameText"
         android:textColor="@color/colorPrimaryDark"
@@ -26,7 +26,7 @@
 
     <!-- Start City -->
     <TextView
-        android:id="@+id/tripStart"
+        android:id="@+id/widget_start_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/startCity"
@@ -38,7 +38,7 @@
         android:paddingEnd="10dp" />
 
     <TextView
-        android:id="@+id/startCityID"
+        android:id="@+id/widget_startCity"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_row="1"
@@ -49,7 +49,7 @@
 
     <!-- End City -->
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/widget_end_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/endCity"
@@ -61,7 +61,7 @@
         android:paddingEnd="10dp"/>
 
     <TextView
-        android:id="@+id/endCityID"
+        android:id="@+id/widget_endCity"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="Waterloo"
@@ -72,7 +72,7 @@
 
     <!-- Start Date -->
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/widget_depart_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/departName"
@@ -84,7 +84,7 @@
         android:paddingEnd="10dp"/>
 
     <TextView
-        android:id="@+id/startDateID"
+        android:id="@+id/widget_departDate"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="2020-10-10"
@@ -95,7 +95,7 @@
 
     <!-- End Date -->
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/widget_arrive_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/arriveName"
@@ -107,7 +107,7 @@
         android:paddingEnd="10dp"/>
 
     <TextView
-        android:id="@+id/endDateID"
+        android:id="@+id/widget_arriveDate"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="2020-10-12"
