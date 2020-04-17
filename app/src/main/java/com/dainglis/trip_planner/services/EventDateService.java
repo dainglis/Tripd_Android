@@ -11,6 +11,7 @@ import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
@@ -66,12 +67,14 @@ public class EventDateService extends Service {
     Runnable checkDateTask = new Runnable() {
         @Override
         public void run() {
-            LiveData<List<Event>> eventLiveList = TripDatabase.getInstance().eventDAO().getAll();
-            List<Event> eventList = eventLiveList.getValue();
-            for (Event e: eventList) {
-                if(compareDates(e.date)){
-                    setNotification(e);
-                    eventList.remove(e);
+
+            while(true) {
+                List<Event> eventList = TripDatabase.getInstance().eventDAO().getAllStatic();
+                for (Event e : eventList) {
+                    if (compareDates(e.date)) {
+                        setNotification(e);
+                        eventList.remove(e);
+                    }
                 }
                 try {
                     Thread.sleep(10000);
@@ -81,25 +84,14 @@ public class EventDateService extends Service {
             }
         }
     };
-    public List<Event> getList(){
-        Uri uri = (new Uri.Builder()).scheme("content")
-                .authority(TripDataContract.AUTHORITY)
-                .appendPath("events")
-                .build();
-        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-        List<Event> listEvent = null;
-        while (cursor.moveToNext()) {
-            cursor.getString( cursor.; // this gives the 'event title'
-        }
-    }
 
     public boolean compareDates(String date){
-        DateFormat eventDateFormat = new SimpleDateFormat(TripDataContract.DATE_FORMAT, Locale.CANADA);
         Date eventDate = null;
         Date currentTime = null;
+        String currentDateandTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
         try {
-            eventDate = eventDateFormat.parse(date);
-            currentTime = eventDateFormat.parse(Calendar.getInstance().getTime().toString());
+            eventDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(date);
+            currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(currentDateandTime);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -109,7 +101,7 @@ public class EventDateService extends Service {
         long hours = (int) ((difference - (1000*60*60*24*days)) / (1000*60*60));
         hours = (hours < 0 ? -hours : hours);
 
-        if(hours == 1){
+        if(days == 0 && hours == 0){
             return true;
         } else{
             return false;
@@ -123,11 +115,12 @@ public class EventDateService extends Service {
 
         CharSequence tickerText = "MyTickerText";
         CharSequence contentTitle = "Friendly Reminder!";
-        CharSequence contentText = "Don't forget that we have" + e.title + " starting in 1 hour!";
-        int icon = R.drawable.ic_launcher_background;
+        CharSequence contentText = "Don't forget that we have" + e.title + " starting in less than 1 hour!";
 
         NotificationCompat.Builder myBuilder = new NotificationCompat.Builder(this, "My Channel")
-                .setSmallIcon(icon)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),
+                        R.mipmap.ic_launcher))
                 .setTicker(tickerText)
                 .setContentTitle(contentTitle)
                 .setContentText(contentText)
@@ -142,7 +135,7 @@ public class EventDateService extends Service {
             //https://developer.android.com/training/notify-user/build-notification.html
 
             CharSequence name = "Don't miss it out!";
-            String description = "Don't forget that we have" + e.title + " starting in 1 hour!";
+            String description = "Don't forget that we have" + e.title + " starting in less than 1 hour!";
             @SuppressLint("WrongConstant") NotificationChannel channel = new NotificationChannel("My Channel", name, NotificationManagerCompat.IMPORTANCE_DEFAULT);
             channel.setDescription(description);
             // Register the channel with the system

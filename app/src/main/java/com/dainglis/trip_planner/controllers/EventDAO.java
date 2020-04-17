@@ -35,10 +35,11 @@ public interface EventDAO {
     LiveData<List<Event>> getAll();
 
     @Query(QUERY_ALL)
-    List<Trip> getAllStatic();
+    List<Event> getAllStatic();
 
     @Query(QUERY_ALL)
     Cursor getAllAsCursor();
+
 
     @Query(QUERY_ALL_BY_ID)
     LiveData<List<Event>> getAllByTripId(long tripId);
