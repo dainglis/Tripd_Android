@@ -41,13 +41,20 @@ public class MainActivity extends AppCompatActivity implements
         TripFormFragment.OnFragmentInteractionListener,
         TripInfoFragment.OnFragmentInteractionListener {
 
-    //static final String KEY_TRIP_ID = "tripId"; // DEPRECATED
+    static final String KEY_TRIP_ID = "id";
+    static final long INITIAL_TRIP_NONE = 0;
+    private long initialTripId = INITIAL_TRIP_NONE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // On creation of the MainActivity, the initial Fragment
         // TripListFragment is launched
+
+        Bundle applicationExtras = getIntent().getExtras();
+        if (applicationExtras != null) {
+            initialTripId = applicationExtras.getLong(KEY_TRIP_ID);
+        }
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -82,7 +89,13 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onStart() {
         super.onStart();
+
         setInitialFragment(TripListFragment.newInstance());
+
+        if (initialTripId != INITIAL_TRIP_NONE) {
+            setActiveFragment(TripInfoFragment.newInstance(initialTripId));
+        }
+
         //setInitialFragment(ContactsFragment.newInstance());
     }
 
@@ -225,9 +238,9 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onTripSelected(final long tripId) {
         //Creates a InfoFragment instance
-        TripInfoFragment infoFragment = TripInfoFragment.newInstance();
+        TripInfoFragment infoFragment = TripInfoFragment.newInstance(tripId);
         //Sends the tripId of the selected trip and also the Context
-        infoFragment.setCurrentTripId(tripId, MainActivity.this);
+        infoFragment.setCurrentContext(MainActivity.this);
         //Change the Active Fragment
         setActiveFragment(infoFragment);
     }
