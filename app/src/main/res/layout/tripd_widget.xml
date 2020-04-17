@@ -5,174 +5,115 @@
  StackView, and AdapterViewFlipper (and ViewStub) -->
 
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_centerInParent="true"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:background="@color/colorBackground"
-    android:padding="@dimen/widget_margin">
+    android:padding="10dp">
 
     <!-- Trip Title -->
-    <TextView
-        android:id="@+id/tripTitleID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="trip title"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="16sp"
-        android:layout_column="0"
-        android:layout_columnSpan="3"
-        android:layout_row="0"
-        android:padding="10dp" />
-
-    <!-- Start City -->
     <TextView
         android:id="@+id/appwidget_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="start City:"
+        android:text="@string/tripNameText"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_column="0"
+        android:layout_columnSpan="2"
+        android:layout_row="0"
+        android:paddingBottom="5dp"/>
+
+    <!-- Start City -->
+    <TextView
+        android:id="@+id/tripStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/startCity"
         android:textColor="@color/colorAccent"
         android:textSize="14sp"
-        android:layout_column="1"
+        android:layout_column="0"
         android:layout_row="1"
-        android:padding="5dp" />
+        android:paddingRight="10dp"
+        android:paddingEnd="10dp" />
 
     <TextView
         android:id="@+id/startCityID"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="startcity name"
-        android:textColor="@android:color/black"
-        android:textSize="12sp"
-        android:layout_column="2"
         android:layout_row="1"
-        android:padding="5dp" />
+        android:layout_column="1"
+        android:text="Toronto"
+        android:textColor="@android:color/black"
+        android:textSize="12sp" />
 
     <!-- End City -->
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="endcity"
+        android:text="@string/endCity"
         android:textColor="@color/colorAccent"
         android:textSize="14sp"
-        android:layout_column="1"
+        android:layout_column="0"
         android:layout_row="2"
-        android:padding="5dp" />
+        android:paddingRight="10dp"
+        android:paddingEnd="10dp"/>
 
     <TextView
         android:id="@+id/endCityID"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="endcityname"
+        android:text="Waterloo"
         android:textColor="@android:color/black"
         android:textSize="12sp"
-        android:layout_column="2"
-        android:layout_row="2"
-        android:padding="5dp" />
+        android:layout_column="1"
+        android:layout_row="2"/>
 
     <!-- Start Date -->
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="departdate"
+        android:text="@string/departName"
         android:textColor="@color/colorAccent"
         android:textSize="14sp"
-        android:layout_column="1"
+        android:layout_column="0"
         android:layout_row="3"
-        android:padding="5dp" />
+        android:paddingRight="10dp"
+        android:paddingEnd="10dp"/>
 
     <TextView
         android:id="@+id/startDateID"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="start date time"
+        android:text="2020-10-10"
         android:textColor="@android:color/black"
         android:textSize="12sp"
-        android:layout_column="2"
-        android:layout_row="3"
-        android:padding="5dp" />
+        android:layout_column="1"
+        android:layout_row="3"/>
 
     <!-- End Date -->
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="arrivedate"
+        android:text="@string/arriveName"
         android:textColor="@color/colorAccent"
         android:textSize="14sp"
-        android:layout_column="1"
+        android:layout_column="0"
         android:layout_row="4"
-        android:padding="5dp" />
+        android:paddingRight="10dp"
+        android:paddingEnd="10dp"/>
 
     <TextView
         android:id="@+id/endDateID"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="arrive date time"
+        android:text="2020-10-12"
         android:textColor="@android:color/black"
         android:textSize="12sp"
-        android:layout_column="2"
-        android:layout_row="4"
-        android:padding="5dp"/>
+        android:layout_column="1"
+        android:layout_row="4" />
 
 </GridLayout>
-<!--
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_centerInParent="true"
-    android:background="@color/colorBackground"
-    android:rowCount="4"
-    android:columnCount="3"
-    android:padding="@dimen/widget_margin">
-
-    <TextView
-        android:id="@+id/appwidget_text"
-        android:layout_row="0"
-        android:layout_column="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_row="1"
-        android:layout_column="0"
-        android:text="TextView"/>
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_row="1"
-        android:layout_column="2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"/>
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_row="2"
-        android:layout_column="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"/>
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_row="3"
-        android:layout_column="0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"/>
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_row="3"
-        android:layout_column="2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"/>
-
-</GridLayout> -->
