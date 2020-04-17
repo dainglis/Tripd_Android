@@ -118,8 +118,10 @@ public class TripDataContentProvider extends ContentProvider {
                     DateFormat dateFormat = new SimpleDateFormat(TripDataContract.DATE_FORMAT, Locale.CANADA);
                     try {
                         dateFormat.parse(sel);
+                        Log.d("TDCP", "Date received: " + sel);
 
-                        return tripDAO.getNextTripAfterDate(sel);
+                        Cursor c = tripDAO.getNextTripAfterDate(sel);
+                        return c;
                     } catch (ParseException exc) {
                         Log.e("TDCP", "Malformed selection string: " + sel);
                     }

@@ -78,6 +78,21 @@ public class TripInfoFragment extends Fragment {
     FloatingActionButton editButton;
     FloatingActionButton shareButton;
 
+    public static TripInfoFragment newInstance() {
+        TripInfoFragment fragment = new TripInfoFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static TripInfoFragment newInstance(long tripId) {
+        TripInfoFragment fragment = new TripInfoFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        fragment.setCurrentTripId(tripId);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -114,7 +129,7 @@ public class TripInfoFragment extends Fragment {
         return view;
     }
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-        Method:         setCurrentTripId(long id, Context c)
+        Method:         setCurrentTripId(long id)
         Description:    This method is load when the user select a trip on the TripList.
                         It receives the trip selected and the context of the Main Activity.
         Parameters:     Long        id        Id of the trip selected on the previous fragment.
@@ -122,9 +137,12 @@ public class TripInfoFragment extends Fragment {
         Returns:        void.
 
      */
-    public void setCurrentTripId(long id, Context c){
+    public void setCurrentTripId(long id){
         currentTripId = id;
-        context = c;
+    }
+
+    public void setCurrentContext(Context context) {
+        this.context = context;
     }
 
     /*
@@ -292,12 +310,6 @@ public class TripInfoFragment extends Fragment {
         mListener.onCityClick(view);
     }
 
-    public static TripInfoFragment newInstance() {
-        TripInfoFragment fragment = new TripInfoFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     //Interface used to make the interactions contained on this fragment work.
     //This interface is implemented on the mainActivity, and each method if developed there.
