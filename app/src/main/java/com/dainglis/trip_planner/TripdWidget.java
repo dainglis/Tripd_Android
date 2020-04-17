@@ -1,3 +1,13 @@
+/* SOURCE FILE HEADER COMMENT ======================================================================
+
+    FILENAME:       TripdWidget.java
+    PROJECT:        PROG3150 - Assignment 03
+    PROGRAMMERS:    David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
+    DATE:           April 16th, 2020
+    DESCRIPTION:    This file contains the interaction logic for the homescreen TripdWidget
+
+================================================================================================= */
+
 package com.dainglis.trip_planner;
 
 import android.app.PendingIntent;
@@ -42,44 +52,35 @@ import java.util.Locale;
  * Implementation of App Widget functionality.
  */
 public class TripdWidget extends AppWidgetProvider {
+
     static void updateAppWidget(Context context,
                                 AppWidgetManager appWidgetManager,
                                 int appWidgetId,
                                 Cursor resultCursor) {
 
-
-        // Remaining work:
-        // 1. Connect the widget to the content provider
-        // 2. Comment well
-        // 3. Write document
-
         // Create a pending intent for the activity
-        // TripInfoFragment class is not TaskListActivity
-        //Intent intent = new Intent(context, );
-
-
-        //"Get the layout and set the listener for the app widget
-
-        //views.setOnClickPendingIntent(R.id.widget_id, pendingIntent);
-
-        RemoteViews views;
         Intent widgetAppIntent = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, widgetAppIntent, 0);
 
+        RemoteViews views;
+
         if (resultCursor != null && resultCursor.moveToFirst()) {
+
+            //"Get the layout and set the listener for the app widget
             views = new RemoteViews(context.getPackageName(), R.layout.tripd_widget);
             StringBuilder resBuilder = new StringBuilder();
 
+            // Use the cursor to iterate through the next upcoming trip's details
             for (int j = 0; j < resultCursor.getColumnCount(); j++) {
                 if (j != 0) {
                     resBuilder.append(", ");
                 }
                 resBuilder.append(resultCursor.getString(j));
-
             }
+
             Log.d("Widget", "Cursor provides Trip '" + resBuilder.toString());
 
-            // "Update the user interface
+            // "Update the user interface to reflect the trip info
             views.setTextViewText(R.id.widget_trip_name,
                     resultCursor.getString(resultCursor.getColumnIndex("tripTitle")));
             views.setTextViewText(R.id.widget_startCity,
@@ -92,13 +93,15 @@ public class TripdWidget extends AppWidgetProvider {
                     resultCursor.getString(resultCursor.getColumnIndex("endDate")));
 
             widgetAppIntent.putExtra(TripDataContract.KEY_TRIP_ID,
-                    resultCursor.getLong(resultCursor.getColumnIndex("tripId")));
+                    resultCursor.getLong(resultCursor.getColumnIndex("tripId"))); // THIS SHOULD try to make the main activity swap to the correct trip
 
-            views.setOnClickPendingIntent(appWidgetId, pendingIntent);
-
+            // Set the on-click action
+            views.setOnClickPendingIntent(R.id.widget_id, pendingIntent);
 
         }
         else {
+
+            // Otherwise set the widget view to "tripd_widget_none"
             Log.e("Widget", "Received null Cursor object");
             views =  new RemoteViews(context.getPackageName(), R.layout.tripd_widget_none);
 
@@ -107,11 +110,12 @@ public class TripdWidget extends AppWidgetProvider {
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
+
     }
 
     public Cursor getAvailableTrip(final Context context) {
+
         // Get the text from the database / content provider to display within the widget
-        //TripDataContentProvider contentProvider = new TripDataContentProvider();
         SimpleDateFormat dateFormat = new SimpleDateFormat(TripDataContract.DATE_FORMAT, Locale.CANADA);
 
         Date today = Calendar.getInstance().getTime();
@@ -148,54 +152,6 @@ public class TripdWidget extends AppWidgetProvider {
             }
         });
 
-
-
-        /*
-        The most important AppWidgetProvider callback is onUpdate() because it is called when each
-        App Widget is added to a host (unless you use a configuration Activity). If your App Widget
-        accepts any user interaction events, then you need to register the event handlers in this
-        callback. If your App Widget doesn't create temporary files or databases, or perform other
-        work that requires clean-up, then onUpdate() may be the only callback method you need to
-        define. For example, if you want an App Widget with a button that launches an Activity when
-        clicked, you could use the following implementation of AppWidgetProvider:
-
-          public class ExampleAppWidgetProvider extends AppWidgetProvider {
-
-                public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-                    final int N = appWidgetIds.length;
-
-                    // Perform this loop procedure for each App Widget that belongs to this provider
-                    for (int i=0; i<N; i++) {
-                        int appWidgetId = appWidgetIds[i];
-
-                        // Create an Intent to launch ExampleActivity
-                        Intent intent = new Intent(context, ExampleActivity.class);
-                        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-
-                        // Get the layout for the App Widget and attach an on-click listener
-                        // to the button
-                        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.appwidget_provider_layout);
-                        views.setOnClickPendingIntent(R.id.button, pendingIntent);
-
-                        // Tell the AppWidgetManager to perform an update on the current app widget
-                        appWidgetManager.updateAppWidget(appWidgetId, views);
-                    }
-                }
-            }
-
-            This AppWidgetProvider defines only the onUpdate() method for the purpose of defining a
-            PendingIntent that launches an Activity and attaching it to the App Widget's button with
-            setOnClickPendingIntent(int, PendingIntent). Notice that it includes a loop that
-            iterates through each entry in appWidgetIds, which is an array of IDs that identify each
-            App Widget created by this provider. In this way, if the user creates more than one
-            instance of the App Widget, then they are all updated simultaneously. However, only one
-            updatePeriodMillis schedule will be managed for all instances of the App Widget. For
-            example, if the update schedule is defined to be every two hours, and a second instance
-            of the App Widget is added one hour after the first one, then they will both be updated
-            on the period defined by the first one and the second update period will be ignored
-            (they'll both be updated every two hours, not every hour).
-
-        * */
     }
 
     @Override
@@ -211,7 +167,8 @@ public class TripdWidget extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
-                                    // TripDataContentProvider is not TaskListDB.TASK_MODIFIED
+
+                                    // TripDataContentProvider is not TaskListDB.TASK_MODIFIED =====================================
         if (intent.getAction().equals(TripDataContentProvider.class.getName())) {
 
             AppWidgetManager manager = AppWidgetManager.getInstance(context);
