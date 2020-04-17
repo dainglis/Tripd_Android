@@ -11,9 +11,11 @@
 
 package com.dainglis.trip_planner.views;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,15 +51,15 @@ public class GoogleMapsFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView = inflater.inflate(R.layout.fragment_google__maps_, container, false);
+        mView = inflater.inflate(R.layout.fragment_google_maps, container, false);
         return mView;
     }
 
     @Override
-    public void onViewCreated(View view, Bundle saveInstanceState){
+    public void onViewCreated(@NonNull View view, Bundle saveInstanceState){
         super.onViewCreated(view, saveInstanceState);
         mMapView = (MapView) mView.findViewById(R.id.map);
-        // check if mapBiew exists
+        // check if mapView exists
         if(mMapView != null) {
             mMapView.onCreate(null);
             mMapView.onResume();
@@ -76,14 +78,19 @@ public class GoogleMapsFragment extends Fragment implements OnMapReadyCallback {
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        Context context = getContext();
 
-        MapsInitializer.initialize(getContext());
+        if (context != null) {
+            MapsInitializer.initialize(getContext());
 
-        // set map type
-        mGoogleMap = googleMap;
-        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+            // set map type
+            mGoogleMap = googleMap;
+            googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(43,-80)));
-
+            googleMap.addMarker(new MarkerOptions().position(new LatLng(43, -80)));
+        }
+        else {
+            Log.e("GoogleMapsAPI", "Error launching Maps API: no context");
+        }
     }
 }
