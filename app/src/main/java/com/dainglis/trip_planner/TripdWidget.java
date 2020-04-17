@@ -93,7 +93,7 @@ public class TripdWidget extends AppWidgetProvider {
                     resultCursor.getString(resultCursor.getColumnIndex("endDate")));
 
             widgetAppIntent.putExtra(TripDataContract.KEY_TRIP_ID,
-                    resultCursor.getLong(resultCursor.getColumnIndex("tripId"))); // THIS SHOULD try to make the main activity swap to the correct trip
+                    resultCursor.getLong(resultCursor.getColumnIndex("tripId"))); // THIS SHOULD try to make the main activity swap to the correct trip. I'm not sure it's getting the correct ID though.
 
             // Set the on-click action
             views.setOnClickPendingIntent(R.id.widget_id, pendingIntent);

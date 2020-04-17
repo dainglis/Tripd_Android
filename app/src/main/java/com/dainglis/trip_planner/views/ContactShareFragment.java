@@ -1,3 +1,14 @@
+
+/* SOURCE FILE HEADER COMMENT ======================================================================
+
+    FILENAME:       ContactShareFragment.java
+    PROJECT:        PROG3150 - Assignment 01
+    PROGRAMMERS:    David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
+    DATE:           January 28th, 2020
+    DESCRIPTION:    This file contains the definition of the ContactShareFragment class.
+    
+================================================================================================= */
+
 package com.dainglis.trip_planner.views;
 
 import android.arch.lifecycle.ViewModelProviders;
