@@ -1,26 +1,84 @@
 package com.dainglis.trip_planner;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
+import android.content.ContentProvider;
 import android.content.Context;
+import android.content.Intent;
+import android.content.UriMatcher;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
+import android.support.v4.app.FragmentActivity;
+import android.widget.CursorAdapter;
 import android.widget.RemoteViews;
+import android.widget.TextView;
+
+import com.dainglis.trip_planner.providers.TripDataContentProvider;
+import com.dainglis.trip_planner.providers.TripDataContract;
+import com.dainglis.trip_planner.views.MainActivity;
+import com.dainglis.trip_planner.views.TripInfoFragment;
+import com.dainglis.trip_planner.views.TripListFragment;
+
+import java.net.URI;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Implementation of App Widget functionality.
  */
 public class TripdWidget extends AppWidgetProvider {
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                 int appWidgetId) {
 
         // Remaining work: 1. Connect the widget to the content provider
         // 2. Comment well
         // 3. Write document
 
-        CharSequence widgetText = "This is an extremely l o o o o o ng name for a trip";//context.getString(R.string.appwidget_text);
-        // Construct the RemoteViews object
+        //"Create a pending intent for the activity
+                                            // TripInfoFragment class is not TaskListActivity
+        //FragmentActivity fragmentActivity = MainActivity.onTripSelected(12);
+
+        //Intent intent = new Intent(context, );
+        //PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+
+        //"Get the layout and set the listener for the app widget
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.tripd_widget);
-        views.setTextViewText(R.id.widget_trip_name, widgetText);
+        //views.setOnClickPendingIntent(R.id.widget_id, pendingIntent);
+
+
+        // Get the text from the database / content provider to display within the widget
+        TripDataContentProvider contentProvider = new TripDataContentProvider();
+        SimpleDateFormat dateFormat = new SimpleDateFormat(TripDataContract.DATE_FORMAT, Locale.CANADA);
+        Date today = Calendar.getInstance().getTime();
+        Uri uri = (new Uri.Builder()).scheme("content").authority(TripDataContract.AUTHORITY).appendPath("trips/by").build();
+        Cursor cursor = contentProvider.query(uri, null, dateFormat.format(today), null, null);
+
+        if (cursor != null) {
+
+            views.setTextViewText(R.id.widget_trip_name, "whoop");
+
+            // "Update the user interface
+            views.setTextViewText(R.id.widget_trip_name, cursor.getString(cursor.getColumnIndex("title")));
+            views.setTextViewText(R.id.widget_startCity, cursor.getString(cursor.getColumnIndex("startLocation")));
+            views.setTextViewText(R.id.widget_endCity, cursor.getString(cursor.getColumnIndex("endLocation")));
+            views.setTextViewText(R.id.widget_departDate, cursor.getString(cursor.getColumnIndex("startDate")));
+            views.setTextViewText(R.id.widget_arriveDate, cursor.getString(cursor.getColumnIndex("endDate")));
+
+            cursor.close();
+        }
+        else {
+            views.setTextViewText(R.id.widget_trip_name, "heck");
+        }
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -90,5 +148,22 @@ public class TripdWidget extends AppWidgetProvider {
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
     }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
+                                    // TripDataContentProvider is not TaskListDB.TASK_MODIFIED
+        if (intent.getAction().equals(TripDataContentProvider.class.getName())) {
+
+            AppWidgetManager manager = AppWidgetManager.getInstance(context);
+            ComponentName provider = new ComponentName(context, TripdWidget.class);
+
+            int [] appWidgetIds = manager.getAppWidgetIds(provider);
+            onUpdate(context, manager, appWidgetIds);
+
+        }
+
+    }
+
 }
 

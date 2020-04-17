@@ -5,6 +5,7 @@
  StackView, and AdapterViewFlipper (and ViewStub) -->
 
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_id"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@color/colorBackground"
