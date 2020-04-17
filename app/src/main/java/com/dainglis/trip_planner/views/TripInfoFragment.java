@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,6 +71,7 @@ public class TripInfoFragment extends Fragment {
     TextView endLocationView;
     TextView tripDateView;
     ImageView imageView;
+    View fragmentContainer;
 
     //Create variables for FloatingButtons
     FloatingActionButton addButton;
@@ -102,7 +104,8 @@ public class TripInfoFragment extends Fragment {
         startLocationView = view.findViewById(R.id.tripStart);
         endLocationView = view.findViewById(R.id.tripEnd);
         tripDateView = view.findViewById(R.id.tripDateInfo);
-        imageView = view.findViewById(R.id.imageView);
+        //imageView = view.findViewById(R.id.imageView);
+        fragmentContainer = view.findViewById(R.id.fragment_container);
 
         // FloatActionButtons from the view
         addButton = view.findViewById(R.id.buttonAdd);
@@ -113,6 +116,15 @@ public class TripInfoFragment extends Fragment {
             Toast.makeText(view.getContext(),"No tripId received", Toast.LENGTH_SHORT)
                     .show();
         }
+
+
+        Fragment mapFragment = new GoogleMapsFragment();
+
+        getFragmentManager().beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(R.id.maps_fragment_container, mapFragment)
+                .commit();
+
         //And return the view
         return view;
     }
@@ -192,6 +204,8 @@ public class TripInfoFragment extends Fragment {
                 raiseCityPressed(view);
             }
         });
+
+
     }
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
         Method:         updateTripView(Trip trip)
@@ -210,7 +224,7 @@ public class TripInfoFragment extends Fragment {
             tripDateView.setText(trip.getDateStamp());
 
             //Call, Asynchronously, the method responsible for loading the image of the city visited
-            new getCityImage().execute(new String[]{ trip.getEndLocation()});
+            //new getCityImage().execute(new String[]{ trip.getEndLocation()});
         }
     }
 
@@ -285,13 +299,11 @@ public class TripInfoFragment extends Fragment {
     }
 
     private void raiseShareButtonPressed() {
-
         Intent calTripIntent = mViewModel.getTripAsCalendarIntent();
 
         if (calTripIntent != null) {
             startActivity(calTripIntent);
         }
-
     }
 
     private void raiseCityPressed(View view) {
@@ -305,7 +317,6 @@ public class TripInfoFragment extends Fragment {
 
         void onAddButtonPressed(long tripId);
         void onEditButtonPressed(long tripId);
-        void onShareButtonPressed(long tripId);
         void onCityClick(View view);
     }
 

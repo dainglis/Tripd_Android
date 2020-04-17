@@ -95,8 +95,6 @@ public class MainActivity extends AppCompatActivity implements
         if (initialTripId != INITIAL_TRIP_NONE) {
             setActiveFragment(TripInfoFragment.newInstance(initialTripId));
         }
-
-        //setInitialFragment(ContactsFragment.newInstance());
     }
 
 
@@ -278,13 +276,7 @@ public class MainActivity extends AppCompatActivity implements
         setActiveFragment(formFragment);
     }
 
-    @Override
-    public void onShareButtonPressed(long tripId) {
-        // Not using share menu, will remove
-        //ContactShareFragment contactShare = ContactShareFragment.newInstance();
-        //setActiveFragment(contactShare);
-    }
-        //Method responsible for accessing Wikipedia pages of the cities
+    //Method responsible for accessing Wikipedia pages of the cities
     public void onCityClick(View view){
 
         TextView tv = (TextView)view;
