@@ -1,20 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!-- SOURCE FILE HEADER COMMENT ====================================================================
-
-  FILENAME:     AndroidManifest.xml
-  PROJECT:      PROG3150 - Assignment 01
-  PROGRAMMERS:  David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
-  DATE:         February 8th, 2020
-  DESCRIPTION:  This file contains the manifest for the Tripd application. This includes a
-                summary of the activities involved.
-
-===============================================================================================  -->
-
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.dainglis.trip_planner">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
@@ -26,29 +14,35 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <receiver android:name=".TripdWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/tripd_widget_info" />
+        </receiver>
+
         <activity
             android:name=".views.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
         <provider
             android:name=".providers.TripDataContentProvider"
             android:authorities="com.dainglis.trip_planner.provider"
-            android:exported="false" />
-
-        <!-- round logo needed for adaptive icon -->
-
+            android:exported="false" /> <!-- round logo needed for adaptive icon -->
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-
 
 </manifest>
