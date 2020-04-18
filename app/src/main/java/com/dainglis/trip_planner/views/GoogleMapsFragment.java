@@ -43,9 +43,13 @@ public class GoogleMapsFragment extends Fragment implements OnMapReadyCallback {
     MapView mMapView;
     View mView;
 
-    // public constructor
-    public GoogleMapsFragment() {
+    String address;
 
+    public GoogleMapsFragment() { }
+
+    public GoogleMapsFragment setMapAddress(String addr) {
+        address = addr;
+        return this;
     }
 
 
@@ -89,27 +93,50 @@ public class GoogleMapsFragment extends Fragment implements OnMapReadyCallback {
         Context context = getContext();
 
         if (context != null) {
-        MapsInitializer.initialize(getContext());
+            MapsInitializer.initialize(getContext());
 
-        TripInfoFragment trf = new TripInfoFragment();
+            //TripInfoFragment trf = new TripInfoFragment();
 
-        LatLng addr = trf.getLocationFromAddress(TripInfoFragment());
+            LatLng addr = getLocationFromAddress(address);
 
 
-        // set map type
-        mGoogleMap = googleMap;
-        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        // enable liteMode for minimal functionality and gestures
-        GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
+            // set map type
+            mGoogleMap = googleMap;
+            googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+            // enable liteMode for minimal functionality and gestures
+            GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
 
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(addr.latitude,addr.longitude)));
+            googleMap.addMarker(new MarkerOptions().position(new LatLng(addr.latitude, addr.longitude)));
+        } else {
+            Log.e("GoogleMapsAPI", "Error launching Maps API: no context");
+        }
     }
-        else {
-        Log.e("GoogleMapsAPI", "Error launching Maps API: no context");
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+            Method:          getLocationFromAddress()
+            Description:    This method calls the Geocoder API to get the lat and long of an address
+            --------------------------------------------------------------------------------------------- */
+    public LatLng getLocationFromAddress(String strAddress) {
+        Geocoder coder = new Geocoder(getContext());
+        List<Address> address;
+        LatLng geoPlace = null;
+
+        try {
+            address = coder.getFromLocationName(strAddress, 1);
+            if (address == null) {
+                return null;
+            }
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+
+            geoPlace = new LatLng(location.getLatitude(), location.getLongitude() );
+
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+        }
+
+        return geoPlace;
     }
-}
-
-
-
-
 }

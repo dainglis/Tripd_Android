@@ -122,12 +122,6 @@ public class TripInfoFragment extends Fragment {
         }
 
 
-        Fragment mapFragment = new GoogleMapsFragment();
-
-        getFragmentManager().beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.maps_fragment_container, mapFragment)
-                .commit();
 
         //And return the view
         return view;
@@ -226,6 +220,13 @@ public class TripInfoFragment extends Fragment {
             startLocationView.setText(trip.getStartLocation());
             endLocationView.setText(trip.getEndLocation());
             tripDateView.setText(trip.getDateStamp());
+
+
+            getFragmentManager().beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .replace(R.id.maps_fragment_container,
+                            new GoogleMapsFragment().setMapAddress(trip.getEndLocation()))
+                    .commit();
 
             //Call, Asynchronously, the method responsible for loading the image of the city visited
             //new getCityImage().execute(new String[]{ trip.getEndLocation()});
@@ -436,38 +437,5 @@ public class TripInfoFragment extends Fragment {
 
         }
     }
-
-
-    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-            Method:          getLocationFromAddress()
-            Description:    This method calls the Geocoder API to get the lat and long of an address
-            --------------------------------------------------------------------------------------------- */
-
-
-    public LatLng getLocationFromAddress(String strAddress) {
-
-        Geocoder coder = new Geocoder(startLocationView.getContext());
-        List<Address> address;
-        LatLng geoPlace = null;
-
-        try {
-            address = coder.getFromLocationName(strAddress, 1);
-            if (address == null) {
-                return null;
-            }
-            Address location = address.get(0);
-            location.getLatitude();
-            location.getLongitude();
-
-            geoPlace = new LatLng(location.getLatitude(), location.getLongitude() );
-
-        } catch (Exception ex) {
-
-            ex.printStackTrace();
-        }
-
-        return geoPlace;
-    }
-
 
 }
