@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements
         TripFormFragment.OnFragmentInteractionListener,
         TripInfoFragment.OnFragmentInteractionListener {
 
-    static final String KEY_TRIP_ID = "id";
     static final long INITIAL_TRIP_NONE = 0;
     private long initialTripId = INITIAL_TRIP_NONE;
 
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements
 
         Bundle applicationExtras = getIntent().getExtras();
         if (applicationExtras != null) {
-            initialTripId = applicationExtras.getLong(KEY_TRIP_ID);
+            initialTripId = applicationExtras.getLong(TripDataContract.KEY_TRIP_ID);
         }
 
         setContentView(R.layout.activity_main);

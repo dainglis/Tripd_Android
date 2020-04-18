@@ -42,10 +42,10 @@ import java.util.Locale;
  * Implementation of App Widget functionality.
  */
 public class TripdWidget extends AppWidgetProvider {
-    static void updateAppWidget(Context context,
-                                AppWidgetManager appWidgetManager,
+    static void updateAppWidget(final Context context,
+                                final AppWidgetManager appWidgetManager,
                                 int appWidgetId,
-                                Cursor resultCursor) {
+                                final Cursor resultCursor) {
 
 
         // Remaining work:
@@ -63,21 +63,11 @@ public class TripdWidget extends AppWidgetProvider {
         //views.setOnClickPendingIntent(R.id.widget_id, pendingIntent);
 
         RemoteViews views;
-        Intent widgetAppIntent = new Intent(context, MainActivity.class);
+        Intent widgetAppIntent = new Intent(context, MainActivity.class).setAction(Intent.ACTION_MAIN);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, widgetAppIntent, 0);
 
         if (resultCursor != null && resultCursor.moveToFirst()) {
             views = new RemoteViews(context.getPackageName(), R.layout.tripd_widget);
-            StringBuilder resBuilder = new StringBuilder();
-
-            for (int j = 0; j < resultCursor.getColumnCount(); j++) {
-                if (j != 0) {
-                    resBuilder.append(", ");
-                }
-                resBuilder.append(resultCursor.getString(j));
-
-            }
-            Log.d("Widget", "Cursor provides Trip '" + resBuilder.toString());
 
             // "Update the user interface
             views.setTextViewText(R.id.widget_trip_name,
