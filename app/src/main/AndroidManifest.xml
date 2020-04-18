@@ -59,11 +59,11 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
       
-        <service android:name=".services.EventDateService"
+        <service
+            android:name=".services.EventDateService"
             android:enabled="true"
-            android:exported="true"/>
-
-            android:exported="false" /> <!-- round logo needed for adaptive icon -->
+            android:exported="true" />
+                <!-- round logo needed for adaptive icon -->
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
