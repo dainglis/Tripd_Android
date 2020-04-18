@@ -91,6 +91,9 @@ public class GoogleMapsFragment extends Fragment implements OnMapReadyCallback {
         if (context != null) {
         MapsInitializer.initialize(getContext());
 
+        TripInfoFragment trf = new TripInfoFragment();
+
+        LatLng addr = trf.getLocationFromAddress(TripInfoFragment());
 
 
         // set map type
@@ -99,7 +102,7 @@ public class GoogleMapsFragment extends Fragment implements OnMapReadyCallback {
         // enable liteMode for minimal functionality and gestures
         GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
 
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(43, -80)));
+        googleMap.addMarker(new MarkerOptions().position(new LatLng(addr.latitude,addr.longitude)));
     }
         else {
         Log.e("GoogleMapsAPI", "Error launching Maps API: no context");
