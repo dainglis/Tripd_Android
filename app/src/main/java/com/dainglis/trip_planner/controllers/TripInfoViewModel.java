@@ -13,13 +13,17 @@ package com.dainglis.trip_planner.controllers;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.provider.CalendarContract;
 import android.util.Log;
 
 import com.dainglis.trip_planner.models.Event;
 import com.dainglis.trip_planner.models.Trip;
 import com.dainglis.trip_planner.providers.TripDataContract;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -121,5 +125,36 @@ public class TripInfoViewModel extends ViewModel {
                 .putExtra(CalendarContract.Events.TITLE, currentTrip.getTitle())
                 .putExtra(CalendarContract.Events.DESCRIPTION, "Check out the Tripd app for Event details")
                 .putExtra(CalendarContract.Events.EVENT_LOCATION, currentTrip.getEndLocation());
+    }
+
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+            Method:          getLocationFromAddress()
+            Description:    This method calls the Geocoder API to get the lat and long of an address
+            --------------------------------------------------------------------------------------------- */
+    public LatLng getLocationFromAddress(Context context, String strAddress) {
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng geoPlace = new LatLng(0, 0);;
+
+        Log.d("GMaps", "Presented with address: " + strAddress);
+
+        try {
+            address = coder.getFromLocationName(strAddress, 1);
+            if (address == null) {
+                return null;
+            }
+            Address location = address.get(0);
+            Log.d("GMaps", "Presented with coords: " + location.getLatitude() + ", " + location.getLongitude());
+
+            geoPlace = new LatLng(location.getLatitude(), location.getLongitude() );
+
+        } catch (Exception ex) {
+            Log.e("GMaps", "Unable to access address");
+
+            ex.printStackTrace();
+        }
+
+        return geoPlace;
     }
 }
