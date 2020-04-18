@@ -8,7 +8,7 @@
   <component name="ChangeListManager">
     <list default="true" id="22e11d0c-ef34-4ba6-801f-6eee63445539" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dainglis/trip_planner/controllers/EventDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dainglis/trip_planner/controllers/EventDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dainglis/trip_planner/receivers/BootReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dainglis/trip_planner/receivers/BootReceiver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dainglis/trip_planner/services/EventDateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dainglis/trip_planner/services/EventDateService.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,7 +17,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_2_API_24" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="R58M73ZMX5B" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -58,8 +58,8 @@
   </component>
   <component name="ProjectId" id="1aez7OafVzJFhpn1nx4sJrWmiUH" />
   <component name="PropertiesComponent">
-    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Pixel_2_API_24" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-04-17T20:59:02.180Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="R58M73ZMX5B" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-04-18T00:51:54.729Z" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/test/java" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Downloads/Examples Week 9/Examples Week 9/AppTest" />
     <property name="project.structure.last.edited" value="SDK Location" />
@@ -178,17 +178,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/dainglis/trip_planner/services/EventDateService.java</url>
-          <line>74</line>
+          <line>91</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/dainglis/trip_planner/services/EventDateService.java</url>
-          <line>93</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/dainglis/trip_planner/services/EventDateService.java</url>
-          <line>73</line>
+          <line>90</line>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>
