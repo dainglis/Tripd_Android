@@ -12,6 +12,8 @@
 package com.dainglis.trip_planner.views;
 
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -19,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.dainglis.trip_planner.R;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,6 +31,10 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class GoogleMapsFragment extends Fragment implements OnMapReadyCallback {
@@ -82,18 +89,24 @@ public class GoogleMapsFragment extends Fragment implements OnMapReadyCallback {
         Context context = getContext();
 
         if (context != null) {
-            MapsInitializer.initialize(getContext());
+        MapsInitializer.initialize(getContext());
 
-            // set map type
-            mGoogleMap = googleMap;
-            googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-            // enable liteMode for minimal functionality and gestures
-            GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
 
-            googleMap.addMarker(new MarkerOptions().position(new LatLng(43, -80)));
-        }
-        else {
-            Log.e("GoogleMapsAPI", "Error launching Maps API: no context");
-        }
+
+        // set map type
+        mGoogleMap = googleMap;
+        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        // enable liteMode for minimal functionality and gestures
+        GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
+
+        googleMap.addMarker(new MarkerOptions().position(new LatLng(43, -80)));
     }
+        else {
+        Log.e("GoogleMapsAPI", "Error launching Maps API: no context");
+    }
+}
+
+
+
+
 }

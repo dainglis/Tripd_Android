@@ -19,6 +19,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -39,6 +41,7 @@ import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.controllers.TripInfoViewModel;
 import com.dainglis.trip_planner.models.Event;
 import com.dainglis.trip_planner.models.Trip;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -46,6 +49,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -432,4 +436,38 @@ public class TripInfoFragment extends Fragment {
 
         }
     }
+
+
+    /* METHOD HEADER COMMENT -----------------------------------------------------------------------
+            Method:          getLocationFromAddress()
+            Description:    This method calls the Geocoder API to get the lat and long of an address
+            --------------------------------------------------------------------------------------------- */
+
+
+    public LatLng getLocationFromAddress(String strAddress) {
+
+        Geocoder coder = new Geocoder(startLocationView.getContext());
+        List<Address> address;
+        LatLng p1 = null;
+
+        try {
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
+                return null;
+            }
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+
+            p1 = new LatLng(location.getLatitude(), location.getLongitude() );
+
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+        }
+
+        return p1;
+    }
+
+
 }
