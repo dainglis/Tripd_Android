@@ -448,10 +448,10 @@ public class TripInfoFragment extends Fragment {
 
         Geocoder coder = new Geocoder(startLocationView.getContext());
         List<Address> address;
-        LatLng p1 = null;
+        LatLng geoPlace = null;
 
         try {
-            address = coder.getFromLocationName(strAddress, 5);
+            address = coder.getFromLocationName(strAddress, 1);
             if (address == null) {
                 return null;
             }
@@ -459,14 +459,14 @@ public class TripInfoFragment extends Fragment {
             location.getLatitude();
             location.getLongitude();
 
-            p1 = new LatLng(location.getLatitude(), location.getLongitude() );
+            geoPlace = new LatLng(location.getLatitude(), location.getLongitude() );
 
         } catch (Exception ex) {
 
             ex.printStackTrace();
         }
 
-        return p1;
+        return geoPlace;
     }
 
 
