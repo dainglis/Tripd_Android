@@ -1,0 +1,142 @@
+<!-- SOURCE FILE HEADER COMMENT ====================================================================
+
+  FILENAME:     tripd_widget.xml
+  PROJECT:      PROG3150 - Assignment 03
+  PROGRAMMERS:  David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
+  DATE:         April 16th, 2020
+  DESCRIPTION:  This file contains the xml needed for the tripd_widget widget.
+
+===============================================================================================  -->
+
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_id"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/colorBackground"
+    android:padding="10dp">
+
+    <!-- Trip Title -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:padding="0dp"
+        android:layout_column="0"
+        android:layout_columnSpan="2"
+        android:layout_row="0">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/ic_launcher"
+            android:contentDescription="@string/app_name"/>
+
+        <TextView
+            android:id="@+id/widget_trip_name"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="@string/tripNameText"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingStart="10dp"/>
+    </LinearLayout>
+
+    <!-- Start City -->
+    <TextView
+        android:id="@+id/widget_start_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/startCity"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
+        android:layout_column="0"
+        android:layout_row="1"
+        android:paddingRight="10dp"
+        android:paddingEnd="10dp" />
+
+    <TextView
+        android:id="@+id/widget_startCity"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_row="1"
+        android:layout_column="1"
+        android:text="@string/city_placeholder"
+        android:textColor="@android:color/black"
+        android:textSize="12sp" />
+
+    <!-- End City -->
+    <TextView
+        android:id="@+id/widget_end_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/endCity"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
+        android:layout_column="0"
+        android:layout_row="2"
+        android:paddingRight="10dp"
+        android:paddingEnd="10dp"/>
+
+    <TextView
+        android:id="@+id/widget_endCity"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="@string/city_placeholder"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        android:layout_column="1"
+        android:layout_row="2"/>
+
+    <!-- Start Date -->
+    <TextView
+        android:id="@+id/widget_depart_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/departName"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
+        android:layout_column="0"
+        android:layout_row="3"
+        android:paddingRight="10dp"
+        android:paddingEnd="10dp"/>
+
+    <TextView
+        android:id="@+id/widget_departDate"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="@string/hint_date"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        android:layout_column="1"
+        android:layout_row="3"/>
+
+    <!-- End Date -->
+    <TextView
+        android:id="@+id/widget_arrive_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/arriveName"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"
+        android:layout_column="0"
+        android:layout_row="4"
+        android:paddingRight="10dp"
+        android:paddingEnd="10dp"/>
+
+    <TextView
+        android:id="@+id/widget_arriveDate"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="@string/hint_date"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        android:layout_column="1"
+        android:layout_row="4" />
+
+</GridLayout>

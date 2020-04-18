@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- SOURCE FILE HEADER COMMENT ====================================================================
+
+  FILENAME:     tripd_widget_info.xml
+  PROJECT:      PROG3150 - Assignment 03
+  PROGRAMMERS:  David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
+  DATE:         April 16th, 2020
+  DESCRIPTION:  This file contains the xml needed for maintaining dimensions of the widget.
+
+===============================================================================================  -->
+
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialKeyguardLayout="@layout/tripd_widget"
+    android:initialLayout="@layout/tripd_widget"
+    android:minWidth="180dp"
+    android:minHeight="110dp"
+    android:previewImage="@drawable/widget_sample"
+    android:updatePeriodMillis="86400000"
+    android:widgetCategory="home_screen"></appwidget-provider>

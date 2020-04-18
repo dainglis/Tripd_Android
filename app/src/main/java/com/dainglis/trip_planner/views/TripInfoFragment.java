@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,11 +71,27 @@ public class TripInfoFragment extends Fragment {
     TextView endLocationView;
     TextView tripDateView;
     ImageView imageView;
+    View fragmentContainer;
 
     //Create variables for FloatingButtons
     FloatingActionButton addButton;
     FloatingActionButton editButton;
     FloatingActionButton shareButton;
+
+    public static TripInfoFragment newInstance() {
+        TripInfoFragment fragment = new TripInfoFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static TripInfoFragment newInstance(long tripId) {
+        TripInfoFragment fragment = new TripInfoFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        fragment.setCurrentTripId(tripId);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,7 +104,8 @@ public class TripInfoFragment extends Fragment {
         startLocationView = view.findViewById(R.id.tripStart);
         endLocationView = view.findViewById(R.id.tripEnd);
         tripDateView = view.findViewById(R.id.tripDateInfo);
-        imageView = view.findViewById(R.id.imageView);
+        //imageView = view.findViewById(R.id.imageView);
+        fragmentContainer = view.findViewById(R.id.fragment_container);
 
         // FloatActionButtons from the view
         addButton = view.findViewById(R.id.buttonAdd);
@@ -98,11 +116,20 @@ public class TripInfoFragment extends Fragment {
             Toast.makeText(view.getContext(),"No tripId received", Toast.LENGTH_SHORT)
                     .show();
         }
+
+
+        Fragment mapFragment = new GoogleMapsFragment();
+
+        getFragmentManager().beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(R.id.maps_fragment_container, mapFragment)
+                .commit();
+
         //And return the view
         return view;
     }
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
-        Method:         setCurrentTripId(long id, Context c)
+        Method:         setCurrentTripId(long id)
         Description:    This method is load when the user select a trip on the TripList.
                         It receives the trip selected and the context of the Main Activity.
         Parameters:     Long        id        Id of the trip selected on the previous fragment.
@@ -110,9 +137,12 @@ public class TripInfoFragment extends Fragment {
         Returns:        void.
 
      */
-    public void setCurrentTripId(long id, Context c){
+    public void setCurrentTripId(long id){
         currentTripId = id;
-        context = c;
+    }
+
+    public void setCurrentContext(Context context) {
+        this.context = context;
     }
 
     /*
@@ -174,6 +204,8 @@ public class TripInfoFragment extends Fragment {
                 raiseCityPressed(view);
             }
         });
+
+
     }
     /* METHOD HEADER COMMENT -----------------------------------------------------------------------
         Method:         updateTripView(Trip trip)
@@ -192,7 +224,7 @@ public class TripInfoFragment extends Fragment {
             tripDateView.setText(trip.getDateStamp());
 
             //Call, Asynchronously, the method responsible for loading the image of the city visited
-            new getCityImage().execute(new String[]{ trip.getEndLocation()});
+            //new getCityImage().execute(new String[]{ trip.getEndLocation()});
         }
     }
 
@@ -267,25 +299,17 @@ public class TripInfoFragment extends Fragment {
     }
 
     private void raiseShareButtonPressed() {
-
         Intent calTripIntent = mViewModel.getTripAsCalendarIntent();
 
         if (calTripIntent != null) {
             startActivity(calTripIntent);
         }
-
     }
 
     private void raiseCityPressed(View view) {
         mListener.onCityClick(view);
     }
 
-    public static TripInfoFragment newInstance() {
-        TripInfoFragment fragment = new TripInfoFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     //Interface used to make the interactions contained on this fragment work.
     //This interface is implemented on the mainActivity, and each method if developed there.
@@ -293,7 +317,6 @@ public class TripInfoFragment extends Fragment {
 
         void onAddButtonPressed(long tripId);
         void onEditButtonPressed(long tripId);
-        void onShareButtonPressed(long tripId);
         void onCityClick(View view);
     }
 
