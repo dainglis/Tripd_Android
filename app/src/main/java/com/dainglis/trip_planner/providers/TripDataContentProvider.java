@@ -1,3 +1,15 @@
+
+/* SOURCE FILE HEADER COMMENT ======================================================================
+
+    FILENAME:       TripDataContentProvider.java
+    PROJECT:        PROG3150 - Assignment 03
+    PROGRAMMERS:    David Inglis, Nick Iden, Steven Knapp, Michel Gomes Lima, Megan Bradshaw
+    DATE:           April 10th, 2020
+    DESCRIPTION:    This file contains the definition of the TripDataContentProvider. This allows
+                    secure access to database members for external sources.
+
+================================================================================================= */
+
 package com.dainglis.trip_planner.providers;
 
 import android.content.ContentProvider;
