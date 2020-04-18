@@ -51,8 +51,10 @@ public class MainActivity extends AppCompatActivity implements
         // TripListFragment is launched
 
         Bundle applicationExtras = getIntent().getExtras();
+
         if (applicationExtras != null) {
             initialTripId = applicationExtras.getLong(TripDataContract.KEY_TRIP_ID);
+            Log.d("Tripd/Create", "This application was provided a tripId: " + initialTripId);
         }
 
         setContentView(R.layout.activity_main);

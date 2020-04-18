@@ -8,7 +8,7 @@
 
 ================================================================================================= */
 
-package com.dainglis.trip_planner;
+package com.dainglis.trip_planner.widgets;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -31,6 +31,7 @@ import android.widget.CursorAdapter;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
+import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.controllers.TripDatabase;
 import com.dainglis.trip_planner.providers.TripDataContentProvider;
 import com.dainglis.trip_planner.providers.TripDataContract;
@@ -68,7 +69,6 @@ public class TripdWidget extends AppWidgetProvider {
 
         RemoteViews views;
         Intent widgetAppIntent = new Intent(context, MainActivity.class).setAction(Intent.ACTION_MAIN);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, widgetAppIntent, 0);
 
 
         if (resultCursor != null && resultCursor.moveToFirst()) {
@@ -88,10 +88,14 @@ public class TripdWidget extends AppWidgetProvider {
             views.setTextViewText(R.id.widget_arriveDate,
                     resultCursor.getString(resultCursor.getColumnIndex("endDate")));
 
+            Log.d("Widget", "Inserting extra tripId: " + resultCursor.getLong(resultCursor.getColumnIndex("tripId")));
             widgetAppIntent.putExtra(TripDataContract.KEY_TRIP_ID,
-                    resultCursor.getLong(resultCursor.getColumnIndex("tripId"))); // THIS SHOULD try to make the main activity swap to the correct trip. I'm not sure it's getting the correct ID though.
+                    resultCursor.getLong(resultCursor.getColumnIndex("tripId")));
+            // THIS SHOULD try to make the main activity swap to the correct trip. I'm not sure it's getting the correct ID though.
 
             // Set the on-click action
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, widgetAppIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
             views.setOnClickPendingIntent(R.id.widget_id, pendingIntent);
 
         }
@@ -101,7 +105,8 @@ public class TripdWidget extends AppWidgetProvider {
             Log.e("Widget", "Received null Cursor object");
             views =  new RemoteViews(context.getPackageName(), R.layout.tripd_widget_none);
 
-            views.setOnClickPendingIntent(appWidgetId, pendingIntent);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, widgetAppIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+            views.setOnClickPendingIntent(R.id.widget_id, pendingIntent);
         }
 
         // Instruct the widget manager to update the widget
@@ -162,18 +167,6 @@ public class TripdWidget extends AppWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        super.onReceive(context, intent);
-
-                                    // TripDataContentProvider is not TaskListDB.TASK_MODIFIED =====================================
-        if (intent.getAction().equals(TripDataContentProvider.class.getName())) {
-
-            AppWidgetManager manager = AppWidgetManager.getInstance(context);
-            ComponentName provider = new ComponentName(context, TripdWidget.class);
-
-            int [] appWidgetIds = manager.getAppWidgetIds(provider);
-            onUpdate(context, manager, appWidgetIds);
-
-        }
 
     }
 
