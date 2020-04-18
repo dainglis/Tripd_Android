@@ -141,18 +141,19 @@
                 android:layout_row="0"
                 android:layout_column="0"
                 android:textSize="@dimen/info_city_spacer" />
+
             <TextView
                 android:id="@+id/tripStart"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimaryDark"
-                android:layout_gravity="start"
-                android:paddingTop="10dp"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:text="@string/city_placeholder"
+                android:layout_height="26dp"
                 android:layout_row="0"
                 android:layout_column="1"
+                android:layout_gravity="start"
+                android:paddingStart="10dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="10dp"
+                android:text="@string/city_placeholder"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/info_city_text" />
 
             <TextView

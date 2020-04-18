@@ -19,6 +19,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -39,6 +41,7 @@ import com.dainglis.trip_planner.R;
 import com.dainglis.trip_planner.controllers.TripInfoViewModel;
 import com.dainglis.trip_planner.models.Event;
 import com.dainglis.trip_planner.models.Trip;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -46,6 +49,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -118,12 +122,6 @@ public class TripInfoFragment extends Fragment {
         }
 
 
-        Fragment mapFragment = new GoogleMapsFragment();
-
-        getFragmentManager().beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.maps_fragment_container, mapFragment)
-                .commit();
 
         //And return the view
         return view;
@@ -222,6 +220,13 @@ public class TripInfoFragment extends Fragment {
             startLocationView.setText(trip.getStartLocation());
             endLocationView.setText(trip.getEndLocation());
             tripDateView.setText(trip.getDateStamp());
+
+
+            getFragmentManager().beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .replace(R.id.maps_fragment_container,
+                            new GoogleMapsFragment().setMapAddress(trip.getEndLocation()))
+                    .commit();
 
             //Call, Asynchronously, the method responsible for loading the image of the city visited
             //new getCityImage().execute(new String[]{ trip.getEndLocation()});
@@ -432,4 +437,5 @@ public class TripInfoFragment extends Fragment {
 
         }
     }
+
 }
