@@ -70,7 +70,6 @@ public class TripdWidget extends AppWidgetProvider {
         Intent widgetAppIntent = new Intent(context, MainActivity.class).setAction(Intent.ACTION_MAIN);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, widgetAppIntent, 0);
 
-        RemoteViews views;
 
         if (resultCursor != null && resultCursor.moveToFirst()) {
 
