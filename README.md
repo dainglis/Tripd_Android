@@ -11,8 +11,8 @@ The **Tripd** app has four pages:
 
 
 ### Developers
-* David Inglis
-* Megan Bradshaw
-* Nick Iden
-* Michel Talisson Gomes Lima
-* Steven Knapp
+* [David Inglis](https://github.com/dainglis)
+* [Megan Bradshaw](https://github.com/m-bradshaw)
+* [Nick Iden](https://github.com/nickiden)
+* [Michel Talisson Gomes Lima](https://github.com/MichelGomesLima)
+* [Steven Knapp](https://github.com/theknappattack)
